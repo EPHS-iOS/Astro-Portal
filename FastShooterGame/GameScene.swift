@@ -54,12 +54,19 @@ class GameScene: SKScene {
             let pointOfTouch = touch.location(in: self)
             
             if right.contains(pointOfTouch){
-                player.position.x += 20
+                player.physicsBody?.applyImpulse(CGVector(dx: 100, dy: 0))
+                //player.position.x += 20
             }
             if left.contains(pointOfTouch){
-                player.position.x -= 20
+                player.physicsBody?.applyImpulse(CGVector(dx: -100, dy: 0))
+                //player.position.x -= 20
             }else if jump.contains(pointOfTouch){
-                player.position.y += 20
+                player.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 400))
+//                let jumpUpAction = SKAction.moveBy(x: 0, y: 300, duration: 0.5)
+//                //let jumpDownAction = SKAction.moveBy(x: 0, y: -300, duration: 0.5)
+//                let jumpSequence = SKAction.sequence([jumpUpAction])//, jumpDownAction])
+//                player.run(jumpSequence)
+
             }
         }
     }

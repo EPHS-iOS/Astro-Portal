@@ -13,7 +13,7 @@ class GameScene: SKScene {
     private var label : SKLabelNode?
     private var spinnyNode : SKShapeNode?
     
-    var player = SKSpriteNode(color: UIColor.red, size: CGSize(width: 100, height: 100))
+    var player = SKSpriteNode(color: UIColor.red, size: CGSize(width: 50, height: 50))
     let right = SKSpriteNode(imageNamed: "right")
     let left = SKSpriteNode(imageNamed: "left")
     let jump = SKSpriteNode(imageNamed: "jump")
@@ -24,7 +24,7 @@ class GameScene: SKScene {
         player.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         player.position = CGPoint(x:0, y: 0)
         player.zPosition = 2
-        player.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 100, height: 100))
+        player.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 50, height: 50))
 //        player.physicsBody = SKPhysicsBody(texture: player.texture!, alphaThreshold: 0.7, size: (player.texture!.size()))
 //        player.physicsBody?.affectedByGravity = false
 //        player.physicsBody?.categoryBitMask = PhysicsCategories.player
@@ -54,14 +54,20 @@ class GameScene: SKScene {
             let pointOfTouch = touch.location(in: self)
             
             if right.contains(pointOfTouch){
-                player.physicsBody?.applyImpulse(CGVector(dx: 100, dy: 0))
+                let jumpRightAction = SKAction.moveBy(x: 300, y: 0, duration: 0.4)
+                let right = SKAction.repeatForever(jumpRightAction)
+                player.run(right)
+                //player.physicsBody?.applyImpulse(CGVector(dx: 100, dy: 0))
                 //player.position.x += 20
             }
             if left.contains(pointOfTouch){
-                player.physicsBody?.applyImpulse(CGVector(dx: -100, dy: 0))
+                let jumpLeftAction = SKAction.moveBy(x: -300, y: 0, duration: 0.4)
+                let left = SKAction.repeatForever(jumpLeftAction)
+                player.run(left)
+                //player.physicsBody?.applyImpulse(CGVector(dx: -100, dy: 0))
                 //player.position.x -= 20
             }else if jump.contains(pointOfTouch){
-                player.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 400))
+                player.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 75))
 //                let jumpUpAction = SKAction.moveBy(x: 0, y: 300, duration: 0.5)
 //                //let jumpDownAction = SKAction.moveBy(x: 0, y: -300, duration: 0.5)
 //                let jumpSequence = SKAction.sequence([jumpUpAction])//, jumpDownAction])
@@ -69,6 +75,24 @@ class GameScene: SKScene {
 
             }
         }
+    }
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch: AnyObject in touches{
+            let pointOfTouch = touch.location(in: self)
+        
+            if right.contains(pointOfTouch){
+                let jumpRightAction = SKAction.moveBy(x: -300, y: 0, duration: 0.4)
+                let right = SKAction.repeatForever(jumpRightAction)
+                player.run(right)
+                
+            }
+            if left.contains(pointOfTouch){
+                let jumpLeftAction = SKAction.moveBy(x: 300, y: 0, duration: 0.4)
+                let left = SKAction.repeatForever(jumpLeftAction)
+                player.run(left)
+            }
+        }
+        
     }
 }
     

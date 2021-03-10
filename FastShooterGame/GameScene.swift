@@ -116,6 +116,7 @@ class GameScene: SKScene {
             }
 
         }
+    //hi
 
         override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
 

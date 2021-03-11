@@ -52,10 +52,10 @@ class GameScene: SKScene {
         physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
     }
     func centerOnNode(node:SKNode){
-        self.camera!.run(SKAction.move(to: CGPoint(x:node.position.x, y:node.position.y), duration: 0.5))
-       self.right.run(SKAction.move(to: CGPoint(x:node.position.x-100, y:node.position.y-125), duration: 0.5))
-        self.left.run(SKAction.move(to: CGPoint(x:node.position.x-200, y:node.position.y-125), duration: 0.5))
-        self.jump.run(SKAction.move(to: CGPoint(x:node.position.x+200, y:node.position.y-125), duration: 0.5))
+        self.camera!.run(SKAction.move(to: CGPoint(x:node.position.x, y:node.position.y), duration: 0.3))
+       self.right.run(SKAction.move(to: CGPoint(x:node.position.x-100, y:node.position.y-125), duration: 0.3))
+        self.left.run(SKAction.move(to: CGPoint(x:node.position.x-200, y:node.position.y-125), duration: 0.3))
+        self.jump.run(SKAction.move(to: CGPoint(x:node.position.x+200, y:node.position.y-125), duration: 0.3))
     }
     override func didFinishUpdate() {
     centerOnNode(node: player!)
@@ -99,7 +99,7 @@ class GameScene: SKScene {
 
                 }else if jump.contains(pointOfTouch){
 
-                    player?.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 75))
+                    player?.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 250))
 
     //                let jumpUpAction = SKAction.moveBy(x: 0, y: 300, duration: 0.5)
 

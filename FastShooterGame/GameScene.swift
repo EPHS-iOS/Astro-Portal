@@ -10,8 +10,7 @@ import GameplayKit
 
 class GameScene: SKScene {
     
-    private var label : SKLabelNode?
-    private var spinnyNode : SKShapeNode?
+  
     var cameraNode: SKCameraNode?
     var player : SKSpriteNode?
     let right = SKSpriteNode(imageNamed: "right")
@@ -23,9 +22,9 @@ class GameScene: SKScene {
         cameraNode = childNode(withName: "camera") as?SKCameraNode
        
 //        player = SKSpriteNode()
-        player?.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        
         player?.position = CGPoint(x:0, y: 0)
-       player?.zPosition = 2
+       player?.zPosition = 10
      //  player?.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 100, height: 100))
 //        player.physicsBody = SKPhysicsBody(texture: player.texture!, alphaThreshold: 0.7, size: (player.texture!.size()))
 //        player.physicsBody?.affectedByGravity = false
@@ -36,26 +35,32 @@ class GameScene: SKScene {
         //self.addChild(player!)
         right.position = CGPoint(x: self.size.width * -0.2, y: self.size.height * -0.4)
         right.zPosition = 3
+        right.size=CGSize(width: 130,height: 100)
+        right.alpha = 0.8
         self.addChild(right)
         
         
         left.position = CGPoint(x: self.size.width * -0.3, y: self.size.height * -0.4)
         left.zPosition = 3
+        left.size=CGSize(width: 130,height: 100)
+        left.alpha = 0.8
         self.addChild(left)
         
         
         jump.position = CGPoint(x: self.size.width * 0.3, y: self.size.height * -0.4)
         jump.zPosition = 3
+       jump.size=CGSize(width: 70,height: 100)
+        jump.alpha = 0.8
         self.addChild(jump)
       
         self.physicsWorld.gravity = CGVector(dx: 0, dy: -9.8)
-        physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
+ 
     }
     func centerOnNode(node:SKNode){
         self.camera!.run(SKAction.move(to: CGPoint(x:node.position.x, y:node.position.y), duration: 0.3))
-       self.right.run(SKAction.move(to: CGPoint(x:node.position.x-100, y:node.position.y-125), duration: 0.3))
-        self.left.run(SKAction.move(to: CGPoint(x:node.position.x-200, y:node.position.y-125), duration: 0.3))
-        self.jump.run(SKAction.move(to: CGPoint(x:node.position.x+200, y:node.position.y-125), duration: 0.3))
+        self.right.run(SKAction.move(to: CGPoint(x:node.position.x-250, y:node.position.y-200), duration: 0.3))
+        self.left.run(SKAction.move(to: CGPoint(x:node.position.x-400, y:node.position.y-200), duration: 0.3))
+        self.jump.run(SKAction.move(to: CGPoint(x:node.position.x+400, y:node.position.y-200), duration: 0.3))
     }
     override func didFinishUpdate() {
     centerOnNode(node: player!)

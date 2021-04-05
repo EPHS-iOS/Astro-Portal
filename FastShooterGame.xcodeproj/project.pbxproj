@@ -40,7 +40,7 @@
 /* Begin PBXFileReference section */
 		2B5B0F6825F8378C00145EEA /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		2B5B0F6D25F8388C00145EEA /* MyTileSet.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MyTileSet.sks; sourceTree = "<group>"; };
-		2B5BFF0125E42FAA0066419E /* Platformer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Platformer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B5BFF0125E42FAA0066419E /* FastShooterGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FastShooterGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B5BFF0425E42FAA0066419E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2B5BFF0625E42FAA0066419E /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		2B5BFF0825E42FAA0066419E /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
@@ -49,10 +49,10 @@
 		2B5BFF0F25E42FAA0066419E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2B5BFF1125E42FAD0066419E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2B5BFF1325E42FAD0066419E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2B5BFF1825E42FAD0066419E /* PlatformerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlatformerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B5BFF1825E42FAD0066419E /* FastShooterGameTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FastShooterGameTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B5BFF1C25E42FAE0066419E /* FastShooterGameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastShooterGameTests.swift; sourceTree = "<group>"; };
 		2B5BFF1E25E42FAE0066419E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2B5BFF2325E42FAE0066419E /* PlatformerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlatformerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B5BFF2325E42FAE0066419E /* FastShooterGameUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FastShooterGameUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B5BFF2725E42FAE0066419E /* FastShooterGameUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastShooterGameUITests.swift; sourceTree = "<group>"; };
 		2B5BFF2925E42FAE0066419E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -95,9 +95,9 @@
 		2B5BFF0225E42FAA0066419E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				2B5BFF0125E42FAA0066419E /* Platformer.app */,
-				2B5BFF1825E42FAD0066419E /* PlatformerTests.xctest */,
-				2B5BFF2325E42FAE0066419E /* PlatformerUITests.xctest */,
+				2B5BFF0125E42FAA0066419E /* FastShooterGame.app */,
+				2B5BFF1825E42FAD0066419E /* FastShooterGameTests.xctest */,
+				2B5BFF2325E42FAE0066419E /* FastShooterGameUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -140,9 +140,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		2B5BFF0025E42FAA0066419E /* Platformer */ = {
+		2B5BFF0025E42FAA0066419E /* FastShooterGame */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2B5BFF2C25E42FAE0066419E /* Build configuration list for PBXNativeTarget "Platformer" */;
+			buildConfigurationList = 2B5BFF2C25E42FAE0066419E /* Build configuration list for PBXNativeTarget "FastShooterGame" */;
 			buildPhases = (
 				2B5BFEFD25E42FAA0066419E /* Sources */,
 				2B5BFEFE25E42FAA0066419E /* Frameworks */,
@@ -152,14 +152,14 @@
 			);
 			dependencies = (
 			);
-			name = Platformer;
+			name = FastShooterGame;
 			productName = FastShooterGame;
-			productReference = 2B5BFF0125E42FAA0066419E /* Platformer.app */;
+			productReference = 2B5BFF0125E42FAA0066419E /* FastShooterGame.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2B5BFF1725E42FAD0066419E /* PlatformerTests */ = {
+		2B5BFF1725E42FAD0066419E /* FastShooterGameTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2B5BFF2F25E42FAE0066419E /* Build configuration list for PBXNativeTarget "PlatformerTests" */;
+			buildConfigurationList = 2B5BFF2F25E42FAE0066419E /* Build configuration list for PBXNativeTarget "FastShooterGameTests" */;
 			buildPhases = (
 				2B5BFF1425E42FAD0066419E /* Sources */,
 				2B5BFF1525E42FAD0066419E /* Frameworks */,
@@ -170,14 +170,14 @@
 			dependencies = (
 				2B5BFF1A25E42FAD0066419E /* PBXTargetDependency */,
 			);
-			name = PlatformerTests;
+			name = FastShooterGameTests;
 			productName = FastShooterGameTests;
-			productReference = 2B5BFF1825E42FAD0066419E /* PlatformerTests.xctest */;
+			productReference = 2B5BFF1825E42FAD0066419E /* FastShooterGameTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		2B5BFF2225E42FAE0066419E /* PlatformerUITests */ = {
+		2B5BFF2225E42FAE0066419E /* FastShooterGameUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2B5BFF3225E42FAE0066419E /* Build configuration list for PBXNativeTarget "PlatformerUITests" */;
+			buildConfigurationList = 2B5BFF3225E42FAE0066419E /* Build configuration list for PBXNativeTarget "FastShooterGameUITests" */;
 			buildPhases = (
 				2B5BFF1F25E42FAE0066419E /* Sources */,
 				2B5BFF2025E42FAE0066419E /* Frameworks */,
@@ -188,9 +188,9 @@
 			dependencies = (
 				2B5BFF2525E42FAE0066419E /* PBXTargetDependency */,
 			);
-			name = PlatformerUITests;
+			name = FastShooterGameUITests;
 			productName = FastShooterGameUITests;
-			productReference = 2B5BFF2325E42FAE0066419E /* PlatformerUITests.xctest */;
+			productReference = 2B5BFF2325E42FAE0066419E /* FastShooterGameUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -215,7 +215,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 2B5BFEFC25E42FAA0066419E /* Build configuration list for PBXProject "Platformer" */;
+			buildConfigurationList = 2B5BFEFC25E42FAA0066419E /* Build configuration list for PBXProject "FastShooterGame" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -228,9 +228,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				2B5BFF0025E42FAA0066419E /* Platformer */,
-				2B5BFF1725E42FAD0066419E /* PlatformerTests */,
-				2B5BFF2225E42FAE0066419E /* PlatformerUITests */,
+				2B5BFF0025E42FAA0066419E /* FastShooterGame */,
+				2B5BFF1725E42FAD0066419E /* FastShooterGameTests */,
+				2B5BFF2225E42FAE0066419E /* FastShooterGameUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -297,12 +297,12 @@
 /* Begin PBXTargetDependency section */
 		2B5BFF1A25E42FAD0066419E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 2B5BFF0025E42FAA0066419E /* Platformer */;
+			target = 2B5BFF0025E42FAA0066419E /* FastShooterGame */;
 			targetProxy = 2B5BFF1925E42FAD0066419E /* PBXContainerItemProxy */;
 		};
 		2B5BFF2525E42FAE0066419E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 2B5BFF0025E42FAA0066419E /* Platformer */;
+			target = 2B5BFF0025E42FAA0066419E /* FastShooterGame */;
 			targetProxy = 2B5BFF2425E42FAE0066419E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -448,7 +448,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = edu.ephs2021.platformer;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.2021.sai.FastShooterGame;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -468,7 +468,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = edu.ephs2021.platformer;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.2021.sai.FastShooterGame;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -493,7 +493,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Platformer.app/Platformer";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FastShooterGame.app/FastShooterGame";
 			};
 			name = Debug;
 		};
@@ -515,7 +515,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Platformer.app/Platformer";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FastShooterGame.app/FastShooterGame";
 			};
 			name = Release;
 		};
@@ -562,7 +562,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		2B5BFEFC25E42FAA0066419E /* Build configuration list for PBXProject "Platformer" */ = {
+		2B5BFEFC25E42FAA0066419E /* Build configuration list for PBXProject "FastShooterGame" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2B5BFF2A25E42FAE0066419E /* Debug */,
@@ -571,7 +571,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2B5BFF2C25E42FAE0066419E /* Build configuration list for PBXNativeTarget "Platformer" */ = {
+		2B5BFF2C25E42FAE0066419E /* Build configuration list for PBXNativeTarget "FastShooterGame" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2B5BFF2D25E42FAE0066419E /* Debug */,
@@ -580,7 +580,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2B5BFF2F25E42FAE0066419E /* Build configuration list for PBXNativeTarget "PlatformerTests" */ = {
+		2B5BFF2F25E42FAE0066419E /* Build configuration list for PBXNativeTarget "FastShooterGameTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2B5BFF3025E42FAE0066419E /* Debug */,
@@ -589,7 +589,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2B5BFF3225E42FAE0066419E /* Build configuration list for PBXNativeTarget "PlatformerUITests" */ = {
+		2B5BFF3225E42FAE0066419E /* Build configuration list for PBXNativeTarget "FastShooterGameUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2B5BFF3325E42FAE0066419E /* Debug */,

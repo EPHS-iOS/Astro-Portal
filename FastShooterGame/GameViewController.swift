@@ -9,12 +9,7 @@ import UIKit
 import SpriteKit
 import GameplayKit
 
-enum gameState {
-    case preGame
-    case inGame
-    case afterGame
-}
-var currentGameState = gameState.preGame
+var lev = 0
 
 class GameViewController: UIViewController {
     
@@ -38,7 +33,7 @@ class GameViewController: UIViewController {
         }
 
         
-        if currentGameState == gameState.inGame {
+        if lev == 1 {
             super.viewDidLoad()
             if let view = self.view as! SKView? {
                 // Load the SKScene from 'GameScene.sks'

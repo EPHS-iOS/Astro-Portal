@@ -56,6 +56,7 @@ class GameViewController: UIViewController {
                 view.showsNodeCount = true //hi
             }
         }
+      
     }
 
     override var shouldAutorotate: Bool {

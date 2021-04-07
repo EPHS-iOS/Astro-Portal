@@ -9,8 +9,8 @@ import SpriteKit
 import GameplayKit
 
 class GameScene: SKScene {
+
     
-  
     var cameraNode: SKCameraNode?
     var player : SKSpriteNode?
     var bulletDuration = 3.0
@@ -70,8 +70,8 @@ class GameScene: SKScene {
             SKAction.wait(forDuration:bulletDuration)
           ])
         ))
-
         
+
           
     }
     func centerOnNode(node:SKNode){

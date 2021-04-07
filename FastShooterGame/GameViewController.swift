@@ -9,14 +9,21 @@ import UIKit
 import SpriteKit
 import GameplayKit
 
+enum gameState {
+    case preGame
+    case inGame
+    case afterGame
+}
+var currentGameState = gameState.preGame
+
 class GameViewController: UIViewController {
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
-            if let scene = SKScene(fileNamed: "GameScene") {
+            if let scene = SKScene(fileNamed: "level") {
                 // Set the scale mode to scale to fit the window
                 scene.scaleMode = .aspectFill
                 
@@ -28,6 +35,26 @@ class GameViewController: UIViewController {
             
             view.showsFPS = true
             view.showsNodeCount = true //hi
+        }
+
+        
+        if currentGameState == gameState.inGame {
+            super.viewDidLoad()
+            if let view = self.view as! SKView? {
+                // Load the SKScene from 'GameScene.sks'
+                if let scene = SKScene(fileNamed: "GameScene") {
+                    // Set the scale mode to scale to fit the window
+                    scene.scaleMode = .aspectFill
+                    
+                    // Present the scene
+                    view.presentScene(scene)
+                }
+                view.showsPhysics = false
+                view.ignoresSiblingOrder = true
+                
+                view.showsFPS = true
+                view.showsNodeCount = true //hi
+            }
         }
     }
 
@@ -47,3 +74,4 @@ class GameViewController: UIViewController {
         return true
     }
 }
+

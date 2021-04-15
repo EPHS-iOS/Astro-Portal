@@ -30,6 +30,7 @@ class GameViewController: UIViewController {
             
             view.showsFPS = true
             view.showsNodeCount = true //hi
+            view.isMultipleTouchEnabled = true
         }
 
         
@@ -49,6 +50,7 @@ class GameViewController: UIViewController {
                 
                 view.showsFPS = true
                 view.showsNodeCount = true //hi
+                view.isMultipleTouchEnabled = true
             }
         }
       

@@ -9,27 +9,36 @@ import SpriteKit
 import GameplayKit
 
 class GameScene: SKScene {
-
+    var utouch : Bool?
+    var finishedLevel : Bool?
+    var rtouch : Bool?
+    var ltouch: Bool?
+    var hasKey : Bool?
     var istouching : Bool?
     var cameraNode: SKCameraNode?
     var player : SKSpriteNode?
+    var door : SKSpriteNode?
     var bulletDuration = 3.0
    // var gun1 : SKSpriteNode?
     let right = SKSpriteNode(imageNamed: "right")
     let left = SKSpriteNode(imageNamed: "left")
     let jump = SKSpriteNode(imageNamed: "jump")
-
+    var key : SKSpriteNode?
     struct PhysicsCategory {
       static let none      : UInt32 = 0
       static let all       : UInt32 = UInt32.max
       static let bullet   : UInt32 = 0b1       // 1
         static let player : UInt32 = 0b10
         static let map : UInt32 = 0b11
+        static let key : UInt32 = 0b100
+        static let door : UInt32 = 0b101
         
         
     }
     override func didMove(to view: SKView) {
-        istouching=false
+        finishedLevel=false
+        hasKey=false
+  //      istouching=false
         physicsWorld.contactDelegate = self
         
         player = childNode(withName: "player") as?SKSpriteNode
@@ -72,9 +81,19 @@ class GameScene: SKScene {
                  }
              }
          }
+        key = childNode(withName: "key") as?SKSpriteNode
+        key?.physicsBody?.usesPreciseCollisionDetection=true
+        key?.physicsBody?.categoryBitMask=PhysicsCategory.key
+        key?.physicsBody?.contactTestBitMask=PhysicsCategory.none
+      door = childNode(withName: "door") as?SKSpriteNode
+        door?.physicsBody?.usesPreciseCollisionDetection=true
+        door?.physicsBody?.categoryBitMask=PhysicsCategory.door
+        door?.physicsBody?.contactTestBitMask=PhysicsCategory.none
         player?.setScale(1) //75
         player?.physicsBody?.categoryBitMask=PhysicsCategory.player
         player?.physicsBody?.contactTestBitMask=PhysicsCategory.map
+        player?.physicsBody?.contactTestBitMask=PhysicsCategory.key
+        player?.physicsBody?.contactTestBitMask=PhysicsCategory.door
         player?.physicsBody?.usesPreciseCollisionDetection = true
         right.position = CGPoint(x: self.size.width * -0.2, y: self.size.height * -0.4)
         right.zPosition = 3
@@ -123,6 +142,17 @@ class GameScene: SKScene {
         }else{
             jump.alpha=1
         }
+        if(rtouch==true){
+            player?.position.x+=5
+        }
+        if(ltouch==true){
+            player?.position.x-=5
+        }
+        if(utouch==true){
+            player?.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 500))
+         utouch=false
+            
+        }
  
         centerOnNode(node: player!)
     }
@@ -159,42 +189,17 @@ class GameScene: SKScene {
 
                 if right.contains(pointOfTouch){
 
-                    let jumpRightAction = SKAction.moveBy(x: 300, y: 0, duration: 1)
-
-                    let right = SKAction.repeatForever(jumpRightAction)
-
-                    player?.run(right)
-
-                    //player.physicsBody?.applyImpulse(CGVector(dx: 100, dy: 0))
-
-                    //player.position.x += 20
-
+                rtouch=true
+                 
                 }
 
                 if left.contains(pointOfTouch){
-
-                    let jumpLeftAction = SKAction.moveBy(x: -300, y: 0, duration: 1)
-
-                    let left = SKAction.repeatForever(jumpLeftAction)
-
-                    player?.run(left)
-
-                    //player.physicsBody?.applyImpulse(CGVector(dx: -100, dy: 0))
-
-                    //player.position.x -= 20
+                    ltouch=true
 
                 }else if jump.contains(pointOfTouch)&&istouching==true{
+               utouch=true
 
-                    player?.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 500))
-istouching=false
-    //                let jumpUpAction = SKAction.moveBy(x: 0, y: 300, duration: 0.5)
-
-    //                //let jumpDownAction = SKAction.moveBy(x: 0, y: -300, duration: 0.5)
-
-    //                let jumpSequence = SKAction.sequence([jumpUpAction])//, jumpDownAction])
-
-    //                player.run(jumpSequence)
-
+                    istouching=false
 
 
                 }
@@ -214,27 +219,25 @@ istouching=false
 
                 if right.contains(pointOfTouch){
 
-                    let jumpRightAction = SKAction.moveBy(x: -300, y: 0, duration: 1)
+              
 
-                    let right = SKAction.repeatForever(jumpRightAction)
-
-                    player?.run(right)
-
-                    
-
+                    player?.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 0))
+rtouch=false
                 }
 
                 if left.contains(pointOfTouch){
 
-                  let jumpLeftAction = SKAction.moveBy(x: 300, y: 0, duration: 1)
-      let left = SKAction.repeatForever(jumpLeftAction)
-
-                player?.run(left)
-         
+                  //  let jumpLeftAction = SKAction.moveBy(x: 10, y: 0, duration: 0.1)
+ ltouch=false
                     
 
                 }
+                if jump.contains(pointOfTouch){
 
+utouch=false
+                    
+
+                }
             }
 
             
@@ -249,6 +252,32 @@ extension GameScene: SKPhysicsContactDelegate {
         if contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.player && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.map{
             print("yes")
             istouching=true
+        }
+        if contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.player && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.key{
+            print("key")
+            key?.removeFromParent()
+            hasKey=true
+        }
+        if contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.player && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.door && hasKey==true{
+            print("finishLevel")
+            finishedLevel=true
+            if let view = self.view as! SKView? {
+                // Load the SKScene from 'GameScene.sks'
+                if let scene = SKScene(fileNamed: "level") {
+                    // Set the scale mode to scale to fit the window
+                    scene.scaleMode = .aspectFill
+                    
+                    // Present the scene
+                    view.presentScene(scene)
+                }
+                view.showsPhysics = false
+                view.ignoresSiblingOrder = true
+                
+                view.showsFPS = true
+                view.showsNodeCount = true //hi
+                view.isMultipleTouchEnabled = true
+            }
+           
         }
     }
 

@@ -143,13 +143,13 @@ class GameScene: SKScene {
             jump.alpha=1
         }
         if(rtouch==true){
-            player?.position.x+=5
+            player?.position.x+=10
         }
         if(ltouch==true){
-            player?.position.x-=5
+            player?.position.x-=10
         }
         if(utouch==true){
-            player?.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 500))
+            player?.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 550))
          utouch=false
             
         }

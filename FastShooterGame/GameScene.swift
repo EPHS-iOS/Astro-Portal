@@ -8,7 +8,7 @@
 import SpriteKit
 import GameplayKit
 
-class GameScene: SKScene {
+class GameScene: SKScene, SKPhysicsContactDelegate {
     var utouch : Bool?
     var finishedLevel : Bool?
     var rtouch : Bool?
@@ -32,6 +32,7 @@ class GameScene: SKScene {
         static let map : UInt32 = 0b11
         static let key : UInt32 = 0b100
         static let door : UInt32 = 0b101
+        static let mapEdge : UInt32 = 0b110
         
         
     }
@@ -81,10 +82,33 @@ class GameScene: SKScene {
                  }
              }
          }
+        for col in 0..<tileMap.numberOfColumns {
+            for row in 0..<tileMap.numberOfRows {
+                let tileDefinition = tileMap.tileDefinition(atColumn: col, row: row)
+                let isCobblestone = tileDefinition?.userData?["edge"] as? Bool
+                if (isCobblestone ?? false) {
+                    let x = CGFloat(col) * tileSize.width - halfWidth
+                    let y = CGFloat(row) * tileSize.height - halfHeight
+                    let rect = CGRect(x: 0, y: 0, width: tileSize.width, height: tileSize.height)
+                    let tileNode = SKShapeNode(rect: rect)
+                    tileNode.position = CGPoint(x: x, y: y)
+                    tileNode.physicsBody = SKPhysicsBody.init(rectangleOf: tileSize, center: CGPoint(x: tileSize.width / 2.0, y: tileSize.height / 2.0))
+                    tileNode.physicsBody?.isDynamic = false
+                   tileNode.physicsBody?.friction=0.1
+                   tileNode.physicsBody?.usesPreciseCollisionDetection = true
+                    tileNode.alpha=0
+                    tileNode.physicsBody?.categoryBitMask = PhysicsCategory.mapEdge
+                    tileNode.physicsBody?.contactTestBitMask = PhysicsCategory.none
+                    tileMap.addChild(tileNode)
+                }
+            }
+        }
+        
         key = childNode(withName: "key") as?SKSpriteNode
+    key?.physicsBody?.isDynamic = false
         key?.physicsBody?.usesPreciseCollisionDetection=true
         key?.physicsBody?.categoryBitMask=PhysicsCategory.key
-        key?.physicsBody?.contactTestBitMask=PhysicsCategory.none
+        key?.physicsBody?.contactTestBitMask=PhysicsCategory.player
       door = childNode(withName: "door") as?SKSpriteNode
         door?.physicsBody?.usesPreciseCollisionDetection=true
         door?.physicsBody?.categoryBitMask=PhysicsCategory.door
@@ -94,6 +118,7 @@ class GameScene: SKScene {
         player?.physicsBody?.contactTestBitMask=PhysicsCategory.map
         player?.physicsBody?.contactTestBitMask=PhysicsCategory.key
         player?.physicsBody?.contactTestBitMask=PhysicsCategory.door
+        player?.physicsBody?.contactTestBitMask=PhysicsCategory.mapEdge
         player?.physicsBody?.usesPreciseCollisionDetection = true
         right.position = CGPoint(x: self.size.width * -0.2, y: self.size.height * -0.4)
         right.zPosition = 3
@@ -246,19 +271,19 @@ utouch=false
 }
     
    
-extension GameScene: SKPhysicsContactDelegate {
+extension GameScene{
     func didBegin(_ contact: SKPhysicsContact) {
         print("check")
         if contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.player && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.map{
             print("yes")
             istouching=true
         }
-        if contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.player && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.key{
+        if ((contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.player && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.key )||(contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.key && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.player)){
             print("key")
             key?.removeFromParent()
             hasKey=true
         }
-        if contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.player && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.door && hasKey==true{
+        if ((contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.player && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.door && hasKey==true)||(contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.door && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.player && hasKey==true)){
             print("finishLevel")
             finishedLevel=true
             if let view = self.view as! SKView? {
@@ -278,6 +303,10 @@ extension GameScene: SKPhysicsContactDelegate {
                 view.isMultipleTouchEnabled = true
             }
            
+        }
+        if contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.player && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.mapEdge{
+            print("edge")
+            player?.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 300))
         }
     }
 

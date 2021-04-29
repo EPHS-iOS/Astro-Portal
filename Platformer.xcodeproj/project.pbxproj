@@ -114,14 +114,14 @@
 			isa = PBXGroup;
 			children = (
 				2B5BFF0425E42FAA0066419E /* AppDelegate.swift */,
-				461E5AA6262F3AD0000CAA7A /* level2.swift */,
 				2B5BFF0625E42FAA0066419E /* GameScene.sks */,
+				2B5BFF0A25E42FAA0066419E /* GameScene.swift */,
 				461E5AAB262F3B7E000CAA7A /* level2.sks */,
+				461E5AA6262F3AD0000CAA7A /* level2.swift */,
 				2B0D98FF261E287900795CE2 /* level.sks */,
 				2B5B0F6D25F8388C00145EEA /* MyTileSet.sks */,
 				2B5BFF0825E42FAA0066419E /* Actions.sks */,
 				2B0D98FA261E285300795CE2 /* level.swift */,
-				2B5BFF0A25E42FAA0066419E /* GameScene.swift */,
 				2B5BFF0C25E42FAA0066419E /* GameViewController.swift */,
 				2B5BFF0E25E42FAA0066419E /* Main.storyboard */,
 				2B5BFF1125E42FAD0066419E /* Assets.xcassets */,

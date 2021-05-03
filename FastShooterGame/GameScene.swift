@@ -73,7 +73,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                      tileNode.position = CGPoint(x: x, y: y)
                      tileNode.physicsBody = SKPhysicsBody.init(rectangleOf: tileSize, center: CGPoint(x: tileSize.width / 2.0, y: tileSize.height / 2.0))
                      tileNode.physicsBody?.isDynamic = false
-                    tileNode.physicsBody?.friction=0.1
+                  
                     tileNode.physicsBody?.usesPreciseCollisionDetection = true
                      tileNode.alpha=0
                      tileNode.physicsBody?.categoryBitMask = PhysicsCategory.map
@@ -94,7 +94,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     tileNode.position = CGPoint(x: x, y: y)
                     tileNode.physicsBody = SKPhysicsBody.init(rectangleOf: tileSize, center: CGPoint(x: tileSize.width / 2.0, y: tileSize.height / 2.0))
                     tileNode.physicsBody?.isDynamic = false
-                   tileNode.physicsBody?.friction=0.1
+                
                    tileNode.physicsBody?.usesPreciseCollisionDetection = true
                     tileNode.alpha=0
                     tileNode.physicsBody?.categoryBitMask = PhysicsCategory.mapEdge

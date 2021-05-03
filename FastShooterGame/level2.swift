@@ -15,20 +15,24 @@ import GameplayKit
 class level2: SKScene {
     var utouch : Bool?
     var utouch2 : Bool?
+    var rtouch2 : Bool?
     var finishedLevel : Bool?
     var rtouch : Bool?
     var ltouch: Bool?
+    var ltouch2:Bool?
     var hasKey : Bool?
     var halfWidth : CGFloat?
     var isthere : Bool?
+    var isthereLeft : Bool?
     var tileSize : CGSize?
     var halfHeight : CGFloat?
     var isOnEdge: Bool?
+    var isOnEdgeLeft : Bool?
     var x : CGFloat?
     var y : CGFloat?
     var istouching : Bool?
-    var hi : SKNode?
     var nodesList = [SKShapeNode]()
+    var nodesListLeft = [SKShapeNode]()
     var tileMap : SKTileMapNode?
     //var edgeMap : SKTile
     var cameraNode: SKCameraNode?
@@ -53,7 +57,7 @@ class level2: SKScene {
         
     }
     override func didMove(to view: SKView) {
-    
+    isOnEdgeLeft=false
        isOnEdge=false
         finishedLevel=false
         hasKey=false
@@ -61,6 +65,7 @@ class level2: SKScene {
         physicsWorld.contactDelegate = self
         
         player = childNode(withName: "player") as?SKSpriteNode
+    
         cameraNode = childNode(withName: "camera") as?SKCameraNode
         
     //   gun1 = childNode(withName: "gun wall") as?SKSpriteNode
@@ -92,7 +97,7 @@ class level2: SKScene {
                      tileNode.position = CGPoint(x: x!, y: y!)
                     tileNode.physicsBody = SKPhysicsBody.init(rectangleOf: tileSize!, center: CGPoint(x: tileSize!.width / 2.0, y: tileSize!.height / 2.0))
                      tileNode.physicsBody?.isDynamic = false
-                    tileNode.physicsBody?.friction=0.1
+               
                     
                     //tileNode.physicsBody?.usesPreciseCollisionDetection = true
                      tileNode.alpha=0
@@ -103,6 +108,8 @@ class level2: SKScene {
                  }
              }
          }
+
+      
         for col in 0..<tileMap!.numberOfColumns {
             for row in 0..<tileMap!.numberOfRows {
                 let tileDefinition = tileMap!.tileDefinition(atColumn: col, row: row)
@@ -113,9 +120,9 @@ class level2: SKScene {
                     let rect = CGRect(x: 0, y: 0, width: tileSize!.width, height: tileSize!.height)
                     let tileNode = SKShapeNode(rect: rect)
                     tileNode.position = CGPoint(x: x!, y: y!)
-                   tileNode.physicsBody = SKPhysicsBody.init(rectangleOf: CGSize(width: tileSize!.width-18, height: tileSize!.height), center: CGPoint(x: tileSize!.width / 2.0-9, y: tileSize!.height / 2.0))
+                   tileNode.physicsBody = SKPhysicsBody.init(rectangleOf: CGSize(width: tileSize!.width, height: tileSize!.height), center: CGPoint(x: tileSize!.width / 2.0, y: tileSize!.height / 2.0))
                    tileNode.physicsBody?.isDynamic = false
-                   tileNode.physicsBody?.friction=0.1
+           
                         tileNode.physicsBody?.usesPreciseCollisionDetection = true
                     tileNode.alpha=1
                    tileNode.physicsBody?.categoryBitMask = PhysicsCategory.mapEdge
@@ -136,14 +143,12 @@ class level2: SKScene {
                     let rect = CGRect(x: 0, y: 0, width: tileSize!.width, height: tileSize!.height)
                     let tileNode = SKShapeNode(rect: rect)
                     tileNode.position = CGPoint(x: x!, y: y!)
-                   tileNode.physicsBody = SKPhysicsBody.init(rectangleOf: CGSize(width: tileSize!.width-18, height: tileSize!.height), center: CGPoint(x: tileSize!.width / 2.0+9, y: tileSize!.height / 2.0))
+                   tileNode.physicsBody = SKPhysicsBody.init(rectangleOf: CGSize(width: tileSize!.width, height: tileSize!.height), center: CGPoint(x: tileSize!.width / 2.0, y: tileSize!.height / 2.0))
                    tileNode.physicsBody?.isDynamic = false
-                   tileNode.physicsBody?.friction=0.1
-                        tileNode.physicsBody?.usesPreciseCollisionDetection = true
                     tileNode.alpha=1
                    tileNode.physicsBody?.categoryBitMask = PhysicsCategory.mapEdge
                     tileNode.physicsBody?.contactTestBitMask = PhysicsCategory.none
-                    nodesList.append(tileNode)
+                    nodesListLeft.append(tileNode)
                     tileMap!.addChild(tileNode)
                     
                 }
@@ -164,6 +169,7 @@ class level2: SKScene {
         player?.physicsBody?.contactTestBitMask=PhysicsCategory.key
         player?.physicsBody?.contactTestBitMask=PhysicsCategory.door
         player?.physicsBody?.contactTestBitMask=PhysicsCategory.mapEdge
+        
        // player?.physicsBody?.usesPreciseCollisionDetection = true
         right.position = CGPoint(x: self.size.width * -0.2, y: self.size.height * -0.4)
         right.zPosition = 3
@@ -208,22 +214,46 @@ class level2: SKScene {
   //  centerOnNode(node: player!)
     }
     override func update(_ currentTime: TimeInterval){
+        print(utouch2)
         isthere=false
         for i in 0..<nodesList.count{
            
-          if(player?.frame.intersects(nodesList[i].frame)==true){
+            if(nodesList[i].frame.intersects(player!.frame)==true){
             isthere=true
               isOnEdge=true
-            print("true")
+                //  print("Rtrue")
                 
           }
             if(i==nodesList.count-1&&isthere==false){
-                print("false")
+           //    print("Rfalse")
                 isOnEdge=false
+              //  utouch2=false
+                rtouch2=false
             }
+           
+        }
+        isthereLeft=false
+        for i in 0..<nodesListLeft.count{
+           
+            if(nodesListLeft[i].frame.intersects(player!.frame)==true){
+            isthereLeft=true
+              isOnEdgeLeft=true
+         //  print("true")
+                
+          }
+            if(i==nodesListLeft.count-1&&isthereLeft==false){
+          //    print("false")
+                isOnEdgeLeft=false
+             //   utouch2=false
+                ltouch2=false
+            }
+           
+        }
+        if(key?.frame.intersects(player!.frame)==true){
+          //  print("omg")
         }
         
-        if(isOnEdge==false){
+        if(isOnEdgeLeft==false){
             jump.alpha=0.5
         }else {
             jump.alpha=1
@@ -231,6 +261,7 @@ class level2: SKScene {
         
         if(rtouch==true){
             player?.position.x+=10
+            print("rdoing")
         }
         if(ltouch==true){
             player?.position.x-=10
@@ -241,12 +272,24 @@ class level2: SKScene {
          utouch=false
             print("impulse")
         }
-        if(utouch2==true&&isOnEdge==true){
+        if(rtouch2==true&&isOnEdge==true){
+            player?.physicsBody?.applyImpulse(CGVector(dx:0,dy:700))
+          player?.position.x+=20
+            //player?.physicsBody?.applyImpulse(CGVector(dx:30,dy:0))
+            
+        }
+        if(utouch2==true&&(isOnEdge==true||isOnEdgeLeft==true)){
            
          //   self.physicsWorld.gravity = CGVector(dx: 0, dy: 0)
             player?.position.y+=20
             
             print("upp")
+        }
+        if(ltouch2==true&&isOnEdgeLeft==true){
+            player?.physicsBody?.applyImpulse(CGVector(dx:0,dy:700))
+            player?.position.x-=20
+           //player?.physicsBody?.applyImpulse(CGVector(dx:-30,dy:0))
+          
         }
  
         centerOnNode(node: player!)
@@ -281,18 +324,34 @@ class level2: SKScene {
                  let pointOfTouch = touch.location(in: self)
 
                  
-
+                if(isOnEdge==false){
                  if right.contains(pointOfTouch){
 
                  rtouch=true
                   
                  }
-
+                }
+                if(isOnEdge==true){
+                    if right.contains(pointOfTouch){
+                       rtouch=true
+                    rtouch2=true
+                     
+                    }
+                }
+                if(isOnEdgeLeft==false){
                  if left.contains(pointOfTouch){
                      ltouch=true
 
                  }
-                if(isOnEdge==false){
+                }
+                if(isOnEdgeLeft==true){
+                    if left.contains(pointOfTouch){
+                        
+                        ltouch=true
+                        ltouch2=true
+                    }
+                }
+                if(isOnEdge==false&&isOnEdgeLeft==false){
                 if jump.contains(pointOfTouch)&&istouching==true{
                 utouch=true
 
@@ -301,8 +360,9 @@ class level2: SKScene {
 
                  }
                 }
-                if(isOnEdge==true){
+                if(isOnEdge==true||isOnEdgeLeft==true){
                     if jump.contains(pointOfTouch){
+                        print("test")
                     utouch2=true
                         utouch = false
                          istouching=false
@@ -338,20 +398,32 @@ ltouch=false
                    
 
                }
+            if left.contains(pointOfTouch){
+
+              //  let jumpLeftAction = SKAction.moveBy(x: 10, y: 0, duration: 0.1)
+ltouch2=false
+                
+
+            }
                if jump.contains(pointOfTouch){
 
 utouch=false
                    
 
                }
-            if(isOnEdge==true){
+           
             if jump.contains(pointOfTouch){
 
 utouch2=false
                 
 
             }
-            }
+         
+           
+                if(right.contains(pointOfTouch)){
+                    rtouch2=false
+                }
+            
            }
 
            
@@ -366,12 +438,12 @@ extension level2: SKPhysicsContactDelegate {
        if contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.player && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.map{
    print("map")
             istouching=true
-        isOnEdge=false
+    
       //  self.physicsWorld.gravity = CGVector(dx: 0, dy: -9.8)
         }
         if ((contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.player && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.key )||(contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.key && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.player)){
             print("key")
-            key?.removeFromParent()
+           key?.removeFromParent()
             hasKey=true
             
         }
@@ -398,8 +470,7 @@ extension level2: SKPhysicsContactDelegate {
         }
         if contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.player && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.mapEdge{
             print("edge")
-            isOnEdge=true
-      istouching=false
+    //  istouching=false
         }
     }
 

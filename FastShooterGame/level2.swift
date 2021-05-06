@@ -155,10 +155,10 @@ class level2: SKScene {
             }
         }
         key = childNode(withName: "key") as?SKSpriteNode
-    key?.physicsBody?.isDynamic = false
-      //  key?.physicsBody?.usesPreciseCollisionDetection=true
-        key?.physicsBody?.categoryBitMask=PhysicsCategory.key
-        key?.physicsBody?.contactTestBitMask=PhysicsCategory.player
+ key?.physicsBody?.isDynamic = false
+     
+       key?.physicsBody?.categoryBitMask=PhysicsCategory.key
+       key?.physicsBody?.contactTestBitMask=PhysicsCategory.player
       door = childNode(withName: "door") as?SKSpriteNode
     //    door?.physicsBody?.usesPreciseCollisionDetection=true
         door?.physicsBody?.categoryBitMask=PhysicsCategory.door

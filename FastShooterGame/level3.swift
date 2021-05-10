@@ -27,6 +27,7 @@ class level3: SKScene, SKPhysicsContactDelegate {
     var halfWidth : CGFloat?
     var isthere : Bool?
     var isthereLeft : Bool?
+    var isthereground : Bool?
     var tileSize : CGSize?
     var halfHeight : CGFloat?
     var isOnEdge: Bool?
@@ -36,6 +37,7 @@ class level3: SKScene, SKPhysicsContactDelegate {
     var istouching : Bool?
     var nodesList = [SKShapeNode]()
     var nodesListLeft = [SKShapeNode]()
+    var nodesListGround = [SKShapeNode]()
     var tileMap : SKTileMapNode?
     //var edgeMap : SKTile
     var cameraNode: SKCameraNode?
@@ -110,6 +112,7 @@ class level3: SKScene, SKPhysicsContactDelegate {
                      tileNode.physicsBody?.contactTestBitMask = PhysicsCategory.none
                 
                     tileMap!.addChild(tileNode)
+                    nodesListGround.append(tileNode)
                  }
              }
          }
@@ -228,12 +231,11 @@ class level3: SKScene, SKPhysicsContactDelegate {
         if(reset==true){
          
             AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
-
-         // rtouch=false
-           // ltouch=false
-            //rtouch2=false
-            //ltouch2=false
             player?.position=initialPosition!
+            rtouch=false
+               ltouch=false
+               rtouch2=false
+               ltouch2=false
             reset = false
         }
         isthere=false
@@ -270,11 +272,27 @@ class level3: SKScene, SKPhysicsContactDelegate {
             }
            
         }
-        if(key?.frame.intersects(player!.frame)==true){
-          //  print("omg")
+        isthereground=false
+        for i in 0..<nodesListGround.count{
+           
+            if(nodesListGround[i].frame.intersects(player!.frame)==true){
+            isthereground=true
+                print ("ground")
+              istouching=true
+         //  print("true")
+                
+          }
+            if(i==nodesListGround.count-1&&isthereground==false){
+          //    print("false")
+                istouching=false
+                utouch=false
+                print ("no ground")
+   
+            }
+           
         }
         
-        if(isOnEdgeLeft==false){
+        if(isOnEdge==false){
             jump.alpha=0.5
         }else {
             jump.alpha=1
@@ -292,7 +310,7 @@ class level3: SKScene, SKPhysicsContactDelegate {
         
         if(utouch==true){
             player?.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 550))
-         utouch=false
+        
             print("impulse")
         }
         if(rtouch2==true&&isOnEdge==true){
@@ -374,11 +392,14 @@ class level3: SKScene, SKPhysicsContactDelegate {
                         ltouch2=true
                     }
                 }
+                if(istouching==false){
+                    utouch=false
+                }
                 if(isOnEdge==false&&isOnEdgeLeft==false){
                 if jump.contains(pointOfTouch)&&istouching==true{
                 utouch=true
 
-                     istouching=false
+                    
 
 
                  }
@@ -388,7 +409,7 @@ class level3: SKScene, SKPhysicsContactDelegate {
                         print("test")
                     utouch2=true
                         utouch = false
-                         istouching=false
+                        
 
 
                      }
@@ -455,8 +476,8 @@ utouch2=false
     func didBegin(_ contact: SKPhysicsContact) {
         print("check")
        if contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.player && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.map{
-   print("map")
-            istouching=true
+
+            
     
       //  self.physicsWorld.gravity = CGVector(dx: 0, dy: -9.8)
         }

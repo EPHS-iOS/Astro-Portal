@@ -14,6 +14,7 @@ import GameplayKit
 import AudioToolbox
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
+    var impulseCount : Int?
     var utouch : Bool?
     var utouch2 : Bool?
     var rtouch2 : Bool?
@@ -27,6 +28,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var halfWidth : CGFloat?
     var isthere : Bool?
     var isthereLeft : Bool?
+    var isthereground : Bool?
     var tileSize : CGSize?
     var halfHeight : CGFloat?
     var isOnEdge: Bool?
@@ -36,6 +38,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var istouching : Bool?
     var nodesList = [SKShapeNode]()
     var nodesListLeft = [SKShapeNode]()
+    var nodesListGround = [SKShapeNode]()
     var tileMap : SKTileMapNode?
     //var edgeMap : SKTile
     var cameraNode: SKCameraNode?
@@ -60,6 +63,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     override func didMove(to view: SKView) {
+        impulseCount=0
+        view.isMultipleTouchEnabled=true
         reset = false
     isOnEdgeLeft=false
        isOnEdge=false
@@ -110,6 +115,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                      tileNode.physicsBody?.contactTestBitMask = PhysicsCategory.none
                 
                     tileMap!.addChild(tileNode)
+                    nodesListGround.append(tileNode)
                  }
              }
          }
@@ -180,21 +186,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
        // player?.physicsBody?.usesPreciseCollisionDetection = true
         right.position = CGPoint(x: self.size.width * -0.2, y: self.size.height * -0.4)
         right.zPosition = 3
-        right.size=CGSize(width:self.size.width/4,height:self.size.height/4)
+        right.size=CGSize(width:self.size.width/3,height:self.size.height/3)
         right.alpha = 0.8
         self.addChild(right)
         
    
         left.position = CGPoint(x: self.size.width * -0.3, y: self.size.height * -0.4)
         left.zPosition = 3
-        left.size=CGSize(width:self.size.width/4,height:self.size.height/4)
+        left.size=CGSize(width:self.size.width/3,height:self.size.height/3)
         left.alpha = 0.8
         self.addChild(left)
         
         
         jump.position = CGPoint(x: self.size.width * 0.3, y: self.size.height * -0.4)
         jump.zPosition = 3
-       jump.size=CGSize(width: self.size.width/5,height:self.size.height/3)
+       jump.size=CGSize(width: self.size.width/4,height:self.size.height/2)
         jump.alpha = 0.8
         self.addChild(jump)
       
@@ -212,8 +218,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func centerOnNode(node:SKNode){
         
         self.camera!.run(SKAction.move(to: CGPoint(x:node.position.x, y:node.position.y), duration: 0.3))
-        self.right.run(SKAction.move(to: CGPoint(x:node.position.x-450, y:node.position.y-300), duration: 0.3))
-        self.left.run(SKAction.move(to: CGPoint(x:node.position.x-700, y:node.position.y-300), duration: 0.3))
+        self.right.run(SKAction.move(to: CGPoint(x:node.position.x-300, y:node.position.y-300), duration: 0.3))
+        self.left.run(SKAction.move(to: CGPoint(x:node.position.x-750, y:node.position.y-300), duration: 0.3))
        self.jump.run(SKAction.move(to: CGPoint(x:node.position.x+400, y:node.position.y-300), duration: 0.3))
        
     }
@@ -228,12 +234,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if(reset==true){
          
             AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
-
-         // rtouch=false
-           // ltouch=false
-            //rtouch2=false
-            //ltouch2=false
             player?.position=initialPosition!
+            rtouch=false
+               ltouch=false
+               rtouch2=false
+               ltouch2=false
             reset = false
         }
         isthere=false
@@ -270,9 +275,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
            
         }
-        if(key?.frame.intersects(player!.frame)==true){
-          //  print("omg")
-        }
+   
         
         if(isOnEdge==false){
             jump.alpha=0.5
@@ -291,8 +294,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         if(utouch==true){
+            
+           
             player?.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 550))
-         utouch=false
+            utouch=false
+        
+            
             print("impulse")
         }
         if(rtouch2==true&&isOnEdge==true){
@@ -374,30 +381,48 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         ltouch2=true
                     }
                 }
+               
                 if(isOnEdge==false&&isOnEdgeLeft==false){
                 if jump.contains(pointOfTouch)&&istouching==true{
                 utouch=true
+                    istouching=false
 
-                     istouching=false
-
-
-                 }
+                }
                 }
                 if(isOnEdge==true||isOnEdgeLeft==true){
                     if jump.contains(pointOfTouch){
                         print("test")
                     utouch2=true
                         utouch = false
-                         istouching=false
-
-
-                     }
+                        istouching=false
+                    }
                 }
              }
 
          }
     //hi
+   
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+                   
+                    for touch: AnyObject in touches{
 
+                        let pointOfTouch = touch.location(in: self)
+
+                      
+                    
+                    
+                        if(left.contains(pointOfTouch)==false&&right.contains(pointOfTouch)==false&&jump.contains(pointOfTouch)==false){
+                            ltouch=false
+                            ltouch2=false
+                            rtouch=false
+                            rtouch2=false
+                            utouch=false
+                            utouch2=false
+                        }
+                    
+                    }
+
+                }
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
 
            for touch: AnyObject in touches{
@@ -455,8 +480,8 @@ utouch2=false
     func didBegin(_ contact: SKPhysicsContact) {
         print("check")
        if contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.player && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.map{
-   print("map")
-            istouching=true
+istouching=true
+            
     
       //  self.physicsWorld.gravity = CGVector(dx: 0, dy: -9.8)
         }

@@ -27,6 +27,8 @@
 		46919848264052BA00F192BA /* level3.sks in Resources */ = {isa = PBXBuildFile; fileRef = 46919847264052BA00F192BA /* level3.sks */; };
 		46919850264056EB00F192BA /* level4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4691984F264056EB00F192BA /* level4.swift */; };
 		46919858264057A400F192BA /* level4.sks in Resources */ = {isa = PBXBuildFile; fileRef = 46919857264057A400F192BA /* level4.sks */; };
+		46F4C09A264B34E50074E085 /* level6.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F4C099264B34E50074E085 /* level6.swift */; };
+		46F4C09F264B38580074E085 /* level6.sks in Resources */ = {isa = PBXBuildFile; fileRef = 46F4C09E264B38580074E085 /* level6.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +75,8 @@
 		46919847264052BA00F192BA /* level3.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = level3.sks; sourceTree = "<group>"; };
 		4691984F264056EB00F192BA /* level4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = level4.swift; sourceTree = "<group>"; };
 		46919857264057A400F192BA /* level4.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = level4.sks; sourceTree = "<group>"; };
+		46F4C099264B34E50074E085 /* level6.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = level6.swift; sourceTree = "<group>"; };
+		46F4C09E264B38580074E085 /* level6.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = level6.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,9 +134,11 @@
 				461E5AA6262F3AD0000CAA7A /* level2.swift */,
 				46919847264052BA00F192BA /* level3.sks */,
 				469198422640529900F192BA /* level3.swift */,
-				2BBAEACB2644AB0200A8B81C /* Saw.swift */,
 				46919857264057A400F192BA /* level4.sks */,
 				4691984F264056EB00F192BA /* level4.swift */,
+				46F4C09E264B38580074E085 /* level6.sks */,
+				46F4C099264B34E50074E085 /* level6.swift */,
+				2BBAEACB2644AB0200A8B81C /* Saw.swift */,
 				2B5B0F6D25F8388C00145EEA /* MyTileSet.sks */,
 				2B5BFF0825E42FAA0066419E /* Actions.sks */,
 				2B0D98FA261E285300795CE2 /* level.swift */,
@@ -267,6 +273,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46F4C09F264B38580074E085 /* level6.sks in Resources */,
 				2B6954DD26406004009B2EB0 /* level.sks in Resources */,
 				2B5B0F6E25F8388C00145EEA /* MyTileSet.sks in Resources */,
 				46919858264057A400F192BA /* level4.sks in Resources */,
@@ -305,6 +312,7 @@
 				461E5AA7262F3AD0000CAA7A /* level2.swift in Sources */,
 				46919850264056EB00F192BA /* level4.swift in Sources */,
 				2B5BFF0D25E42FAA0066419E /* GameViewController.swift in Sources */,
+				46F4C09A264B34E50074E085 /* level6.swift in Sources */,
 				2B0D98FB261E285300795CE2 /* level.swift in Sources */,
 				469198432640529900F192BA /* level3.swift in Sources */,
 				2B5BFF0525E42FAA0066419E /* AppDelegate.swift in Sources */,

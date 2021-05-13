@@ -63,6 +63,13 @@ class level3: SKScene, SKPhysicsContactDelegate {
         
     }
     override func didMove(to view: SKView) {
+        scene!.enumerateChildNodes(withName: "saw") {
+            (node, stop) in
+   
+          node.run(SKAction.repeatForever(SKAction.rotate(byAngle: (CGFloat.pi )*2, duration: 10)))
+   
+           
+        }
         impulseCount=0
         view.isMultipleTouchEnabled=true
         reset = false
@@ -229,7 +236,7 @@ class level3: SKScene, SKPhysicsContactDelegate {
   //  centerOnNode(node: player!)
     }
     override func update(_ currentTime: TimeInterval){
-        
+      
         
         if(reset==true){
          

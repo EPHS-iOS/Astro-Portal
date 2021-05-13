@@ -64,6 +64,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     override func didMove(to view: SKView) {
+        scene!.enumerateChildNodes(withName: "saw") {
+            (node, stop) in
+   
+          node.run(SKAction.repeatForever(SKAction.rotate(byAngle: (CGFloat.pi )*2, duration: 10)))
+   
+           
+        }
         impulseCount=0
         view.isMultipleTouchEnabled=true
         reset = false
@@ -340,8 +347,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
       return random() * (max - min) + min
     }
     func addBullet(){
-     //   let ran = random(min: -100, max: 100)
-     //   let location = CGPoint(x:gun1!.position.x,y:gun1!.position.y+ran)
+     
+     //   let location = CGPoint(x:gun1!.position.x,y:gun1!.position.y)
     //    let bullet = SKSpriteNode(imageNamed: "laser")
       //  bullet.physicsBody = SKPhysicsBody(circleOfRadius: 25)
       //  bullet.physicsBody?.isDynamic = false // 2

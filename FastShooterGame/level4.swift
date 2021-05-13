@@ -49,6 +49,7 @@ class level4: SKScene, SKPhysicsContactDelegate {
     let right = SKSpriteNode(imageNamed: "right")
     let left = SKSpriteNode(imageNamed: "left")
     let jump = SKSpriteNode(imageNamed: "jump")
+    var menu = SKLabelNode(text: "menu")
     var key : SKSpriteNode?
     struct PhysicsCategory {
       static let none      : UInt32 = 0
@@ -63,6 +64,13 @@ class level4: SKScene, SKPhysicsContactDelegate {
         
     }
     override func didMove(to view: SKView) {
+        scene!.enumerateChildNodes(withName: "saw") {
+            (node, stop) in
+   
+          node.run(SKAction.repeatForever(SKAction.rotate(byAngle: (CGFloat.pi )*2, duration: 10)))
+   
+           
+        }
         impulseCount=0
         view.isMultipleTouchEnabled=true
         reset = false
@@ -203,6 +211,13 @@ class level4: SKScene, SKPhysicsContactDelegate {
        jump.size=CGSize(width: self.size.width/4,height:self.size.height/2)
         jump.alpha = 0.8
         self.addChild(jump)
+        
+        menu.position = CGPoint(x: self.size.width * -0.3, y: self.size.height * -0.4)
+        menu.zPosition = 3
+        menu.fontSize = 55
+        menu.fontColor = SKColor.white
+        menu.alpha = 0.8
+        self.addChild(menu)
       
    // self.physicsWorld.gravity = CGVector(dx: 0, dy: -9.8)
      //   run(SKAction.repeatForever(
@@ -221,6 +236,7 @@ class level4: SKScene, SKPhysicsContactDelegate {
         self.right.run(SKAction.move(to: CGPoint(x:node.position.x-300, y:node.position.y-300), duration: 0.3))
         self.left.run(SKAction.move(to: CGPoint(x:node.position.x-750, y:node.position.y-300), duration: 0.3))
        self.jump.run(SKAction.move(to: CGPoint(x:node.position.x+400, y:node.position.y-300), duration: 0.3))
+        self.menu.run(SKAction.move(to: CGPoint(x:node.position.x-750, y:node.position.y+400), duration: 0.3))
        
     }
     
@@ -350,8 +366,25 @@ class level4: SKScene, SKPhysicsContactDelegate {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
             
              for touch: AnyObject in touches{
-
-                 let pointOfTouch = touch.location(in: self)
+            let pointOfTouch = touch.location(in: self)
+                if menu.contains(pointOfTouch){
+                    if let view = self.view {
+                        // Load the SKScene from 'GameScene.sks'
+                        if let scene = SKScene(fileNamed: "level") {
+                            // Set the scale mode to scale to fit the window
+                            scene.scaleMode = .aspectFill
+                            
+                            // Present the scene
+                            view.presentScene(scene)
+                        }
+                        view.showsPhysics = false
+                        view.ignoresSiblingOrder = true
+                        
+                        view.showsFPS = true
+                        view.showsNodeCount = true //hi
+                    }
+                }
+                 
 
                  
                 if(isOnEdge==false){
@@ -480,6 +513,7 @@ utouch2=false
     func didBegin(_ contact: SKPhysicsContact) {
         print("check")
        if contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.player && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.map{
+        
 istouching=true
             
     

@@ -3,8 +3,8 @@
 
 
 //
-//  GameScene.swift
-//  FastShooterGame
+//  GameScene.swiftgi
+
 //
 //  Created by 64011731 on 2/22/21.
 //
@@ -68,7 +68,7 @@ class level3: SKScene, SKPhysicsContactDelegate {
    
           node.run(SKAction.repeatForever(SKAction.rotate(byAngle: (CGFloat.pi )*2, duration: 10)))
    
-           
+           //hi
         }
         impulseCount=0
         view.isMultipleTouchEnabled=true

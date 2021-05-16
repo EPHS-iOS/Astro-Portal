@@ -23,8 +23,6 @@
 		2BBAEACC2644AB0200A8B81C /* Saw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBAEACB2644AB0200A8B81C /* Saw.swift */; };
 		461E5AA7262F3AD0000CAA7A /* level2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461E5AA6262F3AD0000CAA7A /* level2.swift */; };
 		461E5AAC262F3B7E000CAA7A /* level2.sks in Resources */ = {isa = PBXBuildFile; fileRef = 461E5AAB262F3B7E000CAA7A /* level2.sks */; };
-		464658F7264F32E300DC66E1 /* level5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464658F6264F32E300DC66E1 /* level5.swift */; };
-		464658FC264F344D00DC66E1 /* level5.sks in Resources */ = {isa = PBXBuildFile; fileRef = 464658FB264F344D00DC66E1 /* level5.sks */; };
 		469198432640529900F192BA /* level3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469198422640529900F192BA /* level3.swift */; };
 		46919848264052BA00F192BA /* level3.sks in Resources */ = {isa = PBXBuildFile; fileRef = 46919847264052BA00F192BA /* level3.sks */; };
 		46919850264056EB00F192BA /* level4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4691984F264056EB00F192BA /* level4.swift */; };
@@ -73,8 +71,6 @@
 		2BBAEACB2644AB0200A8B81C /* Saw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Saw.swift; sourceTree = "<group>"; };
 		461E5AA6262F3AD0000CAA7A /* level2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = level2.swift; sourceTree = "<group>"; };
 		461E5AAB262F3B7E000CAA7A /* level2.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = level2.sks; sourceTree = "<group>"; };
-		464658F6264F32E300DC66E1 /* level5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = level5.swift; sourceTree = "<group>"; };
-		464658FB264F344D00DC66E1 /* level5.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = level5.sks; sourceTree = "<group>"; };
 		469198422640529900F192BA /* level3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = level3.swift; sourceTree = "<group>"; };
 		46919847264052BA00F192BA /* level3.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = level3.sks; sourceTree = "<group>"; };
 		4691984F264056EB00F192BA /* level4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = level4.swift; sourceTree = "<group>"; };
@@ -140,8 +136,6 @@
 				469198422640529900F192BA /* level3.swift */,
 				46919857264057A400F192BA /* level4.sks */,
 				4691984F264056EB00F192BA /* level4.swift */,
-				464658FB264F344D00DC66E1 /* level5.sks */,
-				464658F6264F32E300DC66E1 /* level5.swift */,
 				46F4C09E264B38580074E085 /* level6.sks */,
 				46F4C099264B34E50074E085 /* level6.swift */,
 				2BBAEACB2644AB0200A8B81C /* Saw.swift */,
@@ -285,7 +279,6 @@
 				46919858264057A400F192BA /* level4.sks in Resources */,
 				2B5BFF1025E42FAA0066419E /* Main.storyboard in Resources */,
 				461E5AAC262F3B7E000CAA7A /* level2.sks in Resources */,
-				464658FC264F344D00DC66E1 /* level5.sks in Resources */,
 				2B5BFF0725E42FAA0066419E /* GameScene.sks in Resources */,
 				46919848264052BA00F192BA /* level3.sks in Resources */,
 				2B5BFF1225E42FAD0066419E /* Assets.xcassets in Resources */,
@@ -321,7 +314,6 @@
 				2B5BFF0D25E42FAA0066419E /* GameViewController.swift in Sources */,
 				46F4C09A264B34E50074E085 /* level6.swift in Sources */,
 				2B0D98FB261E285300795CE2 /* level.swift in Sources */,
-				464658F7264F32E300DC66E1 /* level5.swift in Sources */,
 				469198432640529900F192BA /* level3.swift in Sources */,
 				2B5BFF0525E42FAA0066419E /* AppDelegate.swift in Sources */,
 				2BBAEACC2644AB0200A8B81C /* Saw.swift in Sources */,

@@ -64,6 +64,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     override func didMove(to view: SKView) {
+        backgroundColor = UIColor.black
+               
+           if let Particles = SKEmitterNode(fileNamed: "Starfield.sks") {
+               Particles.position = CGPoint(x: size.width/2, y: size.height)
+               Particles.name = "star"
+               Particles.targetNode = scene
+
+               addChild(Particles)
+           }
         scene!.enumerateChildNodes(withName: "saw") {
             (node, stop) in
    

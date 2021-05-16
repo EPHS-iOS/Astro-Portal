@@ -21,6 +21,7 @@
 		2B5BFF2825E42FAE0066419E /* FastShooterGameUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B5BFF2725E42FAE0066419E /* FastShooterGameUITests.swift */; };
 		2B6954DD26406004009B2EB0 /* level.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2B6954DC26406004009B2EB0 /* level.sks */; };
 		2BBAEACC2644AB0200A8B81C /* Saw.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBAEACB2644AB0200A8B81C /* Saw.swift */; };
+		2BFEE4382651B8AC00F2A6FA /* Starfield.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2BFEE4372651B8AC00F2A6FA /* Starfield.sks */; };
 		461E5AA7262F3AD0000CAA7A /* level2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461E5AA6262F3AD0000CAA7A /* level2.swift */; };
 		461E5AAC262F3B7E000CAA7A /* level2.sks in Resources */ = {isa = PBXBuildFile; fileRef = 461E5AAB262F3B7E000CAA7A /* level2.sks */; };
 		464658F7264F32E300DC66E1 /* level5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464658F6264F32E300DC66E1 /* level5.swift */; };
@@ -71,6 +72,7 @@
 		2B5BFF2925E42FAE0066419E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2B6954DC26406004009B2EB0 /* level.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = level.sks; sourceTree = "<group>"; };
 		2BBAEACB2644AB0200A8B81C /* Saw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Saw.swift; sourceTree = "<group>"; };
+		2BFEE4372651B8AC00F2A6FA /* Starfield.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Starfield.sks; sourceTree = "<group>"; };
 		461E5AA6262F3AD0000CAA7A /* level2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = level2.swift; sourceTree = "<group>"; };
 		461E5AAB262F3B7E000CAA7A /* level2.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = level2.sks; sourceTree = "<group>"; };
 		464658F6264F32E300DC66E1 /* level5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = level5.swift; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 				2B5BFF0A25E42FAA0066419E /* GameScene.swift */,
 				461E5AAB262F3B7E000CAA7A /* level2.sks */,
 				461E5AA6262F3AD0000CAA7A /* level2.swift */,
+				2BFEE4372651B8AC00F2A6FA /* Starfield.sks */,
 				46919847264052BA00F192BA /* level3.sks */,
 				469198422640529900F192BA /* level3.swift */,
 				46919857264057A400F192BA /* level4.sks */,
@@ -279,6 +282,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2BFEE4382651B8AC00F2A6FA /* Starfield.sks in Resources */,
 				46F4C09F264B38580074E085 /* level6.sks in Resources */,
 				2B6954DD26406004009B2EB0 /* level.sks in Resources */,
 				2B5B0F6E25F8388C00145EEA /* MyTileSet.sks in Resources */,

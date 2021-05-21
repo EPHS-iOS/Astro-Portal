@@ -14,7 +14,9 @@ import GameplayKit
 import AudioToolbox
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
+    var lasercount : Bool?
     var impulseCount : Int?
+    var timer = Timer()
     var utouch : Bool?
     var utouch2 : Bool?
     var rtouch2 : Bool?
@@ -39,12 +41,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var nodesList = [SKShapeNode]()
     var nodesListLeft = [SKShapeNode]()
     var nodesListGround = [SKShapeNode]()
+    var bulletsList = [SKSpriteNode]()
     var tileMap : SKTileMapNode?
     //var edgeMap : SKTile
     var cameraNode: SKCameraNode?
     var player : SKSpriteNode?
     var door : SKSpriteNode?
-    var bulletDuration = 3.0
+    var bulletDuration = 5.0
    // var gun1 : SKSpriteNode?
     let right = SKSpriteNode(imageNamed: "right")
     let left = SKSpriteNode(imageNamed: "left")
@@ -55,24 +58,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
       static let none      : UInt32 = 0
       static let all       : UInt32 = UInt32.max
       static let bullet   : UInt32 = 0b1       // 1
-        static let player : UInt32 = 0b10
-        static let map : UInt32 = 0b11
-        static let key : UInt32 = 0b100
-        static let door : UInt32 = 0b101
-        static let mapEdge : UInt32 = 0b110
-        static let saw : UInt32 = 0b111
-        
+        static let player : UInt32 = 0b10//2
+        static let map : UInt32 = 0b11//3
+        static let key : UInt32 = 0b100//4
+        static let door : UInt32 = 0b101//5
+        static let mapEdge : UInt32 = 0b110//6
+        static let saw : UInt32 = 0b111//7
+        static let laser : UInt32 = 0b1000//8
     }
     override func didMove(to view: SKView) {
-        backgroundColor = UIColor.black
-               
-           if let Particles = SKEmitterNode(fileNamed: "Starfield.sks") {
-               Particles.position = CGPoint(x: size.width/2, y: size.height)
-               Particles.name = "star"
-               Particles.targetNode = scene
+        if let Particles = SKEmitterNode(fileNamed: "Starfield.sks") {
+                  Particles.position = CGPoint(x: size.width/2, y: size.height/2)
+                  Particles.name = "star"
+                  Particles.targetNode = scene
 
-               addChild(Particles)
-           }
+                  addChild(Particles)
+              }
+        lasercount = true
+        ltouch = false
+        ltouch2 = false
+        utouch=false
+        utouch2=false
+        rtouch2=false
+        rtouch=false
         scene!.enumerateChildNodes(withName: "saw") {
             (node, stop) in
    
@@ -128,8 +136,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     
                     //tileNode.physicsBody?.usesPreciseCollisionDetection = true
                      tileNode.alpha=0
-                     tileNode.physicsBody?.categoryBitMask = PhysicsCategory.map
-                     tileNode.physicsBody?.contactTestBitMask = PhysicsCategory.none
+                    tileNode.physicsBody?.categoryBitMask = PhysicsCategory.map
+                    tileNode.physicsBody?.collisionBitMask = PhysicsCategory.none
+                    tileNode.physicsBody?.contactTestBitMask = PhysicsCategory.bullet
+                    tileNode.physicsBody?.contactTestBitMask = PhysicsCategory.player
                 
                     tileMap!.addChild(tileNode)
                     nodesListGround.append(tileNode)
@@ -153,8 +163,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
            
                         tileNode.physicsBody?.usesPreciseCollisionDetection = true
                     tileNode.alpha=1
-                   tileNode.physicsBody?.categoryBitMask = PhysicsCategory.mapEdge
-                    tileNode.physicsBody?.contactTestBitMask = PhysicsCategory.none
+                    tileNode.physicsBody?.categoryBitMask = PhysicsCategory.mapEdge
+                    tileNode.physicsBody?.collisionBitMask = PhysicsCategory.none
+                    tileNode.physicsBody?.contactTestBitMask = PhysicsCategory.bullet
+                    tileNode.physicsBody?.contactTestBitMask = PhysicsCategory.player
                     nodesList.append(tileNode)
                     tileMap!.addChild(tileNode)
                     
@@ -174,8 +186,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                    tileNode.physicsBody = SKPhysicsBody.init(rectangleOf: CGSize(width: tileSize!.width, height: tileSize!.height), center: CGPoint(x: tileSize!.width / 2.0, y: tileSize!.height / 2.0))
                    tileNode.physicsBody?.isDynamic = false
                     tileNode.alpha=1
-                   tileNode.physicsBody?.categoryBitMask = PhysicsCategory.mapEdge
-                    tileNode.physicsBody?.contactTestBitMask = PhysicsCategory.none
+                    tileNode.physicsBody?.categoryBitMask = PhysicsCategory.mapEdge
+                    tileNode.physicsBody?.collisionBitMask = PhysicsCategory.none
+                    tileNode.physicsBody?.contactTestBitMask = PhysicsCategory.bullet
+                    tileNode.physicsBody?.contactTestBitMask = PhysicsCategory.player
                     nodesListLeft.append(tileNode)
                     tileMap!.addChild(tileNode)
                     
@@ -198,6 +212,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player?.physicsBody?.contactTestBitMask=PhysicsCategory.door
         player?.physicsBody?.contactTestBitMask=PhysicsCategory.mapEdge
         player?.physicsBody?.contactTestBitMask=PhysicsCategory.saw
+       // player?.physicsBody?.contactTestBitMask=PhysicsCategory.bullet
         initialPosition = player?.position
         
        // player?.physicsBody?.usesPreciseCollisionDetection = true
@@ -227,18 +242,41 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         menu.fontColor = SKColor.white
         menu.alpha = 0.8
         self.addChild(menu)
-      
+        let timer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(fire), userInfo: nil, repeats: true)
+        let timer2 = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(fire2), userInfo: nil, repeats: true)
+     
    // self.physicsWorld.gravity = CGVector(dx: 0, dy: -9.8)
-     //   run(SKAction.repeatForever(
-       //   SKAction.sequence([
-         //   SKAction.run(addBullet),
-          //  SKAction.wait(forDuration:bulletDuration)
-         // ])
-      //  ))
+     
         
 
           
     }
+    @objc func fire()
+    {
+        scene!.enumerateChildNodes(withName: "turret") {
+            (node, stop) in
+            self.addBullet(location: node.position)
+           
+        }
+        scene!.enumerateChildNodes(withName: "UpTurret") {
+            (node, stop) in
+            self.addBulletUp(location: node.position)
+           
+        }
+      
+    }
+    @objc func fire2()
+    {
+        if(lasercount==true){
+            lasercount=false
+            addLaser()
+        }else{
+            lasercount=true
+            addLaser()
+        }
+       
+    }
+
     func centerOnNode(node:SKNode){
         
         self.camera!.run(SKAction.move(to: CGPoint(x:node.position.x, y:node.position.y), duration: 0.3))
@@ -272,7 +310,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if(nodesList[i].frame.intersects(player!.frame)==true){
             isthere=true
               isOnEdge=true
-                //  print("Rtrue")
+                 print("OMA")
                 
           }
             if(i==nodesList.count-1&&isthere==false){
@@ -289,7 +327,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if(nodesListLeft[i].frame.intersects(player!.frame)==true){
             isthereLeft=true
               isOnEdgeLeft=true
-         //  print("true")
+           print("OMALEFT")
                 
           }
             if(i==nodesListLeft.count-1&&isthereLeft==false){
@@ -355,22 +393,60 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func random(min: CGFloat, max: CGFloat) -> CGFloat {
       return random() * (max - min) + min
     }
-    func addBullet(){
-     
-     //   let location = CGPoint(x:gun1!.position.x,y:gun1!.position.y)
-    //    let bullet = SKSpriteNode(imageNamed: "laser")
-      //  bullet.physicsBody = SKPhysicsBody(circleOfRadius: 25)
-      //  bullet.physicsBody?.isDynamic = false // 2
-      //  bullet.physicsBody?.categoryBitMask = PhysicsCategory.bullet // 3
-    //   bullet.physicsBody?.contactTestBitMask = PhysicsCategory.player // 4
-    //   bullet.physicsBody?.collisionBitMask = PhysicsCategory.none // 5
-      //  bullet.size = CGSize(width:50,height:50)
-      //  bullet.position=CGPoint(x:gun1!.position.x,y:gun1!.position.y-150+ran)
-     //addChild(bullet)
-      //  let duration = random(min:CGFloat(10), max:CGFloat(15))
-    //    let actionMove = SKAction.move(to: CGPoint(x: -10000, y:gun1!.position.y-150+ran), duration:TimeInterval(duration))
-    //    let moveDone = SKAction.removeFromParent()
-     //   bullet.run(SKAction.sequence([actionMove,moveDone]))
+    func addBullet(location : CGPoint){
+         let location = CGPoint(x:location.x,y:location.y)
+           let bullet = SKSpriteNode(imageNamed: "laser")
+          bullet.physicsBody = SKPhysicsBody(circleOfRadius: 25)
+         bullet.physicsBody?.isDynamic = false // 2
+          bullet.physicsBody?.categoryBitMask = PhysicsCategory.bullet // 3
+          bullet.physicsBody?.contactTestBitMask = PhysicsCategory.player // 4
+        bullet.physicsBody?.contactTestBitMask=PhysicsCategory.map
+        bullet.physicsBody?.contactTestBitMask=PhysicsCategory.mapEdge
+        bullet.physicsBody?.collisionBitMask = PhysicsCategory.none // 5
+           bullet.size = CGSize(width:50,height:50)
+           bullet.position=CGPoint(x:location.x,y:location.y)
+        addChild(bullet)
+        bulletsList.append(bullet)
+         let duration = random(min:CGFloat(10), max:CGFloat(15))
+        let actionMove = SKAction.move(to: CGPoint(x: location.x+10000, y:location.y), duration:TimeInterval(duration))
+        let moveDone = SKAction.removeFromParent()
+        
+        bullet.run((SKAction.sequence([actionMove,moveDone])))
+    }
+    func addBulletUp(location : CGPoint){
+         let location = CGPoint(x:location.x,y:location.y)
+           let bullet = SKSpriteNode(imageNamed: "laser")
+          bullet.physicsBody = SKPhysicsBody(circleOfRadius: 25)
+         bullet.physicsBody?.isDynamic = false // 2
+          bullet.physicsBody?.categoryBitMask = PhysicsCategory.bullet // 3
+          bullet.physicsBody?.contactTestBitMask = PhysicsCategory.player // 4
+        bullet.physicsBody?.contactTestBitMask=PhysicsCategory.map
+        bullet.physicsBody?.contactTestBitMask=PhysicsCategory.mapEdge
+        bullet.physicsBody?.collisionBitMask = PhysicsCategory.none // 5
+           bullet.size = CGSize(width:50,height:50)
+           bullet.position=CGPoint(x:location.x,y:location.y)
+        addChild(bullet)
+        bulletsList.append(bullet)
+         let duration = random(min:CGFloat(10), max:CGFloat(15))
+        let actionMove = SKAction.move(to: CGPoint(x: location.x, y:location.y+10000), duration:TimeInterval(duration))
+        let moveDone = SKAction.removeFromParent()
+        
+        bullet.run((SKAction.sequence([actionMove,moveDone])))
+    }
+    func addLaser (){
+        if(lasercount==false){
+            scene!.enumerateChildNodes(withName: "laser") {
+                (node, stop) in
+                node.alpha=0
+                node.physicsBody?.categoryBitMask=PhysicsCategory.none
+            }
+        }else{
+            scene!.enumerateChildNodes(withName: "laser") {
+                (node, stop) in
+                node.alpha=1
+                node.physicsBody?.categoryBitMask=PhysicsCategory.laser
+            }
+        }
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
             
@@ -433,7 +509,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
                 if(isOnEdge==true||isOnEdgeLeft==true){
                     if jump.contains(pointOfTouch){
-                        print("test")
+                      
                     utouch2=true
                         utouch = false
                         istouching=false
@@ -520,8 +596,9 @@ utouch2=false
 
        }
     func didBegin(_ contact: SKPhysicsContact) {
-        print("check")
-       if contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.player && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.map{
+
+       if ((contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.player && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.map)||(contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.map && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.player)){
+        
 istouching=true
             
     
@@ -537,11 +614,29 @@ istouching=true
         if ((contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.player && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.saw )||(contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.saw && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.player)){
         reset = true
             print("saw")
-            
-            
-         
-            
         }
+     
+        if ((contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.player && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.bullet )||(contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.bullet && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.player)){
+            if(contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.bullet){
+                contact.bodyA.node?.removeFromParent()
+                reset = true
+            }else {
+                contact.bodyB.node?.removeFromParent()
+                reset = true
+            }
+    
+        }
+        if ((contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.player && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.laser )||(contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.laser && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.player)){
+            if(contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.laser){
+             
+                reset = true
+            }else {
+                
+                reset = true
+            }
+    
+        }
+        
         if ((contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.player && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.door && hasKey==true)||(contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.door && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.player && hasKey==true)){
             print("finishLevel")
             finishedLevel=true
@@ -564,10 +659,11 @@ istouching=true
            
         }
         if contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.player && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.mapEdge{
-            print("edge")
+            
     //  istouching=false
         }
     }
 }
     
    
+

@@ -49,9 +49,9 @@ class level6: SKScene, SKPhysicsContactDelegate {
     var door : SKSpriteNode?
     var bulletDuration = 5.0
    // var gun1 : SKSpriteNode?
-    let right = SKSpriteNode(imageNamed: "right")
-    let left = SKSpriteNode(imageNamed: "left")
-    let jump = SKSpriteNode(imageNamed: "jump")
+    let right = SKSpriteNode(imageNamed: "rightarrow")
+    let left = SKSpriteNode(imageNamed: "leftarrow")
+    let jump = SKSpriteNode(imageNamed: "jumparrow")
     var menu = SKLabelNode(text: "menu")
     var key : SKSpriteNode?
     struct PhysicsCategory {
@@ -67,6 +67,13 @@ class level6: SKScene, SKPhysicsContactDelegate {
         static let laser : UInt32 = 0b1000//8
     }
     override func didMove(to view: SKView) {
+        if let Particles = SKEmitterNode(fileNamed: "Starfield.sks") {
+                  Particles.position = CGPoint(x: size.width/2, y: size.height/2)
+                  Particles.name = "star"
+                  Particles.targetNode = scene
+
+                  addChild(Particles)
+              }
         lasercount = true
         ltouch = false
         ltouch2 = false
@@ -211,21 +218,21 @@ class level6: SKScene, SKPhysicsContactDelegate {
        // player?.physicsBody?.usesPreciseCollisionDetection = true
         right.position = CGPoint(x: self.size.width * -0.2, y: self.size.height * -0.4)
         right.zPosition = 3
-        right.size=CGSize(width:self.size.width/3,height:self.size.height/3)
+        right.size=CGSize(width:300,height:200)
         right.alpha = 0.8
         self.addChild(right)
         
    
         left.position = CGPoint(x: self.size.width * -0.3, y: self.size.height * -0.4)
         left.zPosition = 3
-        left.size=CGSize(width:self.size.width/3,height:self.size.height/3)
+        left.size=CGSize(width:300,height:200)
         left.alpha = 0.8
         self.addChild(left)
         
         
         jump.position = CGPoint(x: self.size.width * 0.3, y: self.size.height * -0.4)
         jump.zPosition = 3
-       jump.size=CGSize(width: self.size.width/4,height:self.size.height/2)
+       jump.size=CGSize(width: 250,height:250)
         jump.alpha = 0.8
         self.addChild(jump)
         
@@ -273,9 +280,9 @@ class level6: SKScene, SKPhysicsContactDelegate {
     func centerOnNode(node:SKNode){
         
         self.camera!.run(SKAction.move(to: CGPoint(x:node.position.x, y:node.position.y), duration: 0.3))
-        self.right.run(SKAction.move(to: CGPoint(x:node.position.x-300, y:node.position.y-300), duration: 0.3))
-        self.left.run(SKAction.move(to: CGPoint(x:node.position.x-750, y:node.position.y-300), duration: 0.3))
-       self.jump.run(SKAction.move(to: CGPoint(x:node.position.x+400, y:node.position.y-300), duration: 0.3))
+        self.right.run(SKAction.move(to: CGPoint(x:node.position.x-350, y:node.position.y-400), duration: 0.3))
+        self.left.run(SKAction.move(to: CGPoint(x:node.position.x-750, y:node.position.y-400), duration: 0.3))
+       self.jump.run(SKAction.move(to: CGPoint(x:node.position.x+550, y:node.position.y-350), duration: 0.3))
         self.menu.run(SKAction.move(to: CGPoint(x:node.position.x-750, y:node.position.y+400), duration: 0.3))
        
     }

@@ -49,9 +49,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var door : SKSpriteNode?
     var bulletDuration = 5.0
    // var gun1 : SKSpriteNode?
-    let right = SKSpriteNode(imageNamed: "right")
-    let left = SKSpriteNode(imageNamed: "left")
-    let jump = SKSpriteNode(imageNamed: "jump")
+    let right = SKSpriteNode(imageNamed: "rightarrow")
+    let left = SKSpriteNode(imageNamed: "leftarrow")
+    let jump = SKSpriteNode(imageNamed: "jumparrow")
     var menu = SKLabelNode(text: "menu")
     var key : SKSpriteNode?
     struct PhysicsCategory {
@@ -218,21 +218,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
        // player?.physicsBody?.usesPreciseCollisionDetection = true
         right.position = CGPoint(x: self.size.width * -0.2, y: self.size.height * -0.4)
         right.zPosition = 3
-        right.size=CGSize(width:self.size.width/3,height:self.size.height/3)
+        right.size=CGSize(width:300,height:200)
         right.alpha = 0.8
         self.addChild(right)
         
    
         left.position = CGPoint(x: self.size.width * -0.3, y: self.size.height * -0.4)
         left.zPosition = 3
-        left.size=CGSize(width:self.size.width/3,height:self.size.height/3)
+        left.size=CGSize(width:300,height:200)
         left.alpha = 0.8
         self.addChild(left)
         
         
         jump.position = CGPoint(x: self.size.width * 0.3, y: self.size.height * -0.4)
         jump.zPosition = 3
-       jump.size=CGSize(width: self.size.width/4,height:self.size.height/2)
+       jump.size=CGSize(width: 250,height:250)
         jump.alpha = 0.8
         self.addChild(jump)
         
@@ -280,9 +280,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func centerOnNode(node:SKNode){
         
         self.camera!.run(SKAction.move(to: CGPoint(x:node.position.x, y:node.position.y), duration: 0.3))
-        self.right.run(SKAction.move(to: CGPoint(x:node.position.x-300, y:node.position.y-300), duration: 0.3))
-        self.left.run(SKAction.move(to: CGPoint(x:node.position.x-750, y:node.position.y-300), duration: 0.3))
-       self.jump.run(SKAction.move(to: CGPoint(x:node.position.x+400, y:node.position.y-300), duration: 0.3))
+        self.right.run(SKAction.move(to: CGPoint(x:node.position.x-350, y:node.position.y-400), duration: 0.3))
+        self.left.run(SKAction.move(to: CGPoint(x:node.position.x-750, y:node.position.y-400), duration: 0.3))
+       self.jump.run(SKAction.move(to: CGPoint(x:node.position.x+550, y:node.position.y-350), duration: 0.3))
         self.menu.run(SKAction.move(to: CGPoint(x:node.position.x-750, y:node.position.y+400), duration: 0.3))
        
     }
@@ -310,7 +310,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if(nodesList[i].frame.intersects(player!.frame)==true){
             isthere=true
               isOnEdge=true
-                 print("OMA")
+                //  print("Rtrue")
                 
           }
             if(i==nodesList.count-1&&isthere==false){
@@ -327,7 +327,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if(nodesListLeft[i].frame.intersects(player!.frame)==true){
             isthereLeft=true
               isOnEdgeLeft=true
-           print("OMALEFT")
+         //  print("true")
                 
           }
             if(i==nodesListLeft.count-1&&isthereLeft==false){
@@ -404,7 +404,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bullet.physicsBody?.contactTestBitMask=PhysicsCategory.mapEdge
         bullet.physicsBody?.collisionBitMask = PhysicsCategory.none // 5
            bullet.size = CGSize(width:50,height:50)
-           bullet.position=CGPoint(x:location.x,y:location.y)
+        bullet.position=CGPoint(x:location.x,y:location.y)
+        bullet.zPosition=2
+        
         addChild(bullet)
         bulletsList.append(bullet)
          let duration = random(min:CGFloat(10), max:CGFloat(15))
@@ -425,6 +427,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bullet.physicsBody?.collisionBitMask = PhysicsCategory.none // 5
            bullet.size = CGSize(width:50,height:50)
            bullet.position=CGPoint(x:location.x,y:location.y)
+        bullet.zPosition=2
         addChild(bullet)
         bulletsList.append(bullet)
          let duration = random(min:CGFloat(10), max:CGFloat(15))
@@ -509,7 +512,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
                 if(isOnEdge==true||isOnEdgeLeft==true){
                     if jump.contains(pointOfTouch){
-                      
+                        print("test")
                     utouch2=true
                         utouch = false
                         istouching=false
@@ -659,7 +662,7 @@ istouching=true
            
         }
         if contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.player && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.mapEdge{
-            
+            print("edge")
     //  istouching=false
         }
     }

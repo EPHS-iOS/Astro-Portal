@@ -404,7 +404,9 @@ class level6: SKScene, SKPhysicsContactDelegate {
         bullet.physicsBody?.contactTestBitMask=PhysicsCategory.mapEdge
         bullet.physicsBody?.collisionBitMask = PhysicsCategory.none // 5
            bullet.size = CGSize(width:50,height:50)
-           bullet.position=CGPoint(x:location.x,y:location.y)
+        bullet.position=CGPoint(x:location.x,y:location.y)
+        bullet.zPosition=2
+        
         addChild(bullet)
         bulletsList.append(bullet)
          let duration = random(min:CGFloat(10), max:CGFloat(15))
@@ -425,6 +427,7 @@ class level6: SKScene, SKPhysicsContactDelegate {
         bullet.physicsBody?.collisionBitMask = PhysicsCategory.none // 5
            bullet.size = CGSize(width:50,height:50)
            bullet.position=CGPoint(x:location.x,y:location.y)
+        bullet.zPosition=2
         addChild(bullet)
         bulletsList.append(bullet)
          let duration = random(min:CGFloat(10), max:CGFloat(15))

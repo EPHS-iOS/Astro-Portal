@@ -209,6 +209,24 @@ class level: SKScene {
                     view.showsNodeCount = true //hi
                 }
             }
+            if l8.contains(pointOfTouch){
+                lev = 8
+                if let view = self.view {
+                    // Load the SKScene from 'GameScene.sks'
+                    if let scene = SKScene(fileNamed: "level8") {
+                        // Set the scale mode to scale to fit the window
+                        scene.scaleMode = .aspectFill
+                        
+                        // Present the scene
+                        view.presentScene(scene)
+                    }
+                    view.showsPhysics = false
+                    view.ignoresSiblingOrder = true
+                    
+                    view.showsFPS = true
+                    view.showsNodeCount = true //hi
+                }
+            }
         }
     }
 }

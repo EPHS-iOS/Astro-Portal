@@ -15,6 +15,7 @@ import AudioToolbox
 
 class level5: SKScene, SKPhysicsContactDelegate {
     var lasercount : Bool?
+    var acidCount : Int?
     var impulseCount : Int?
     var timer = Timer()
     var utouch : Bool?
@@ -42,6 +43,7 @@ class level5: SKScene, SKPhysicsContactDelegate {
     var nodesListLeft = [SKShapeNode]()
     var nodesListGround = [SKShapeNode]()
     var bulletsList = [SKSpriteNode]()
+    var acidList = [SKNode]()
     var tileMap : SKTileMapNode?
     //var edgeMap : SKTile
     var cameraNode: SKCameraNode?
@@ -67,6 +69,7 @@ class level5: SKScene, SKPhysicsContactDelegate {
         static let laser : UInt32 = 0b1000//8
     }
     override func didMove(to view: SKView) {
+        acidCount=0
         if let Particles = SKEmitterNode(fileNamed: "Starfield.sks") {
                   Particles.position = CGPoint(x: size.width/2, y: size.height/2)
                   Particles.name = "star"
@@ -244,7 +247,7 @@ class level5: SKScene, SKPhysicsContactDelegate {
         self.addChild(menu)
         let timer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(fire), userInfo: nil, repeats: true)
         let timer2 = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(fire2), userInfo: nil, repeats: true)
-     
+       
    // self.physicsWorld.gravity = CGVector(dx: 0, dy: -9.8)
      
         
@@ -276,7 +279,7 @@ class level5: SKScene, SKPhysicsContactDelegate {
         }
        
     }
-
+  
     func centerOnNode(node:SKNode){
         
         self.camera!.run(SKAction.move(to: CGPoint(x:node.position.x, y:node.position.y), duration: 0.3))
@@ -291,12 +294,33 @@ class level5: SKScene, SKPhysicsContactDelegate {
     override func didFinishUpdate() {
   //  centerOnNode(node: player!)
     }
+
     override func update(_ currentTime: TimeInterval){
-        
-        
+        print(acidCount!)
+        scene!.enumerateChildNodes(withName: "acid") {
+            (node, stop) in
+            self.acidList.append(node)
+        }
+        for i in 0..<acidList.count{
+        if(acidList[i].frame.intersects(player!.frame)){
+          //  print("thishappenone")
+           
+            
+            acidCount! += 1
+            
+        }else{
+         //   print("thishappen")
+            acidCount! = 0
+        }
+        }
+        if(acidCount==120){
+            reset=true
+            acidCount=0
+        }
         if(reset==true){
          
             AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+            player?.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 0))
             player?.position=initialPosition!
             rtouch=false
                ltouch=false

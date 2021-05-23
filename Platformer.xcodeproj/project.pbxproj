@@ -26,6 +26,10 @@
 		461E5AAC262F3B7E000CAA7A /* level2.sks in Resources */ = {isa = PBXBuildFile; fileRef = 461E5AAB262F3B7E000CAA7A /* level2.sks */; };
 		464658F7264F32E300DC66E1 /* level5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464658F6264F32E300DC66E1 /* level5.swift */; };
 		464658FC264F344D00DC66E1 /* level5.sks in Resources */ = {isa = PBXBuildFile; fileRef = 464658FB264F344D00DC66E1 /* level5.sks */; };
+		465DE2D8265A6CD700049322 /* level9.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465DE2D7265A6CD700049322 /* level9.swift */; };
+		465DE2E0265A6CFA00049322 /* level10.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465DE2DF265A6CFA00049322 /* level10.swift */; };
+		465DE2E5265A6D2000049322 /* level9.sks in Resources */ = {isa = PBXBuildFile; fileRef = 465DE2E4265A6D2000049322 /* level9.sks */; };
+		465DE2EA265A6D2E00049322 /* level10.sks in Resources */ = {isa = PBXBuildFile; fileRef = 465DE2E9265A6D2E00049322 /* level10.sks */; };
 		466936DC2659BABD003170BE /* level7.swift in Sources */ = {isa = PBXBuildFile; fileRef = 466936DB2659BABD003170BE /* level7.swift */; };
 		466936E12659BB01003170BE /* level8.swift in Sources */ = {isa = PBXBuildFile; fileRef = 466936E02659BB01003170BE /* level8.swift */; };
 		466936E62659BB28003170BE /* level7.sks in Resources */ = {isa = PBXBuildFile; fileRef = 466936E52659BB28003170BE /* level7.sks */; };
@@ -81,6 +85,10 @@
 		461E5AAB262F3B7E000CAA7A /* level2.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = level2.sks; sourceTree = "<group>"; };
 		464658F6264F32E300DC66E1 /* level5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = level5.swift; sourceTree = "<group>"; };
 		464658FB264F344D00DC66E1 /* level5.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = level5.sks; sourceTree = "<group>"; };
+		465DE2D7265A6CD700049322 /* level9.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = level9.swift; sourceTree = "<group>"; };
+		465DE2DF265A6CFA00049322 /* level10.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = level10.swift; sourceTree = "<group>"; };
+		465DE2E4265A6D2000049322 /* level9.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = level9.sks; sourceTree = "<group>"; };
+		465DE2E9265A6D2E00049322 /* level10.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = level10.sks; sourceTree = "<group>"; };
 		466936DB2659BABD003170BE /* level7.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = level7.swift; sourceTree = "<group>"; };
 		466936E02659BB01003170BE /* level8.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = level8.swift; sourceTree = "<group>"; };
 		466936E52659BB28003170BE /* level7.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = level7.sks; sourceTree = "<group>"; };
@@ -159,6 +167,10 @@
 				466936DB2659BABD003170BE /* level7.swift */,
 				466936EA2659BB3B003170BE /* level8.sks */,
 				466936E02659BB01003170BE /* level8.swift */,
+				465DE2E4265A6D2000049322 /* level9.sks */,
+				465DE2D7265A6CD700049322 /* level9.swift */,
+				465DE2E9265A6D2E00049322 /* level10.sks */,
+				465DE2DF265A6CFA00049322 /* level10.swift */,
 				2BBAEACB2644AB0200A8B81C /* Saw.swift */,
 				2B5B0F6D25F8388C00145EEA /* MyTileSet.sks */,
 				2B5BFF0825E42FAA0066419E /* Actions.sks */,
@@ -302,8 +314,10 @@
 				46919858264057A400F192BA /* level4.sks in Resources */,
 				2B5BFF1025E42FAA0066419E /* Main.storyboard in Resources */,
 				461E5AAC262F3B7E000CAA7A /* level2.sks in Resources */,
+				465DE2EA265A6D2E00049322 /* level10.sks in Resources */,
 				464658FC264F344D00DC66E1 /* level5.sks in Resources */,
 				2B5BFF0725E42FAA0066419E /* GameScene.sks in Resources */,
+				465DE2E5265A6D2000049322 /* level9.sks in Resources */,
 				46919848264052BA00F192BA /* level3.sks in Resources */,
 				466936E62659BB28003170BE /* level7.sks in Resources */,
 				2B5BFF1225E42FAD0066419E /* Assets.xcassets in Resources */,
@@ -335,6 +349,8 @@
 			files = (
 				2B5BFF0B25E42FAA0066419E /* GameScene.swift in Sources */,
 				461E5AA7262F3AD0000CAA7A /* level2.swift in Sources */,
+				465DE2D8265A6CD700049322 /* level9.swift in Sources */,
+				465DE2E0265A6CFA00049322 /* level10.swift in Sources */,
 				46919850264056EB00F192BA /* level4.swift in Sources */,
 				2B5BFF0D25E42FAA0066419E /* GameViewController.swift in Sources */,
 				46F4C09A264B34E50074E085 /* level6.swift in Sources */,

@@ -14,6 +14,7 @@ import GameplayKit
 import AudioToolbox
 
 class level5: SKScene, SKPhysicsContactDelegate {
+    var acidBool : Bool?
     var lasercount : Bool?
     var acidCount : Int?
     var impulseCount : Int?
@@ -69,6 +70,14 @@ class level5: SKScene, SKPhysicsContactDelegate {
         static let laser : UInt32 = 0b1000//8
     }
     override func didMove(to view: SKView) {
+        
+        
+        
+        scene!.enumerateChildNodes(withName: "acid") {
+            (node, stop) in
+            self.acidList.append(node)
+        }
+        acidBool = false
         acidCount=0
         if let Particles = SKEmitterNode(fileNamed: "Starfield.sks") {
                   Particles.position = CGPoint(x: size.width/2, y: size.height/2)
@@ -297,36 +306,49 @@ class level5: SKScene, SKPhysicsContactDelegate {
 
     override func update(_ currentTime: TimeInterval){
         print(acidCount!)
-        scene!.enumerateChildNodes(withName: "acid") {
-            (node, stop) in
-            self.acidList.append(node)
-        }
+       
         for i in 0..<acidList.count{
         if(acidList[i].frame.intersects(player!.frame)){
           //  print("thishappenone")
            
-            
+            print("hello")
             acidCount! += 1
+         //  print( "helo")
+         acidBool=true
             
-        }else{
+        }
+            if(acidList[i].frame.intersects(player!.frame)==false){
+              //  print("thishappenone")
+               
+                print("byeee")
+             
+                
+            }
+            if ((i==acidList.count-1) && acidBool==false){
          //   print("thishappen")
+      
             acidCount! = 0
+          print(  "bye")
         }
+           
         }
-        if(acidCount==120){
+        //acidBool=false
+        if(acidCount! >= 120){
             reset=true
             acidCount=0
         }
         if(reset==true){
          
             AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
-            player?.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 0))
+            acidBool = false
+            acidCount=0
             player?.position=initialPosition!
             rtouch=false
                ltouch=false
                rtouch2=false
                ltouch2=false
             reset = false
+        
         }
         isthere=false
         for i in 0..<nodesList.count{

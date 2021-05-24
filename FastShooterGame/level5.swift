@@ -16,6 +16,7 @@ import AudioToolbox
 class level5: SKScene, SKPhysicsContactDelegate {
     var acidBool : Bool?
     var lasercount : Bool?
+    var targetNode : SKNode?
     var acidCount : Int?
     var impulseCount : Int?
     var timer = Timer()
@@ -45,6 +46,7 @@ class level5: SKScene, SKPhysicsContactDelegate {
     var nodesListGround = [SKShapeNode]()
     var bulletsList = [SKSpriteNode]()
     var acidList = [SKNode]()
+    var acidListB = [SKNode]()
     var tileMap : SKTileMapNode?
     //var edgeMap : SKTile
     var cameraNode: SKCameraNode?
@@ -76,6 +78,11 @@ class level5: SKScene, SKPhysicsContactDelegate {
         scene!.enumerateChildNodes(withName: "acid") {
             (node, stop) in
             self.acidList.append(node)
+        }
+        
+        scene!.enumerateChildNodes(withName: "empty") {
+            (node, stop) in
+            self.targetNode=node
         }
         acidBool = false
         acidCount=0
@@ -306,31 +313,24 @@ class level5: SKScene, SKPhysicsContactDelegate {
 
     override func update(_ currentTime: TimeInterval){
         print(acidCount!)
-       
+   
+        
+        
+        
+        if(acidBool==false){
         for i in 0..<acidList.count{
-        if(acidList[i].frame.intersects(player!.frame)){
-          //  print("thishappenone")
-           
-            print("hello")
-            acidCount! += 1
-         //  print( "helo")
-         acidBool=true
-            
-        }
-            if(acidList[i].frame.intersects(player!.frame)==false){
-              //  print("thishappenone")
-               
-                print("byeee")
-             
-                
+            if(acidList[i].frame.intersects(player!.frame)&&acidBool==false){
+                acidBool=true
+                targetNode=acidList[i]
             }
-            if ((i==acidList.count-1) && acidBool==false){
-         //   print("thishappen")
-      
-            acidCount! = 0
-          print(  "bye")
+    
         }
-           
+        }
+        if(targetNode!.frame.intersects(player!.frame)){
+            acidCount! += 1
+        }else{
+            acidCount! = 0
+            acidBool = false
         }
         //acidBool=false
         if(acidCount! >= 120){

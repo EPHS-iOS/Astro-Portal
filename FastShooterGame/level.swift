@@ -21,6 +21,7 @@ class level: SKScene {
     var l9 = SKLabelNode(text: "9")
     var l10 = SKLabelNode(text: "10")
     var l11 = SKLabelNode(text: "11")
+    var credit = SKLabelNode(text: "Credits")
     var l12 = SKLabelNode(text: "12")
     var l13 = SKLabelNode(text: "13")
     var l14 = SKLabelNode(text: "14")
@@ -32,7 +33,7 @@ class level: SKScene {
             startLabel.fontSize = 50
             startLabel.fontColor = SKColor.white
             startLabel.zPosition = 1
-            startLabel.position = CGPoint(x: 0, y: self.size.height/3.5)
+            startLabel.position = CGPoint(x: 0, y: 120)
             addChild(startLabel)
             
             l1.fontSize = 35
@@ -89,6 +90,11 @@ class level: SKScene {
             l11.fontColor = SKColor.white
             l11.position = CGPoint(x: 200, y: 0)
             addChild(l11)
+            
+            credit.fontSize = 35
+            credit.fontColor = SKColor.white
+            credit.position = CGPoint(x: -250, y: -60)
+            addChild(credit)
             
             print(self.size.height)
             print(self.size.width)
@@ -268,6 +274,23 @@ class level: SKScene {
                 if let view = self.view {
                     // Load the SKScene from 'GameScene.sks'
                     if let scene = SKScene(fileNamed: "level10") {
+                        // Set the scale mode to scale to fit the window
+                        scene.scaleMode = .aspectFill
+                        
+                        // Present the scene
+                        view.presentScene(scene)
+                    }
+                    view.showsPhysics = false
+                    view.ignoresSiblingOrder = true
+                    
+                    view.showsFPS = true
+                    view.showsNodeCount = true //hi
+                }
+            }
+            if credit.contains(pointOfTouch){
+                if let view = self.view {
+                    // Load the SKScene from 'GameScene.sks'
+                    if let scene = SKScene(fileNamed: "credit") {
                         // Set the scale mode to scale to fit the window
                         scene.scaleMode = .aspectFill
                         

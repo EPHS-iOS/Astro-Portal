@@ -77,6 +77,7 @@ class level7: SKScene, SKPhysicsContactDelegate {
     }
     override func didMove(to view: SKView) {
         gotkey1 = false
+        hasKey = false
         scene!.enumerateChildNodes(withName: "key1") {
             (node, stop) in
             self.Rkey1 = node
@@ -135,7 +136,7 @@ class level7: SKScene, SKPhysicsContactDelegate {
     isOnEdgeLeft=false
        isOnEdge=false
         finishedLevel=false
-        hasKey=false
+      //  hasKey=false
   //      istouching=false
         physicsWorld.contactDelegate = self
         
@@ -376,7 +377,7 @@ class level7: SKScene, SKPhysicsContactDelegate {
             acidBool = false
         }
         //acidBool=false
-        if(acidCount! >= 240){
+        if(acidCount! >= 120){
             reset=true
             acidCount=0
         }

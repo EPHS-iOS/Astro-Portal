@@ -14,13 +14,16 @@ import GameplayKit
 import AudioToolbox
 
 class level9: SKScene, SKPhysicsContactDelegate {
-    var alt1Count : Bool?
     var acidBool : Bool?
     var lasercount : Bool?
     var targetNode : SKNode?
     var acidCount : Int?
     var impulseCount : Int?
     var timer = Timer()
+    var Rkey1 : SKNode?
+    var Rkey2 : SKNode?
+    var gotKey2 : Bool?
+    var gotkey1 : Bool?
     var utouch : Bool?
     var utouch2 : Bool?
     var rtouch2 : Bool?
@@ -46,7 +49,6 @@ class level9: SKScene, SKPhysicsContactDelegate {
     var nodesListLeft = [SKShapeNode]()
     var nodesListGround = [SKShapeNode]()
     var bulletsList = [SKSpriteNode]()
-    var altNodesList = [SKNode]()
     var acidList = [SKNode]()
     var acidListB = [SKNode]()
     var tileMap : SKTileMapNode?
@@ -54,6 +56,10 @@ class level9: SKScene, SKPhysicsContactDelegate {
     var cameraNode: SKCameraNode?
     var player : SKSpriteNode?
     var door : SKSpriteNode?
+    var Rdoor1 : SKNode?
+    var Rdoor2 : SKNode?
+    var Rdoor3 : SKNode?
+    var Rdoor4 : SKNode?
     var bulletDuration = 5.0
    // var gun1 : SKSpriteNode?
     let right = SKSpriteNode(imageNamed: "rightarrow")
@@ -74,12 +80,16 @@ class level9: SKScene, SKPhysicsContactDelegate {
         static let laser : UInt32 = 0b1000//8
     }
     override func didMove(to view: SKView) {
-        alt1Count=false
-        
-        scene!.enumerateChildNodes(withName: "top1") {
+        gotkey1 = false
+        scene!.enumerateChildNodes(withName: "key1") {
             (node, stop) in
-            self.altNodesList.append(node)
+            self.Rkey1 = node
         }
+        scene!.enumerateChildNodes(withName: "key2") {
+            (node, stop) in
+            self.Rkey2 = node
+        }
+        
         
         scene!.enumerateChildNodes(withName: "acid") {
             (node, stop) in
@@ -111,6 +121,34 @@ class level9: SKScene, SKPhysicsContactDelegate {
    
           node.run(SKAction.repeatForever(SKAction.rotate(byAngle: (CGFloat.pi )*2, duration: 10)))
    
+           
+        }
+        scene!.enumerateChildNodes(withName: "door1") {
+            (node, stop) in
+   
+      print ("hi")
+            self.Rdoor1=node
+           
+        }
+        scene!.enumerateChildNodes(withName: "door2") {
+            (node, stop) in
+   
+      
+            self.Rdoor2=node
+           
+        }
+        scene!.enumerateChildNodes(withName: "door3") {
+            (node, stop) in
+   
+      
+            self.Rdoor3=node
+           
+        }
+        scene!.enumerateChildNodes(withName: "door4") {
+            (node, stop) in
+   
+      
+            self.Rdoor4=node
            
         }
         impulseCount=0
@@ -149,7 +187,6 @@ class level9: SKScene, SKPhysicsContactDelegate {
             for row in 0..<tileMap!.numberOfRows {
                 let tileDefinition = tileMap!.tileDefinition(atColumn: col, row: row)
                  let isCobblestone = tileDefinition?.userData?["Cobblestone"] as? Bool
-               
                  if (isCobblestone ?? false) {
                  x = CGFloat(col) * tileSize!.width - halfWidth!
                   y = CGFloat(row) * tileSize!.height - halfHeight!
@@ -162,14 +199,14 @@ class level9: SKScene, SKPhysicsContactDelegate {
                     
                     //tileNode.physicsBody?.usesPreciseCollisionDetection = true
                      tileNode.alpha=0
+                    tileNode.zPosition=2
                     tileNode.physicsBody?.categoryBitMask = PhysicsCategory.map
                     tileNode.physicsBody?.collisionBitMask = PhysicsCategory.none
                     tileNode.physicsBody?.contactTestBitMask = PhysicsCategory.bullet
                     tileNode.physicsBody?.contactTestBitMask = PhysicsCategory.player
-                   
+                
                     tileMap!.addChild(tileNode)
                     nodesListGround.append(tileNode)
-                   
                  }
              }
          }
@@ -189,7 +226,8 @@ class level9: SKScene, SKPhysicsContactDelegate {
                    tileNode.physicsBody?.isDynamic = false
            
                         tileNode.physicsBody?.usesPreciseCollisionDetection = true
-                    tileNode.alpha=1
+                    tileNode.alpha=0
+                    tileNode.zPosition=2
                     tileNode.physicsBody?.categoryBitMask = PhysicsCategory.mapEdge
                     tileNode.physicsBody?.collisionBitMask = PhysicsCategory.none
                     tileNode.physicsBody?.contactTestBitMask = PhysicsCategory.bullet
@@ -212,10 +250,11 @@ class level9: SKScene, SKPhysicsContactDelegate {
                     tileNode.position = CGPoint(x: x!, y: y!)
                    tileNode.physicsBody = SKPhysicsBody.init(rectangleOf: CGSize(width: tileSize!.width, height: tileSize!.height), center: CGPoint(x: tileSize!.width / 2.0, y: tileSize!.height / 2.0))
                    tileNode.physicsBody?.isDynamic = false
-                    tileNode.alpha=1
+                    tileNode.alpha=0
+                    tileNode.zPosition=2
                     tileNode.physicsBody?.categoryBitMask = PhysicsCategory.mapEdge
                     tileNode.physicsBody?.collisionBitMask = PhysicsCategory.none
-                    tileNode.physicsBody?.contactTestBitMask = PhysicsCategory.bullet
+                tileNode.physicsBody?.contactTestBitMask = PhysicsCategory.bullet
                     tileNode.physicsBody?.contactTestBitMask = PhysicsCategory.player
                     nodesListLeft.append(tileNode)
                     tileMap!.addChild(tileNode)
@@ -239,7 +278,7 @@ class level9: SKScene, SKPhysicsContactDelegate {
         player?.physicsBody?.contactTestBitMask=PhysicsCategory.door
         player?.physicsBody?.contactTestBitMask=PhysicsCategory.mapEdge
         player?.physicsBody?.contactTestBitMask=PhysicsCategory.saw
-       // player?.physicsBody?.contactTestBitMask=PhysicsCategory.bullet
+        player?.physicsBody?.contactTestBitMask=PhysicsCategory.bullet
         initialPosition = player?.position
         
        // player?.physicsBody?.usesPreciseCollisionDetection = true
@@ -290,17 +329,18 @@ class level9: SKScene, SKPhysicsContactDelegate {
             self.addBulletUp(location: node.position)
            
         }
-        if(alt1Count==false){
-            print("yes")
-            alt1Count=true
-            addalt1()
-        }else{
-            print("no")
-            alt1Count=false
-            addalt1()
+        scene!.enumerateChildNodes(withName: "DownTurret") {
+            (node, stop) in
+            self.addBulletDown(location: node.position)
+           
         }
-      
+        scene!.enumerateChildNodes(withName: "LeftTurret") {
+            (node, stop) in
+            self.addBulletLeft(location: node.position)
+           
+        }
     }
+    
     @objc func fire2()
     {
         if(lasercount==true){
@@ -329,10 +369,34 @@ class level9: SKScene, SKPhysicsContactDelegate {
     }
 
     override func update(_ currentTime: TimeInterval){
-        print(acidCount!)
    
-        
-        
+
+        if((player!.frame.intersects(Rdoor1!.frame)==true)&&(gotkey1==true)){
+            print ("hi")
+            player!.position = CGPoint(x:Rdoor2!.position.x+200, y: Rdoor2!.position.y)
+            
+            
+        }
+        if((player!.frame.intersects(Rdoor2!.frame)==true)&&(gotkey1==true)){
+            print ("hi")
+            player!.position = CGPoint(x:Rdoor1!.position.x+200, y: Rdoor1!.position.y)
+            
+            
+        }
+        if((player!.frame.intersects(Rdoor3!.frame)==true)&&(gotKey2==true)){
+            print ("hi")
+            player!.position = Rdoor4!.position
+            
+            
+        }
+        if(player!.frame.intersects(Rkey1!.frame)){
+        gotkey1 = true
+            Rkey1?.removeFromParent()
+        }
+        if(player!.frame.intersects(Rkey2!.frame)){
+        gotKey2 = true
+            Rkey2?.removeFromParent()
+        }
         
         if(acidBool==false){
         for i in 0..<acidList.count{
@@ -350,7 +414,7 @@ class level9: SKScene, SKPhysicsContactDelegate {
             acidBool = false
         }
         //acidBool=false
-        if(acidCount! >= 120){
+        if(acidCount! >= 240){
             reset=true
             acidCount=0
         }
@@ -460,42 +524,93 @@ class level9: SKScene, SKPhysicsContactDelegate {
          let location = CGPoint(x:location.x,y:location.y)
            let bullet = SKSpriteNode(imageNamed: "laser")
           bullet.physicsBody = SKPhysicsBody(circleOfRadius: 25)
-         bullet.physicsBody?.isDynamic = false // 2
+         bullet.physicsBody?.isDynamic = true // 2
           bullet.physicsBody?.categoryBitMask = PhysicsCategory.bullet // 3
           bullet.physicsBody?.contactTestBitMask = PhysicsCategory.player // 4
         bullet.physicsBody?.contactTestBitMask=PhysicsCategory.map
         bullet.physicsBody?.contactTestBitMask=PhysicsCategory.mapEdge
         bullet.physicsBody?.collisionBitMask = PhysicsCategory.none // 5
            bullet.size = CGSize(width:50,height:50)
-        bullet.position=CGPoint(x:location.x,y:location.y)
+      //  bullet.physicsBody?.mass=0
+        bullet.position=CGPoint(x:location.x+110,y:location.y)
         bullet.zPosition=2
-        
+        bullet.physicsBody?.affectedByGravity=false
         addChild(bullet)
-        bulletsList.append(bullet)
+ 
+     
          let duration = random(min:CGFloat(10), max:CGFloat(15))
         let actionMove = SKAction.move(to: CGPoint(x: location.x+10000, y:location.y), duration:TimeInterval(duration))
         let moveDone = SKAction.removeFromParent()
         
         bullet.run((SKAction.sequence([actionMove,moveDone])))
-        
     }
     func addBulletUp(location : CGPoint){
          let location = CGPoint(x:location.x,y:location.y)
            let bullet = SKSpriteNode(imageNamed: "laser")
           bullet.physicsBody = SKPhysicsBody(circleOfRadius: 25)
-         bullet.physicsBody?.isDynamic = false // 2
+         bullet.physicsBody?.isDynamic = true // 2
+          bullet.physicsBody?.categoryBitMask = PhysicsCategory.bullet // 3
+          bullet.physicsBody?.contactTestBitMask = PhysicsCategory.player // 4
+        bullet.physicsBody?.contactTestBitMask=PhysicsCategory.map
+        bullet.physicsBody?.affectedByGravity=false
+        bullet.physicsBody?.contactTestBitMask=PhysicsCategory.mapEdge
+        bullet.physicsBody?.collisionBitMask = PhysicsCategory.none // 5
+           bullet.size = CGSize(width:50,height:50)
+        bullet.physicsBody?.mass=0
+           bullet.position=CGPoint(x:location.x,y:location.y+128)
+        bullet.zPosition=2
+        addChild(bullet)
+        
+         let duration = random(min:CGFloat(10), max:CGFloat(15))
+        let actionMove = SKAction.move(to: CGPoint(x: location.x, y:location.y+10000), duration:TimeInterval(duration))
+        let moveDone = SKAction.removeFromParent()
+        
+        bullet.run((SKAction.sequence([actionMove,moveDone])))
+    }
+    func addBulletDown(location : CGPoint){
+         let location = CGPoint(x:location.x,y:location.y)
+           let bullet = SKSpriteNode(imageNamed: "laser")
+          bullet.physicsBody = SKPhysicsBody(circleOfRadius: 25)
+         bullet.physicsBody?.isDynamic = true // 2
+        bullet.physicsBody?.affectedByGravity=false
           bullet.physicsBody?.categoryBitMask = PhysicsCategory.bullet // 3
           bullet.physicsBody?.contactTestBitMask = PhysicsCategory.player // 4
         bullet.physicsBody?.contactTestBitMask=PhysicsCategory.map
         bullet.physicsBody?.contactTestBitMask=PhysicsCategory.mapEdge
         bullet.physicsBody?.collisionBitMask = PhysicsCategory.none // 5
            bullet.size = CGSize(width:50,height:50)
-           bullet.position=CGPoint(x:location.x,y:location.y)
+        bullet.physicsBody?.mass=0
+           bullet.position=CGPoint(x:location.x,y:location.y-128)
         bullet.zPosition=2
         addChild(bullet)
-        bulletsList.append(bullet)
+        
          let duration = random(min:CGFloat(10), max:CGFloat(15))
-        let actionMove = SKAction.move(to: CGPoint(x: location.x, y:location.y+10000), duration:TimeInterval(duration))
+        let actionMove = SKAction.move(to: CGPoint(x: location.x, y:location.y-10000), duration:TimeInterval(duration))
+        let moveDone = SKAction.removeFromParent()
+        
+        bullet.run((SKAction.sequence([actionMove,moveDone])))
+    }
+    func addBulletLeft(location : CGPoint){
+         let location = CGPoint(x:location.x,y:location.y)
+           let bullet = SKSpriteNode(imageNamed: "laser")
+          bullet.physicsBody = SKPhysicsBody(circleOfRadius: 25)
+         bullet.physicsBody?.isDynamic = true // 2
+        bullet.physicsBody?.affectedByGravity=false
+          bullet.physicsBody?.categoryBitMask = PhysicsCategory.bullet // 3
+          bullet.physicsBody?.contactTestBitMask = PhysicsCategory.player // 4
+        bullet.physicsBody?.contactTestBitMask=PhysicsCategory.map
+        bullet.physicsBody?.contactTestBitMask=PhysicsCategory.mapEdge
+        bullet.physicsBody?.collisionBitMask = PhysicsCategory.none // 5
+           bullet.size = CGSize(width:50,height:50)
+        bullet.physicsBody?.mass=0
+        bullet.position=CGPoint(x:location.x-128,y:location.y)
+        bullet.zPosition=2
+        
+        addChild(bullet)
+ 
+     
+         let duration = random(min:CGFloat(10), max:CGFloat(15))
+        let actionMove = SKAction.move(to: CGPoint(x: location.x-10000, y:location.y), duration:TimeInterval(duration))
         let moveDone = SKAction.removeFromParent()
         
         bullet.run((SKAction.sequence([actionMove,moveDone])))
@@ -512,19 +627,6 @@ class level9: SKScene, SKPhysicsContactDelegate {
                 (node, stop) in
                 node.alpha=1
                 node.physicsBody?.categoryBitMask=PhysicsCategory.laser
-            }
-        }
-    }
-    func addalt1 (){
-        if(alt1Count==true){
-        for j in altNodesList {
-            j.alpha = 0
-            j.physicsBody?.categoryBitMask=PhysicsCategory.none
-        }
-        }else{
-            for j in altNodesList {
-                j.alpha = 1
-                j.physicsBody?.categoryBitMask=PhysicsCategory.map
             }
         }
     }
@@ -696,16 +798,46 @@ istouching=true
             print("saw")
         }
      
+  
+   
         if ((contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.player && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.bullet )||(contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.bullet && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.player)){
-            if(contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.bullet){
-                contact.bodyA.node?.removeFromParent()
-                reset = true
-            }else {
-                contact.bodyB.node?.removeFromParent()
-                reset = true
-            }
-    
-        }
+              if(contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.bullet){
+                  contact.bodyA.node?.removeFromParent()
+                  reset = true
+              }else {
+                  contact.bodyB.node?.removeFromParent()
+                  reset = true
+              }
+              
+      
+          }
+        if ((contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.map && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.bullet )||(contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.bullet && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.map)){
+              if(contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.bullet){
+                print ("remove1")
+                  contact.bodyA.node?.removeFromParent()
+                  
+              }else {
+                print ("remove1")
+                  contact.bodyB.node?.removeFromParent()
+                 
+              }
+              
+      
+          }
+        if ((contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.mapEdge && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.bullet )||(contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.bullet && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.mapEdge)){
+              if(contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.bullet){
+                print ("remove1")
+                  contact.bodyA.node?.removeFromParent()
+                  
+              }else {
+                print ("remove1")
+                  contact.bodyB.node?.removeFromParent()
+                 
+              }
+              
+      
+          }
+  
         if ((contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.player && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.laser )||(contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.laser && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.player)){
             if(contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.laser){
              

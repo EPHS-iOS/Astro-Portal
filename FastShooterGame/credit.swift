@@ -16,7 +16,7 @@ class credit: SKScene {
         one.fontSize = 30
         one.fontColor = SKColor.white
         one.zPosition = 1
-        one.position = CGPoint(x: 0, y: 100)
+        one.position = CGPoint(x: 0, y: 50)
         addChild(one)
         
         menu.position = CGPoint(x: -250, y: 130)

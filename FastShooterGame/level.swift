@@ -20,7 +20,6 @@ class level: SKScene {
     var l8 = SKLabelNode(text: "8")
     var l9 = SKLabelNode(text: "9")
     var l10 = SKLabelNode(text: "10")
-    var l11 = SKLabelNode(text: "11")
     var credit = SKLabelNode(text: "Credits")
     var l12 = SKLabelNode(text: "12")
     var l13 = SKLabelNode(text: "13")
@@ -86,14 +85,10 @@ class level: SKScene {
             l10.position = CGPoint(x: 100, y: 0)
             addChild(l10)
             
-            l11.fontSize = 35
-            l11.fontColor = SKColor.white
-            l11.position = CGPoint(x: 200, y: 0)
-            addChild(l11)
             
             credit.fontSize = 35
             credit.fontColor = SKColor.white
-            credit.position = CGPoint(x: -250, y: -60)
+            credit.position = CGPoint(x: -250, y: -150)
             addChild(credit)
             
             print(self.size.height)

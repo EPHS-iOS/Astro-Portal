@@ -162,7 +162,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                    tileNode.physicsBody?.isDynamic = false
            
                         tileNode.physicsBody?.usesPreciseCollisionDetection = true
-                    tileNode.alpha=1
+                    tileNode.alpha=0
                     tileNode.physicsBody?.categoryBitMask = PhysicsCategory.mapEdge
                     tileNode.physicsBody?.collisionBitMask = PhysicsCategory.none
                     tileNode.physicsBody?.contactTestBitMask = PhysicsCategory.bullet
@@ -185,7 +185,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     tileNode.position = CGPoint(x: x!, y: y!)
                    tileNode.physicsBody = SKPhysicsBody.init(rectangleOf: CGSize(width: tileSize!.width, height: tileSize!.height), center: CGPoint(x: tileSize!.width / 2.0, y: tileSize!.height / 2.0))
                    tileNode.physicsBody?.isDynamic = false
-                    tileNode.alpha=1
+                    tileNode.alpha=0
                     tileNode.physicsBody?.categoryBitMask = PhysicsCategory.mapEdge
                     tileNode.physicsBody?.collisionBitMask = PhysicsCategory.none
                     tileNode.physicsBody?.contactTestBitMask = PhysicsCategory.bullet
@@ -349,11 +349,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if(rtouch==true){
             
             player?.position.x+=10
-            
+          
+            player?.texture=SKTexture(imageNamed: "player_right")
             print("rdoing")
         }
         if(ltouch==true){
             player?.position.x-=10
+            player?.texture=SKTexture(imageNamed: "player_left")
         }
         
         if(utouch==true){
@@ -539,10 +541,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                             rtouch2=false
                             utouch=false
                             utouch2=false
+                            player?.texture=SKTexture(imageNamed: "player_front")
                         }
                     
                     }
-
+       
                 }
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
 
@@ -554,13 +557,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
                if right.contains(pointOfTouch){
 
-             
+                player?.texture=SKTexture(imageNamed: "player_front")
 
         
                 rtouch=false
                }
 
                if left.contains(pointOfTouch){
+                player?.texture=SKTexture(imageNamed: "player_front")
 
                  //  let jumpLeftAction = SKAction.moveBy(x: 10, y: 0, duration: 0.1)
 ltouch=false
@@ -568,6 +572,7 @@ ltouch=false
 
                }
             if left.contains(pointOfTouch){
+                player?.texture=SKTexture(imageNamed: "player_front")
 
               //  let jumpLeftAction = SKAction.moveBy(x: 10, y: 0, duration: 0.1)
 ltouch2=false
@@ -575,6 +580,7 @@ ltouch2=false
 
             }
                if jump.contains(pointOfTouch){
+                player?.texture=SKTexture(imageNamed: "player_front")
 
 utouch=false
                    
@@ -582,6 +588,7 @@ utouch=false
                }
            
             if jump.contains(pointOfTouch){
+                player?.texture=SKTexture(imageNamed: "player_front")
 
 utouch2=false
                 
@@ -590,6 +597,7 @@ utouch2=false
          
            
                 if(right.contains(pointOfTouch)){
+                    player?.texture=SKTexture(imageNamed: "player_front")
                     rtouch2=false
                 }
             

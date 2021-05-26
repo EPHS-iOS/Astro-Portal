@@ -162,7 +162,7 @@ class level2: SKScene, SKPhysicsContactDelegate {
                    tileNode.physicsBody?.isDynamic = false
            
                         tileNode.physicsBody?.usesPreciseCollisionDetection = true
-                    tileNode.alpha=1
+                    tileNode.alpha=0
                     tileNode.physicsBody?.categoryBitMask = PhysicsCategory.mapEdge
                     tileNode.physicsBody?.collisionBitMask = PhysicsCategory.none
                     tileNode.physicsBody?.contactTestBitMask = PhysicsCategory.bullet
@@ -185,7 +185,7 @@ class level2: SKScene, SKPhysicsContactDelegate {
                     tileNode.position = CGPoint(x: x!, y: y!)
                    tileNode.physicsBody = SKPhysicsBody.init(rectangleOf: CGSize(width: tileSize!.width, height: tileSize!.height), center: CGPoint(x: tileSize!.width / 2.0, y: tileSize!.height / 2.0))
                    tileNode.physicsBody?.isDynamic = false
-                    tileNode.alpha=1
+                    tileNode.alpha=0
                     tileNode.physicsBody?.categoryBitMask = PhysicsCategory.mapEdge
                     tileNode.physicsBody?.collisionBitMask = PhysicsCategory.none
                     tileNode.physicsBody?.contactTestBitMask = PhysicsCategory.bullet
@@ -349,11 +349,13 @@ class level2: SKScene, SKPhysicsContactDelegate {
         if(rtouch==true){
             
             player?.position.x+=10
-            
+          
+            player?.texture=SKTexture(imageNamed: "player_right")
             print("rdoing")
         }
         if(ltouch==true){
             player?.position.x-=10
+            player?.texture=SKTexture(imageNamed: "player_left")
         }
         
         if(utouch==true){
@@ -539,6 +541,7 @@ class level2: SKScene, SKPhysicsContactDelegate {
                             rtouch2=false
                             utouch=false
                             utouch2=false
+                            player?.texture=SKTexture(imageNamed: "player_front")
                         }
                     
                     }
@@ -558,6 +561,7 @@ class level2: SKScene, SKPhysicsContactDelegate {
 
         
                 rtouch=false
+                player?.texture=SKTexture(imageNamed: "player_front")
                }
 
                if left.contains(pointOfTouch){
@@ -565,32 +569,33 @@ class level2: SKScene, SKPhysicsContactDelegate {
                  //  let jumpLeftAction = SKAction.moveBy(x: 10, y: 0, duration: 0.1)
 ltouch=false
                    
-
+                player?.texture=SKTexture(imageNamed: "player_front")
                }
             if left.contains(pointOfTouch){
 
               //  let jumpLeftAction = SKAction.moveBy(x: 10, y: 0, duration: 0.1)
 ltouch2=false
-                
+                player?.texture=SKTexture(imageNamed: "player_front")
 
             }
                if jump.contains(pointOfTouch){
 
 utouch=false
                    
-
+                player?.texture=SKTexture(imageNamed: "player_front")
                }
            
             if jump.contains(pointOfTouch){
 
 utouch2=false
-                
+                player?.texture=SKTexture(imageNamed: "player_front")
 
             }
          
            
                 if(right.contains(pointOfTouch)){
                     rtouch2=false
+                    player?.texture=SKTexture(imageNamed: "player_front")
                 }
             
            }

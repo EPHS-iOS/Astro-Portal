@@ -14,6 +14,7 @@ import GameplayKit
 import AudioToolbox
 
 class level2: SKScene, SKPhysicsContactDelegate {
+    let particles = SKEmitterNode(fileNamed: "Starfield.sks")
     var lasercount : Bool?
     var impulseCount : Int?
     var timer = Timer()
@@ -67,13 +68,7 @@ class level2: SKScene, SKPhysicsContactDelegate {
         static let laser : UInt32 = 0b1000//8
     }
     override func didMove(to view: SKView) {
-        if let Particles = SKEmitterNode(fileNamed: "Starfield.sks") {
-                  Particles.position = CGPoint(x: size.width/2, y: size.height/2)
-                  Particles.name = "star"
-                  Particles.targetNode = scene
-
-                  addChild(Particles)
-              }
+       
         lasercount = true
         ltouch = false
         ltouch2 = false
@@ -247,11 +242,11 @@ class level2: SKScene, SKPhysicsContactDelegate {
         let timer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(fire), userInfo: nil, repeats: true)
         let timer2 = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(fire2), userInfo: nil, repeats: true)
      
-   // self.physicsWorld.gravity = CGVector(dx: 0, dy: -9.8)
-     
-        
+        particles!.position = CGPoint(x:player!.position.x, y:player!.position.y)
+        particles!.name = "star"
+        particles!.targetNode = scene
 
-          
+        addChild(particles!)
     }
     @objc func fire()
     {
@@ -287,7 +282,7 @@ class level2: SKScene, SKPhysicsContactDelegate {
     }
     override func update(_ currentTime: TimeInterval){
         
-        
+        particles!.position=player!.position
         if(reset==true){
          
             AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))

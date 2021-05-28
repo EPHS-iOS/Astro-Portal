@@ -14,6 +14,8 @@ import GameplayKit
 import AudioToolbox
 
 class level10: SKScene, SKPhysicsContactDelegate {
+   
+    let particles = SKEmitterNode(fileNamed: "Starfield.sks")
     var acidBool : Bool?
     var lasercount : Bool?
     var initialSawPosition : CGPoint?
@@ -97,13 +99,7 @@ class level10: SKScene, SKPhysicsContactDelegate {
         }
         acidBool = false
         acidCount=0
-        if let Particles = SKEmitterNode(fileNamed: "Starfield.sks") {
-                  Particles.position = CGPoint(x: size.width/2, y: size.height/2)
-                  Particles.name = "star"
-                  Particles.targetNode = scene
-
-                  addChild(Particles)
-              }
+     
         lasercount = true
    
         scene!.enumerateChildNodes(withName: "saw") {
@@ -118,7 +114,7 @@ class level10: SKScene, SKPhysicsContactDelegate {
             self.initialSawPosition = node.position
             self.boss = node
           node.run(SKAction.repeatForever(SKAction.rotate(byAngle: (CGFloat.pi )*2, duration: 10)))
-            let actionMove = SKAction.move(to: CGPoint(x: node.position.x+10000, y:node.position.y), duration:TimeInterval(70))
+            let actionMove = SKAction.move(to: CGPoint(x: node.position.x+30000, y:node.position.y), duration:TimeInterval(210))
             let moveDone = SKAction.removeFromParent()
             
             node.run((SKAction.sequence([actionMove,moveDone])))
@@ -286,7 +282,13 @@ class level10: SKScene, SKPhysicsContactDelegate {
        
    // self.physicsWorld.gravity = CGVector(dx: 0, dy: -9.8)
      
-        
+      
+        particles!.position = CGPoint(x:player!.position.x, y:player!.position.y)
+        particles!.name = "star"
+        particles!.targetNode = scene
+
+        addChild(particles!)
+              
 
           
     }
@@ -334,9 +336,9 @@ class level10: SKScene, SKPhysicsContactDelegate {
     }
 
     override func update(_ currentTime: TimeInterval){
-        print(acidCount!)
+    
    
-       
+        particles!.position=player!.position
         
         if(acidBool==false){
         for i in 0..<acidList.count{

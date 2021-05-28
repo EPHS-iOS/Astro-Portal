@@ -72,6 +72,7 @@ class level10: SKScene, SKPhysicsContactDelegate {
         static let mapEdge : UInt32 = 0b110//6
         static let saw : UInt32 = 0b111//7
         static let laser : UInt32 = 0b1000//8
+        static let death : UInt32 = 0b1001//9
     }
     override func didMove(to view: SKView) {
         
@@ -117,7 +118,7 @@ class level10: SKScene, SKPhysicsContactDelegate {
             self.initialSawPosition = node.position
             self.boss = node
           node.run(SKAction.repeatForever(SKAction.rotate(byAngle: (CGFloat.pi )*2, duration: 10)))
-            let actionMove = SKAction.move(to: CGPoint(x: node.position.x+10000, y:node.position.y), duration:TimeInterval(100))
+            let actionMove = SKAction.move(to: CGPoint(x: node.position.x+10000, y:node.position.y), duration:TimeInterval(70))
             let moveDone = SKAction.removeFromParent()
             
             node.run((SKAction.sequence([actionMove,moveDone])))
@@ -276,7 +277,7 @@ class level10: SKScene, SKPhysicsContactDelegate {
          
          menu.position = CGPoint(x:camera!.position.x-(2*screenWidth)/6, y: camera!.position.y-(2*screenHeight)/6)
          menu.zPosition = 3
-         menu.fontSize = screenWidth/8
+        menu.fontSize = scene!.size.width/8
          menu.fontColor = SKColor.white
          menu.alpha = 0.8
          self.addChild(menu)
@@ -364,7 +365,7 @@ class level10: SKScene, SKPhysicsContactDelegate {
                 // Load the SKScene from 'GameScene.sks'
                 if let scene = SKScene(fileNamed: "level10") {
                     // Set the scale mode to scale to fit the window
-                    scene.scaleMode = .aspectFill
+                    scene.scaleMode = .aspectFit
                     
                     // Present the scene
                     view.presentScene(scene)
@@ -461,7 +462,7 @@ class level10: SKScene, SKPhysicsContactDelegate {
           
         }
  
-        camera?.position = player!.position
+        self.camera!.run(SKAction.move(to: CGPoint(x:player!.position.x, y:player!.position.y), duration: 0.1))
         left.position = CGPoint(x:camera!.position.x-(scene!.size.width), y: camera!.position.y-(scene!.size.height))
     right.position =    CGPoint(x:camera!.position.x-(scene!.size.width)/3, y: camera!.position.y-(scene!.size.height))
    //     self.left.run(SKAction.move(to: CGPoint(x:node.position.x-750, y:node.position.y-400), duration: 0.3))
@@ -757,7 +758,11 @@ istouching=true
         reset = true
             print("saw")
         }
-     
+        if ((contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.player && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.death )||(contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.death && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.player)){
+        reset = true
+            print("saw")
+        }
+   
         if ((contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.player && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.bullet )||(contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.bullet && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.player)){
             if(contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.bullet){
                 contact.bodyA.node?.removeFromParent()

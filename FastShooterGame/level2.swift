@@ -240,7 +240,7 @@ class level2: SKScene, SKPhysicsContactDelegate {
          
          menu.position = CGPoint(x:camera!.position.x-(2*screenWidth)/6, y: camera!.position.y-(2*screenHeight)/6)
          menu.zPosition = 3
-         menu.fontSize = screenWidth/8
+         menu.fontSize = scene!.size.width/8
          menu.fontColor = SKColor.white
          menu.alpha = 0.8
          self.addChild(menu)
@@ -381,7 +381,7 @@ class level2: SKScene, SKPhysicsContactDelegate {
           
         }
  
-        camera?.position = player!.position
+        self.camera!.run(SKAction.move(to: CGPoint(x:player!.position.x, y:player!.position.y), duration: 0.1))
         left.position = CGPoint(x:camera!.position.x-(scene!.size.width), y: camera!.position.y-(scene!.size.height))
     right.position =    CGPoint(x:camera!.position.x-(scene!.size.width)/3, y: camera!.position.y-(scene!.size.height))
    //     self.left.run(SKAction.move(to: CGPoint(x:node.position.x-750, y:node.position.y-400), duration: 0.3))

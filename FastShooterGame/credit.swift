@@ -13,15 +13,15 @@ class credit: SKScene {
     var one = SKLabelNode(text: "thanks viktor hahn and etqws3 for making the tiles")
     var menu = SKLabelNode(text: "menu")
     override func didMove(to view: SKView){
-        one.fontSize = 30
+        one.fontSize = scene!.size.width/20
         one.fontColor = SKColor.white
         one.zPosition = 1
-        one.position = CGPoint(x: 0, y: 50)
+        one.position = CGPoint(x:  0, y: 0)
         addChild(one)
         
-        menu.position = CGPoint(x: -250, y: 130)
+        menu.position = CGPoint(x: -scene!.size.width/3, y:  scene!.size.height/3)
         menu.zPosition = 3
-        menu.fontSize = 20
+        menu.fontSize =  scene!.size.width/20
         menu.fontColor = SKColor.white
         menu.alpha = 0.8
         self.addChild(menu)

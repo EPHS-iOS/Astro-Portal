@@ -260,33 +260,35 @@ class level7: SKScene, SKPhysicsContactDelegate {
         player?.physicsBody?.contactTestBitMask=PhysicsCategory.bullet
         initialPosition = player?.position
         
-       // player?.physicsBody?.usesPreciseCollisionDetection = true
-        right.position = CGPoint(x: self.size.width * -0.2, y: self.size.height * -0.4)
-        right.zPosition = 3
-        right.size=CGSize(width:300,height:200)
-        right.alpha = 0.8
-        self.addChild(right)
-        
-   
-        left.position = CGPoint(x: self.size.width * -0.3, y: self.size.height * -0.4)
-        left.zPosition = 3
-        left.size=CGSize(width:300,height:200)
-        left.alpha = 0.8
-        self.addChild(left)
-        
-        
-        jump.position = CGPoint(x: self.size.width * 0.3, y: self.size.height * -0.4)
-        jump.zPosition = 3
-       jump.size=CGSize(width: 250,height:250)
-        jump.alpha = 0.8
-        self.addChild(jump)
-        
-        menu.position = CGPoint(x: self.size.width * -0.3, y: self.size.height * -0.4)
-        menu.zPosition = 3
-        menu.fontSize = 55
-        menu.fontColor = SKColor.white
-        menu.alpha = 0.8
-        self.addChild(menu)
+        let screenSize = UIScreen.main.bounds
+         let screenWidth = screenSize.width
+         let screenHeight = screenSize.height
+         right.position = CGPoint(x:camera!.position.x-(2*screenWidth)/6, y: camera!.position.y-(2*screenHeight)/6)
+         right.zPosition = 3
+         right.size=CGSize(width:scene!.size.width/2,height:scene!.size.width/3)
+         right.alpha = 0.8
+         self.addChild(right)
+       
+    
+         left.position = CGPoint(x:camera!.position.x-(2*screenWidth)/6, y: camera!.position.y-(2*screenHeight)/6)
+         left.zPosition = 3
+         left.size=CGSize(width:scene!.size.width/2,height:scene!.size.width/3)
+         left.alpha = 0.8
+         self.addChild(left)
+         
+         
+         jump.position = CGPoint(x:camera!.position.x-(2*screenWidth)/6, y: camera!.position.y-(2*screenHeight)/6)
+         jump.zPosition = 3
+         jump.size=CGSize(width:scene!.size.width/2.5,height:scene!.size.width/2)
+         jump.alpha = 0.8
+         self.addChild(jump)
+         
+         menu.position = CGPoint(x:camera!.position.x-(2*screenWidth)/6, y: camera!.position.y-(2*screenHeight)/6)
+         menu.zPosition = 3
+         menu.fontSize = screenWidth/8
+         menu.fontColor = SKColor.white
+         menu.alpha = 0.8
+         self.addChild(menu)
         let timer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(fire), userInfo: nil, repeats: true)
         let timer2 = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(fire2), userInfo: nil, repeats: true)
        
@@ -332,15 +334,6 @@ class level7: SKScene, SKPhysicsContactDelegate {
        
     }
   
-    func centerOnNode(node:SKNode){
-        
-        self.camera!.run(SKAction.move(to: CGPoint(x:node.position.x, y:node.position.y), duration: 0.3))
-        self.right.run(SKAction.move(to: CGPoint(x:node.position.x-350, y:node.position.y-400), duration: 0.3))
-        self.left.run(SKAction.move(to: CGPoint(x:node.position.x-750, y:node.position.y-400), duration: 0.3))
-       self.jump.run(SKAction.move(to: CGPoint(x:node.position.x+550, y:node.position.y-350), duration: 0.3))
-        self.menu.run(SKAction.move(to: CGPoint(x:node.position.x-750, y:node.position.y+400), duration: 0.3))
-       
-    }
     
   
     override func didFinishUpdate() {
@@ -477,7 +470,12 @@ class level7: SKScene, SKPhysicsContactDelegate {
           
         }
  
-        centerOnNode(node: player!)
+        camera?.position = player!.position
+        left.position = CGPoint(x:camera!.position.x-(scene!.size.width), y: camera!.position.y-(scene!.size.height))
+    right.position =    CGPoint(x:camera!.position.x-(scene!.size.width)/3, y: camera!.position.y-(scene!.size.height))
+   //     self.left.run(SKAction.move(to: CGPoint(x:node.position.x-750, y:node.position.y-400), duration: 0.3))
+     jump.position = CGPoint(x:camera!.position.x+(scene!.size.width), y: camera!.position.y-(5*scene!.size.height)/6)
+        menu.position = CGPoint(x:camera!.position.x-(scene!.size.width), y: camera!.position.y+1.3*(scene!.size.height))
     }
     func random() -> CGFloat {
       return CGFloat(Float(arc4random()) / 0xFFFFFFFF)

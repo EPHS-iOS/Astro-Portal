@@ -108,7 +108,7 @@ class level: SKScene {
                     // Load the SKScene from 'GameScene.sks'
                     if let scene = SKScene(fileNamed: "GameScene") {
                         // Set the scale mode to scale to fit the window
-                        scene.scaleMode = .aspectFill
+                        scene.scaleMode = .aspectFit
                         
                         // Present the scene
                         view.presentScene(scene)
@@ -126,7 +126,7 @@ class level: SKScene {
                     // Load the SKScene from 'GameScene.sks'
                     if let scene = SKScene(fileNamed: "level2") {
                         // Set the scale mode to scale to fit the window
-                        scene.scaleMode = .aspectFill
+                        scene.scaleMode = .aspectFit
                         
                         // Present the scene
                         view.presentScene(scene)
@@ -144,7 +144,7 @@ class level: SKScene {
                     // Load the SKScene from 'GameScene.sks'
                     if let scene = SKScene(fileNamed: "level3") {
                         // Set the scale mode to scale to fit the window
-                        scene.scaleMode = .aspectFill
+                        scene.scaleMode = .aspectFit
                         
                         // Present the scene
                         view.presentScene(scene)
@@ -162,7 +162,7 @@ class level: SKScene {
                     // Load the SKScene from 'GameScene.sks'
                     if let scene = SKScene(fileNamed: "level4") {
                         // Set the scale mode to scale to fit the window
-                        scene.scaleMode = .aspectFill
+                        scene.scaleMode = .aspectFit
                         
                         // Present the scene
                         view.presentScene(scene)
@@ -180,7 +180,7 @@ class level: SKScene {
                     // Load the SKScene from 'GameScene.sks'
                     if let scene = SKScene(fileNamed: "level5") {
                         // Set the scale mode to scale to fit the window
-                        scene.scaleMode = .aspectFill
+                        scene.scaleMode = .aspectFit
                         
                         // Present the scene
                         view.presentScene(scene)
@@ -198,7 +198,7 @@ class level: SKScene {
                     // Load the SKScene from 'GameScene.sks'
                     if let scene = SKScene(fileNamed: "level6") {
                         // Set the scale mode to scale to fit the window
-                        scene.scaleMode = .aspectFill
+                        scene.scaleMode = .aspectFit
                         
                         // Present the scene
                         view.presentScene(scene)
@@ -216,7 +216,7 @@ class level: SKScene {
                     // Load the SKScene from 'GameScene.sks'
                     if let scene = SKScene(fileNamed: "level7") {
                         // Set the scale mode to scale to fit the window
-                        scene.scaleMode = .aspectFill
+                        scene.scaleMode = .aspectFit
                         
                         // Present the scene
                         view.presentScene(scene)
@@ -234,7 +234,7 @@ class level: SKScene {
                     // Load the SKScene from 'GameScene.sks'
                     if let scene = SKScene(fileNamed: "level8") {
                         // Set the scale mode to scale to fit the window
-                        scene.scaleMode = .aspectFill
+                        scene.scaleMode = .aspectFit
                         
                         // Present the scene
                         view.presentScene(scene)
@@ -252,7 +252,7 @@ class level: SKScene {
                     // Load the SKScene from 'GameScene.sks'
                     if let scene = SKScene(fileNamed: "level9") {
                         // Set the scale mode to scale to fit the window
-                        scene.scaleMode = .aspectFill
+                        scene.scaleMode = .aspectFit
                         
                         // Present the scene
                         view.presentScene(scene)
@@ -270,7 +270,7 @@ class level: SKScene {
                     // Load the SKScene from 'GameScene.sks'
                     if let scene = SKScene(fileNamed: "level10") {
                         // Set the scale mode to scale to fit the window
-                        scene.scaleMode = .aspectFill
+                        scene.scaleMode = .aspectFit
                         
                         // Present the scene
                         view.presentScene(scene)
@@ -287,7 +287,7 @@ class level: SKScene {
                     // Load the SKScene from 'GameScene.sks'
                     if let scene = SKScene(fileNamed: "credit") {
                         // Set the scale mode to scale to fit the window
-                        scene.scaleMode = .aspectFill
+                        scene.scaleMode = .aspectFit
                         
                         // Present the scene
                         view.presentScene(scene)

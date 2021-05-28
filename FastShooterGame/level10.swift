@@ -251,34 +251,35 @@ class level10: SKScene, SKPhysicsContactDelegate {
         player?.physicsBody?.contactTestBitMask=PhysicsCategory.saw
        // player?.physicsBody?.contactTestBitMask=PhysicsCategory.bullet
         initialPosition = player?.position
-        
-       // player?.physicsBody?.usesPreciseCollisionDetection = true
-        right.position = CGPoint(x: self.size.width * -0.2, y: self.size.height * -0.4)
-        right.zPosition = 3
-        right.size=CGSize(width:300,height:200)
-        right.alpha = 0.8
-        self.addChild(right)
-        
-   
-       left.position = CGPoint(x: self.size.width * -0.3, y: self.size.height * -0.4)
-        left.zPosition = 3
-        left.size=CGSize(width:300,height:200)
-        left.alpha = 0.8
-        self.addChild(left)
-        
-        
-        jump.position = CGPoint(x: self.size.width * 0.3, y: self.size.height * -0.4)
-        jump.zPosition = 3
-       jump.size=CGSize(width: 250,height:250)
-        jump.alpha = 0.8
-        self.addChild(jump)
-        
-        menu.position = CGPoint(x: self.size.width * -0.3, y: self.size.height * -0.4)
-        menu.zPosition = 3
-        menu.fontSize = 55
-        menu.fontColor = SKColor.white
-        menu.alpha = 0.8
-        self.addChild(menu)
+        let screenSize = UIScreen.main.bounds
+         let screenWidth = screenSize.width
+         let screenHeight = screenSize.height
+         right.position = CGPoint(x:camera!.position.x-(2*screenWidth)/6, y: camera!.position.y-(2*screenHeight)/6)
+         right.zPosition = 3
+         right.size=CGSize(width:scene!.size.width/2,height:scene!.size.width/3)
+         right.alpha = 0.8
+         self.addChild(right)
+       
+    
+         left.position = CGPoint(x:camera!.position.x-(2*screenWidth)/6, y: camera!.position.y-(2*screenHeight)/6)
+         left.zPosition = 3
+         left.size=CGSize(width:scene!.size.width/2,height:scene!.size.width/3)
+         left.alpha = 0.8
+         self.addChild(left)
+         
+         
+         jump.position = CGPoint(x:camera!.position.x-(2*screenWidth)/6, y: camera!.position.y-(2*screenHeight)/6)
+         jump.zPosition = 3
+         jump.size=CGSize(width:scene!.size.width/2.5,height:scene!.size.width/2)
+         jump.alpha = 0.8
+         self.addChild(jump)
+         
+         menu.position = CGPoint(x:camera!.position.x-(2*screenWidth)/6, y: camera!.position.y-(2*screenHeight)/6)
+         menu.zPosition = 3
+         menu.fontSize = screenWidth/8
+         menu.fontColor = SKColor.white
+         menu.alpha = 0.8
+         self.addChild(menu)
         let timer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(fire), userInfo: nil, repeats: true)
         let timer2 = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(fire2), userInfo: nil, repeats: true)
        
@@ -300,8 +301,18 @@ class level10: SKScene, SKPhysicsContactDelegate {
             self.addBulletUp(location: node.position)
            
         }
-      
+        scene!.enumerateChildNodes(withName: "DownTurret") {
+            (node, stop) in
+            self.addBulletDown(location: node.position)
+           
+        }
+        scene!.enumerateChildNodes(withName: "LeftTurret") {
+            (node, stop) in
+            self.addBulletLeft(location: node.position)
+           
+        }
     }
+    
     @objc func fire2()
     {
         if(lasercount==true){
@@ -314,15 +325,7 @@ class level10: SKScene, SKPhysicsContactDelegate {
        
     }
   
-    func centerOnNode(node:SKNode){
-        
-        self.camera!.run(SKAction.move(to: CGPoint(x:node.position.x, y:node.position.y), duration: 0.3))
-        self.right.run(SKAction.move(to: CGPoint(x:node.position.x-350, y:node.position.y-400), duration: 0.3))
-        self.left.run(SKAction.move(to: CGPoint(x:node.position.x-750, y:node.position.y-400), duration: 0.3))
-       self.jump.run(SKAction.move(to: CGPoint(x:node.position.x+550, y:node.position.y-350), duration: 0.3))
-        self.menu.run(SKAction.move(to: CGPoint(x:node.position.x-750, y:node.position.y+400), duration: 0.3))
-       
-    }
+   
     
   
     override func didFinishUpdate() {
@@ -458,7 +461,12 @@ class level10: SKScene, SKPhysicsContactDelegate {
           
         }
  
-        centerOnNode(node: player!)
+        camera?.position = player!.position
+        left.position = CGPoint(x:camera!.position.x-(scene!.size.width), y: camera!.position.y-(scene!.size.height))
+    right.position =    CGPoint(x:camera!.position.x-(scene!.size.width)/3, y: camera!.position.y-(scene!.size.height))
+   //     self.left.run(SKAction.move(to: CGPoint(x:node.position.x-750, y:node.position.y-400), duration: 0.3))
+     jump.position = CGPoint(x:camera!.position.x+(scene!.size.width), y: camera!.position.y-(5*scene!.size.height)/6)
+        menu.position = CGPoint(x:camera!.position.x-(scene!.size.width), y: camera!.position.y+1.3*(scene!.size.height))
     }
     func random() -> CGFloat {
       return CGFloat(Float(arc4random()) / 0xFFFFFFFF)
@@ -470,18 +478,20 @@ class level10: SKScene, SKPhysicsContactDelegate {
          let location = CGPoint(x:location.x,y:location.y)
            let bullet = SKSpriteNode(imageNamed: "laser")
           bullet.physicsBody = SKPhysicsBody(circleOfRadius: 25)
-         bullet.physicsBody?.isDynamic = false // 2
+         bullet.physicsBody?.isDynamic = true // 2
           bullet.physicsBody?.categoryBitMask = PhysicsCategory.bullet // 3
           bullet.physicsBody?.contactTestBitMask = PhysicsCategory.player // 4
         bullet.physicsBody?.contactTestBitMask=PhysicsCategory.map
         bullet.physicsBody?.contactTestBitMask=PhysicsCategory.mapEdge
         bullet.physicsBody?.collisionBitMask = PhysicsCategory.none // 5
            bullet.size = CGSize(width:50,height:50)
-        bullet.position=CGPoint(x:location.x,y:location.y)
+      //  bullet.physicsBody?.mass=0
+        bullet.position=CGPoint(x:location.x+110,y:location.y)
         bullet.zPosition=2
-        
+        bullet.physicsBody?.affectedByGravity=false
         addChild(bullet)
-        bulletsList.append(bullet)
+ 
+     
          let duration = random(min:CGFloat(10), max:CGFloat(15))
         let actionMove = SKAction.move(to: CGPoint(x: location.x+10000, y:location.y), duration:TimeInterval(duration))
         let moveDone = SKAction.removeFromParent()
@@ -492,19 +502,69 @@ class level10: SKScene, SKPhysicsContactDelegate {
          let location = CGPoint(x:location.x,y:location.y)
            let bullet = SKSpriteNode(imageNamed: "laser")
           bullet.physicsBody = SKPhysicsBody(circleOfRadius: 25)
-         bullet.physicsBody?.isDynamic = false // 2
+         bullet.physicsBody?.isDynamic = true // 2
+          bullet.physicsBody?.categoryBitMask = PhysicsCategory.bullet // 3
+          bullet.physicsBody?.contactTestBitMask = PhysicsCategory.player // 4
+        bullet.physicsBody?.contactTestBitMask=PhysicsCategory.map
+        bullet.physicsBody?.affectedByGravity=false
+        bullet.physicsBody?.contactTestBitMask=PhysicsCategory.mapEdge
+        bullet.physicsBody?.collisionBitMask = PhysicsCategory.none // 5
+           bullet.size = CGSize(width:50,height:50)
+        bullet.physicsBody?.mass=0
+           bullet.position=CGPoint(x:location.x,y:location.y+128)
+        bullet.zPosition=2
+        addChild(bullet)
+        
+         let duration = random(min:CGFloat(10), max:CGFloat(15))
+        let actionMove = SKAction.move(to: CGPoint(x: location.x, y:location.y+10000), duration:TimeInterval(duration))
+        let moveDone = SKAction.removeFromParent()
+        
+        bullet.run((SKAction.sequence([actionMove,moveDone])))
+    }
+    func addBulletDown(location : CGPoint){
+         let location = CGPoint(x:location.x,y:location.y)
+           let bullet = SKSpriteNode(imageNamed: "laser")
+          bullet.physicsBody = SKPhysicsBody(circleOfRadius: 25)
+         bullet.physicsBody?.isDynamic = true // 2
+        bullet.physicsBody?.affectedByGravity=false
           bullet.physicsBody?.categoryBitMask = PhysicsCategory.bullet // 3
           bullet.physicsBody?.contactTestBitMask = PhysicsCategory.player // 4
         bullet.physicsBody?.contactTestBitMask=PhysicsCategory.map
         bullet.physicsBody?.contactTestBitMask=PhysicsCategory.mapEdge
         bullet.physicsBody?.collisionBitMask = PhysicsCategory.none // 5
            bullet.size = CGSize(width:50,height:50)
-           bullet.position=CGPoint(x:location.x,y:location.y)
+        bullet.physicsBody?.mass=0
+           bullet.position=CGPoint(x:location.x,y:location.y-128)
         bullet.zPosition=2
         addChild(bullet)
-        bulletsList.append(bullet)
+        
          let duration = random(min:CGFloat(10), max:CGFloat(15))
-        let actionMove = SKAction.move(to: CGPoint(x: location.x, y:location.y+10000), duration:TimeInterval(duration))
+        let actionMove = SKAction.move(to: CGPoint(x: location.x, y:location.y-10000), duration:TimeInterval(duration))
+        let moveDone = SKAction.removeFromParent()
+        
+        bullet.run((SKAction.sequence([actionMove,moveDone])))
+    }
+    func addBulletLeft(location : CGPoint){
+         let location = CGPoint(x:location.x,y:location.y)
+           let bullet = SKSpriteNode(imageNamed: "laser")
+          bullet.physicsBody = SKPhysicsBody(circleOfRadius: 25)
+         bullet.physicsBody?.isDynamic = true // 2
+        bullet.physicsBody?.affectedByGravity=false
+          bullet.physicsBody?.categoryBitMask = PhysicsCategory.bullet // 3
+          bullet.physicsBody?.contactTestBitMask = PhysicsCategory.player // 4
+        bullet.physicsBody?.contactTestBitMask=PhysicsCategory.map
+        bullet.physicsBody?.contactTestBitMask=PhysicsCategory.mapEdge
+        bullet.physicsBody?.collisionBitMask = PhysicsCategory.none // 5
+           bullet.size = CGSize(width:50,height:50)
+        bullet.physicsBody?.mass=0
+        bullet.position=CGPoint(x:location.x-128,y:location.y)
+        bullet.zPosition=2
+        
+        addChild(bullet)
+ 
+     
+         let duration = random(min:CGFloat(10), max:CGFloat(15))
+        let actionMove = SKAction.move(to: CGPoint(x: location.x-10000, y:location.y), duration:TimeInterval(duration))
         let moveDone = SKAction.removeFromParent()
         
         bullet.run((SKAction.sequence([actionMove,moveDone])))
@@ -708,6 +768,32 @@ istouching=true
             }
     
         }
+        if ((contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.map && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.bullet )||(contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.bullet && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.map)){
+              if(contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.bullet){
+       
+                  contact.bodyA.node?.removeFromParent()
+                  
+              }else {
+                
+                  contact.bodyB.node?.removeFromParent()
+                 
+              }
+              
+      
+          }
+        if ((contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.mapEdge && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.bullet )||(contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.bullet && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.mapEdge)){
+              if(contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.bullet){
+            
+                  contact.bodyA.node?.removeFromParent()
+                  
+              }else {
+               
+                  contact.bodyB.node?.removeFromParent()
+                 
+              }
+              
+      
+          }
         if ((contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.player && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.laser )||(contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.laser && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.player)){
             if(contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.laser){
              

@@ -346,6 +346,10 @@ class level7: SKScene, SKPhysicsContactDelegate {
         if((player!.frame.intersects(Rdoor1!.frame)==true)&&(gotkey1==true)){
             print ("hi")
             player!.position = Rdoor2!.position
+            rtouch=false
+               ltouch=false
+               rtouch2=false
+               ltouch2=false
             
         }
         if(player!.frame.intersects(Rkey1!.frame)){
@@ -688,6 +692,65 @@ class level7: SKScene, SKPhysicsContactDelegate {
 
                 }
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+
+           for touch: AnyObject in touches{
+
+               let pointOfTouch = touch.location(in: self)
+
+           
+
+               if right.contains(pointOfTouch){
+
+                player?.texture=SKTexture(imageNamed: "player_front")
+
+        
+                rtouch=false
+               }
+
+               if left.contains(pointOfTouch){
+                player?.texture=SKTexture(imageNamed: "player_front")
+
+                 //  let jumpLeftAction = SKAction.moveBy(x: 10, y: 0, duration: 0.1)
+ltouch=false
+                   
+
+               }
+            if left.contains(pointOfTouch){
+                player?.texture=SKTexture(imageNamed: "player_front")
+
+              //  let jumpLeftAction = SKAction.moveBy(x: 10, y: 0, duration: 0.1)
+ltouch2=false
+                
+
+            }
+               if jump.contains(pointOfTouch){
+                player?.texture=SKTexture(imageNamed: "player_front")
+
+utouch=false
+                   
+
+               }
+           
+            if jump.contains(pointOfTouch){
+                player?.texture=SKTexture(imageNamed: "player_front")
+
+utouch2=false
+                
+
+            }
+         
+           
+                if(right.contains(pointOfTouch)){
+                    player?.texture=SKTexture(imageNamed: "player_front")
+                    rtouch2=false
+                }
+            
+           }
+
+           
+
+       }
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
 
            for touch: AnyObject in touches{
 

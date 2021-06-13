@@ -597,6 +597,65 @@ utouch2=false
            
 
        }
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+
+           for touch: AnyObject in touches{
+
+               let pointOfTouch = touch.location(in: self)
+
+           
+
+               if right.contains(pointOfTouch){
+
+                player?.texture=SKTexture(imageNamed: "player_front")
+
+        
+                rtouch=false
+               }
+
+               if left.contains(pointOfTouch){
+                player?.texture=SKTexture(imageNamed: "player_front")
+
+                 //  let jumpLeftAction = SKAction.moveBy(x: 10, y: 0, duration: 0.1)
+ltouch=false
+                   
+
+               }
+            if left.contains(pointOfTouch){
+                player?.texture=SKTexture(imageNamed: "player_front")
+
+              //  let jumpLeftAction = SKAction.moveBy(x: 10, y: 0, duration: 0.1)
+ltouch2=false
+                
+
+            }
+               if jump.contains(pointOfTouch){
+                player?.texture=SKTexture(imageNamed: "player_front")
+
+utouch=false
+                   
+
+               }
+           
+            if jump.contains(pointOfTouch){
+                player?.texture=SKTexture(imageNamed: "player_front")
+
+utouch2=false
+                
+
+            }
+         
+           
+                if(right.contains(pointOfTouch)){
+                    player?.texture=SKTexture(imageNamed: "player_front")
+                    rtouch2=false
+                }
+            
+           }
+
+           
+
+       }
     func didBegin(_ contact: SKPhysicsContact) {
 
        if ((contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.player && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.map)||(contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.map && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.player)){

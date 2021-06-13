@@ -365,21 +365,30 @@ class level9: SKScene, SKPhysicsContactDelegate {
    
         particles!.position=player!.position
         if((player!.frame.intersects(Rdoor1!.frame)==true)&&(gotkey1==true)){
-            print ("hi")
+          
             player!.position = CGPoint(x:Rdoor2!.position.x+200, y: Rdoor2!.position.y)
-            
+            rtouch=false
+               ltouch=false
+               rtouch2=false
+               ltouch2=false
             
         }
         if((player!.frame.intersects(Rdoor2!.frame)==true)&&(gotkey1==true)){
-            print ("hi")
-            player!.position = CGPoint(x:Rdoor1!.position.x+200, y: Rdoor1!.position.y)
             
+            player!.position = CGPoint(x:Rdoor1!.position.x+200, y: Rdoor1!.position.y)
+            rtouch=false
+               ltouch=false
+               rtouch2=false
+               ltouch2=false
             
         }
         if((player!.frame.intersects(Rdoor3!.frame)==true)&&(gotKey2==true)){
-            print ("hi")
+     
             player!.position = Rdoor4!.position
-            
+            rtouch=false
+               ltouch=false
+               rtouch2=false
+               ltouch2=false
             
         }
         if(player!.frame.intersects(Rkey1!.frame)){
@@ -782,6 +791,65 @@ utouch2=false
            
 
        }
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+
+           for touch: AnyObject in touches{
+
+               let pointOfTouch = touch.location(in: self)
+
+           
+
+               if right.contains(pointOfTouch){
+
+                player?.texture=SKTexture(imageNamed: "player_front")
+
+        
+                rtouch=false
+               }
+
+               if left.contains(pointOfTouch){
+                player?.texture=SKTexture(imageNamed: "player_front")
+
+                 //  let jumpLeftAction = SKAction.moveBy(x: 10, y: 0, duration: 0.1)
+ltouch=false
+                   
+
+               }
+            if left.contains(pointOfTouch){
+                player?.texture=SKTexture(imageNamed: "player_front")
+
+              //  let jumpLeftAction = SKAction.moveBy(x: 10, y: 0, duration: 0.1)
+ltouch2=false
+                
+
+            }
+               if jump.contains(pointOfTouch){
+                player?.texture=SKTexture(imageNamed: "player_front")
+
+utouch=false
+                   
+
+               }
+           
+            if jump.contains(pointOfTouch){
+                player?.texture=SKTexture(imageNamed: "player_front")
+
+utouch2=false
+                
+
+            }
+         
+           
+                if(right.contains(pointOfTouch)){
+                    player?.texture=SKTexture(imageNamed: "player_front")
+                    rtouch2=false
+                }
+            
+           }
+
+           
+
+       }
     func didBegin(_ contact: SKPhysicsContact) {
 
        if ((contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.player && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.map)||(contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.map && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.player)){
@@ -822,11 +890,11 @@ istouching=true
           }
         if ((contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.map && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.bullet )||(contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.bullet && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.map)){
               if(contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.bullet){
-                print ("remove1")
+                
                   contact.bodyA.node?.removeFromParent()
                   
               }else {
-                print ("remove1")
+          
                   contact.bodyB.node?.removeFromParent()
                  
               }

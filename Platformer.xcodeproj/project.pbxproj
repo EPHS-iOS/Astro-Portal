@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2B0D98FB261E285300795CE2 /* level.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0D98FA261E285300795CE2 /* level.swift */; };
+		2B3928102681054B004134AE /* AstroPortalMusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2B39280F2681054B004134AE /* AstroPortalMusic.mp3 */; };
 		2B5B0F6925F8378C00145EEA /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B5B0F6825F8378C00145EEA /* Launch Screen.storyboard */; };
 		2B5B0F6E25F8388C00145EEA /* MyTileSet.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2B5B0F6D25F8388C00145EEA /* MyTileSet.sks */; };
 		2B5BFF0525E42FAA0066419E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B5BFF0425E42FAA0066419E /* AppDelegate.swift */; };
@@ -63,6 +64,7 @@
 
 /* Begin PBXFileReference section */
 		2B0D98FA261E285300795CE2 /* level.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = level.swift; sourceTree = "<group>"; };
+		2B39280F2681054B004134AE /* AstroPortalMusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = AstroPortalMusic.mp3; sourceTree = "<group>"; };
 		2B5B0F6825F8378C00145EEA /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		2B5B0F6D25F8388C00145EEA /* MyTileSet.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MyTileSet.sks; sourceTree = "<group>"; };
 		2B5BFF0125E42FAA0066419E /* Platformer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Platformer.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -153,6 +155,7 @@
 		2B5BFF0325E42FAA0066419E /* FastShooterGame */ = {
 			isa = PBXGroup;
 			children = (
+				2B39280F2681054B004134AE /* AstroPortalMusic.mp3 */,
 				2B5BFF0425E42FAA0066419E /* AppDelegate.swift */,
 				2B5BFF0625E42FAA0066419E /* GameScene.sks */,
 				2B5BFF0A25E42FAA0066419E /* GameScene.swift */,
@@ -315,6 +318,7 @@
 				466936EB2659BB3B003170BE /* level8.sks in Resources */,
 				2BFEE4382651B8AC00F2A6FA /* Starfield.sks in Resources */,
 				46F4C09F264B38580074E085 /* level6.sks in Resources */,
+				2B3928102681054B004134AE /* AstroPortalMusic.mp3 in Resources */,
 				2B6954DD26406004009B2EB0 /* level.sks in Resources */,
 				2B5B0F6E25F8388C00145EEA /* MyTileSet.sks in Resources */,
 				46919858264057A400F192BA /* level4.sks in Resources */,

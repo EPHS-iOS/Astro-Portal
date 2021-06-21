@@ -10,14 +10,20 @@ import SpriteKit
 import GameplayKit
 
 class credit: SKScene {
-    var one = SKLabelNode(text: "thanks viktor hahn and etqws3 for making the tiles")
+    var one = SKLabelNode(text: "Thanks viktor hahn and etqws3 for making the tiles")
     var menu = SKLabelNode(text: "menu")
+    var two = SKLabelNode(text: "Thanks jahndan_ for the background music")
     override func didMove(to view: SKView){
-        one.fontSize = scene!.size.width/20
+        one.fontSize = scene!.size.width/22
         one.fontColor = SKColor.white
         one.zPosition = 1
-        one.position = CGPoint(x:  0, y: 0)
+        one.position = CGPoint(x:  0, y: scene!.size.height/5)
         addChild(one)
+       two.fontSize = scene!.size.width/22
+      two.fontColor = SKColor.white
+        two.zPosition = 1
+       two.position = CGPoint(x:  0, y: scene!.size.height/11)
+        addChild(two)
         
         menu.position = CGPoint(x: -scene!.size.width/3, y:  scene!.size.height/3)
         menu.zPosition = 3

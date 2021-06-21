@@ -54,7 +54,7 @@ class level9: SKScene, SKPhysicsContactDelegate {
     var acidListB = [SKNode]()
     var tileMap : SKTileMapNode?
     //var edgeMap : SKTile
-    var cameraNode: SKCameraNode?
+    let cam = SKCameraNode()
     var player : SKSpriteNode?
     var door : SKSpriteNode?
     var Rdoor1 : SKNode?
@@ -82,6 +82,10 @@ class level9: SKScene, SKPhysicsContactDelegate {
         static let death : UInt32 = 0b1001//9
     }
     override func didMove(to view: SKView) {
+        if let musicURL = Bundle.main.url(forResource: "AstroPortalMusic", withExtension: "mp3") {
+            addChild( SKAudioNode(url: musicURL))
+        }
+     
         gotkey1 = false
         scene!.enumerateChildNodes(withName: "key1") {
             (node, stop) in
@@ -158,9 +162,13 @@ class level9: SKScene, SKPhysicsContactDelegate {
         physicsWorld.contactDelegate = self
         
         player = childNode(withName: "player") as?SKSpriteNode
-       
+        self.camera = cam
+        cam.xScale=3
+        cam.yScale=3
     
-        cameraNode = childNode(withName: "camera") as?SKCameraNode
+        let constraint = SKConstraint.distance(SKRange(constantValue: 0), to: player!)
+        camera!.constraints = [ constraint ]
+
         
     //   gun1 = childNode(withName: "gun wall") as?SKSpriteNode
         
@@ -279,32 +287,32 @@ class level9: SKScene, SKPhysicsContactDelegate {
         let screenSize = UIScreen.main.bounds
          let screenWidth = screenSize.width
          let screenHeight = screenSize.height
-         right.position = CGPoint(x:camera!.position.x-(2*screenWidth)/6, y: camera!.position.y-(2*screenHeight)/6)
+        self.addChild(cam)
+         right.position = CGPoint(x:camera!.position.x-(scene!.size.width)/9, y: camera!.position.y-(scene!.size.width)/5)
          right.zPosition = 3
-         right.size=CGSize(width:scene!.size.width/2,height:scene!.size.width/3)
+         right.size=CGSize(width:scene!.size.width/5.5,height:scene!.size.width/8)
          right.alpha = 0.8
-         self.addChild(right)
-       
-    
-         left.position = CGPoint(x:camera!.position.x-(2*screenWidth)/6, y: camera!.position.y-(2*screenHeight)/6)
+         cam.addChild(right)
+        // left.position = CGPoint(x:camera!.position.x-(scene!.size.width), y: camera!.position.y-(scene!.size.height))
+        left.position = CGPoint(x:camera!.position.x-(scene!.size.width)/3, y: camera!.position.y-(scene!.size.width)/5)
          left.zPosition = 3
-         left.size=CGSize(width:scene!.size.width/2,height:scene!.size.width/3)
-         left.alpha = 0.8
-         self.addChild(left)
+        left.size=CGSize(width:scene!.size.width/5.5,height:scene!.size.width/8)
+         left.alpha = 1
+        cam.addChild(left)
+       
          
-         
-         jump.position = CGPoint(x:camera!.position.x-(2*screenWidth)/6, y: camera!.position.y-(2*screenHeight)/6)
+        jump.position = CGPoint(x:camera!.position.x+(scene!.size.width)/4, y: camera!.position.y-(scene!.size.width)/5.5)
          jump.zPosition = 3
-         jump.size=CGSize(width:scene!.size.width/2.5,height:scene!.size.width/2)
+        jump.size=CGSize(width:scene!.size.width/7,height:scene!.size.width/6)
          jump.alpha = 0.8
-         self.addChild(jump)
+         cam.addChild(jump)
          
-         menu.position = CGPoint(x:camera!.position.x-(2*screenWidth)/6, y: camera!.position.y-(2*screenHeight)/6)
+        menu.position = CGPoint(x:camera!.position.x-(scene!.size.width)/3, y: camera!.position.y+(scene!.size.width)/5)
          menu.zPosition = 3
-        menu.fontSize = scene!.size.width/8
+        menu.fontSize = scene!.size.width/19
          menu.fontColor = SKColor.white
          menu.alpha = 0.8
-         self.addChild(menu)
+         cam.addChild(menu)
         let timer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(fire), userInfo: nil, repeats: true)
         let timer2 = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(fire2), userInfo: nil, repeats: true)
        
@@ -367,19 +375,20 @@ class level9: SKScene, SKPhysicsContactDelegate {
         if((player!.frame.intersects(Rdoor1!.frame)==true)&&(gotkey1==true)){
           
             player!.position = CGPoint(x:Rdoor2!.position.x+200, y: Rdoor2!.position.y)
-            rtouch=false
-               ltouch=false
-               rtouch2=false
-               ltouch2=false
+          //  rtouch=false
+            //   ltouch=false
+              // rtouch2=false
+              // ltouch2=false
             
         }
         if((player!.frame.intersects(Rdoor2!.frame)==true)&&(gotkey1==true)){
             
             player!.position = CGPoint(x:Rdoor1!.position.x+200, y: Rdoor1!.position.y)
-            rtouch=false
-               ltouch=false
-               rtouch2=false
-               ltouch2=false
+           // rtouch=false
+             //  ltouch=false
+              // rtouch2=false
+               //ltouch2=false
+            
             
         }
         if((player!.frame.intersects(Rdoor3!.frame)==true)&&(gotKey2==true)){
@@ -411,6 +420,7 @@ class level9: SKScene, SKPhysicsContactDelegate {
         }
         if(targetNode!.frame.intersects(player!.frame)){
             acidCount! += 1
+            player?.texture=SKTexture(imageNamed: "acidPlayer")
         }else{
             acidCount! = 0
             acidBool = false
@@ -478,13 +488,21 @@ class level9: SKScene, SKPhysicsContactDelegate {
         if(rtouch==true){
             
             player?.position.x+=10
-          
+            
+            if(acidBool==false){
             player?.texture=SKTexture(imageNamed: "player_right")
             print("rdoing")
+            }else{
+                player?.texture=SKTexture(imageNamed: "acidPlayer")
+            }
         }
         if(ltouch==true){
             player?.position.x-=10
+            if(acidBool==false){
             player?.texture=SKTexture(imageNamed: "player_left")
+            }else{
+                player?.texture=SKTexture(imageNamed: "acidPlayer")
+            }
         }
         
         if(utouch==true){
@@ -515,12 +533,8 @@ class level9: SKScene, SKPhysicsContactDelegate {
            //player?.physicsBody?.applyImpulse(CGVector(dx:-30,dy:0))
           
         }
-        self.camera!.run(SKAction.move(to: CGPoint(x:player!.position.x, y:player!.position.y), duration: 0.1))
-        left.position = CGPoint(x:camera!.position.x-(scene!.size.width), y: camera!.position.y-(scene!.size.height))
-    right.position =    CGPoint(x:camera!.position.x-(scene!.size.width)/3, y: camera!.position.y-(scene!.size.height))
-   //     self.left.run(SKAction.move(to: CGPoint(x:node.position.x-750, y:node.position.y-400), duration: 0.3))
-     jump.position = CGPoint(x:camera!.position.x+(scene!.size.width), y: camera!.position.y-(5*scene!.size.height)/6)
-        menu.position = CGPoint(x:camera!.position.x-(scene!.size.width), y: camera!.position.y+1.3*(scene!.size.height))
+
+       // menu.position = CGPoint(x:camera!.position.x-(scene!.size.width), y: camera!.position.y+1.3*(scene!.size.height))
     }
     func random() -> CGFloat {
       return CGFloat(Float(arc4random()) / 0xFFFFFFFF)
@@ -641,7 +655,7 @@ class level9: SKScene, SKPhysicsContactDelegate {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
             
              for touch: AnyObject in touches{
-            let pointOfTouch = touch.location(in: self)
+                let pointOfTouch = touch.location(in: self.camera!)
                 if menu.contains(pointOfTouch){
                     if let view = self.view {
                         // Load the SKScene from 'GameScene.sks'
@@ -714,7 +728,7 @@ class level9: SKScene, SKPhysicsContactDelegate {
                    
                     for touch: AnyObject in touches{
 
-                        let pointOfTouch = touch.location(in: self)
+                        let pointOfTouch = touch.location(in: self.camera!)
 
                       
                     
@@ -736,7 +750,7 @@ class level9: SKScene, SKPhysicsContactDelegate {
 
            for touch: AnyObject in touches{
 
-               let pointOfTouch = touch.location(in: self)
+            let pointOfTouch = touch.location(in: self.camera!)
 
            
 
@@ -795,7 +809,7 @@ utouch2=false
 
            for touch: AnyObject in touches{
 
-               let pointOfTouch = touch.location(in: self)
+            let pointOfTouch = touch.location(in: self.camera!)
 
            
 

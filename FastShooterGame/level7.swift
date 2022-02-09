@@ -15,6 +15,11 @@ import AudioToolbox
 
 class level7: SKScene, SKPhysicsContactDelegate {
     let particles = SKEmitterNode(fileNamed: "Starfield.sks")
+    let highScoreLabel = SKLabelNode(fontNamed: "The Bold Font")
+    var myString = SKLabelNode()
+    var myPb = SKLabelNode()
+    var timer3 = Timer()
+    var ti = 0
     var acidBool : Bool?
     var lasercount : Bool?
     var targetNode : SKNode?
@@ -77,7 +82,12 @@ class level7: SKScene, SKPhysicsContactDelegate {
         static let laser : UInt32 = 0b1000//8
         static let death : UInt32 = 0b1001//9
     }
+    let defaults = UserDefaults()
+    lazy var highScoreNumber6 = defaults.integer(forKey: "highScoreSaved6")
     override func didMove(to view: SKView) {
+        if highScoreNumber6 == 0{
+            highScoreNumber6 = 10000000
+        }
         if let musicURL = Bundle.main.url(forResource: "AstroPortalMusic", withExtension: "mp3") {
             addChild( SKAudioNode(url: musicURL))
         }
@@ -293,18 +303,36 @@ class level7: SKScene, SKPhysicsContactDelegate {
          menu.fontColor = SKColor.white
          menu.alpha = 0.8
          cam.addChild(menu)
+        myString.text = "Time: \(ti)"
+        myString.fontSize = scene!.size.width/30
+        myString.fontColor = SKColor.white
+        myString.zPosition = 4
+        myString.position = CGPoint(x:camera!.position.x-(scene!.size.width) / -2.6, y: camera!.position.y+(scene!.size.width)/4.9)
+        cam.addChild(myString)
+        highScoreLabel.text = "Best Time: \(highScoreNumber6)"
+        highScoreLabel.fontSize = 20
+        highScoreLabel.fontColor = SKColor.white
+        highScoreLabel.position = CGPoint(x:camera!.position.x-(scene!.size.width) / -2.5, y: camera!.position.y+(scene!.size.width)/4)
+        highScoreLabel.zPosition = 50
+        cam.addChild(highScoreLabel)
         let timer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(fire), userInfo: nil, repeats: true)
         let timer2 = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(fire2), userInfo: nil, repeats: true)
-       
+        let timer3 = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(tim), userInfo: nil, repeats: true)
+     
    // self.physicsWorld.gravity = CGVector(dx: 0, dy: -9.8)
      
+       
         particles!.position = CGPoint(x:player!.position.x, y:player!.position.y)
         particles!.name = "star"
         particles!.targetNode = scene
 
         addChild(particles!)
-
           
+    }
+    @objc func tim(){
+        ti += 1
+       
+        
     }
     @objc func fire()
     {
@@ -350,7 +378,7 @@ class level7: SKScene, SKPhysicsContactDelegate {
 
     override func update(_ currentTime: TimeInterval){
         particles!.position=player!.position
-
+        myString.text = "Time: \(ti)"
         if((player!.frame.intersects(Rdoor1!.frame)==true)&&(gotkey1==true)){
             print ("hi")
             player!.position = Rdoor2!.position
@@ -898,6 +926,10 @@ istouching=true
         
         if ((contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.player && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.door && hasKey==true)||(contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.door && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.player && hasKey==true)){
             print("finishLevel")
+            if ti < highScoreNumber6{
+                highScoreNumber6 = ti
+                defaults.set(highScoreNumber6, forKey: "highScoreSaved6")
+            }
             finishedLevel=true
             if let view = self.view as! SKView? {
                 // Load the SKScene from 'GameScene.sks'

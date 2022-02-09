@@ -101,6 +101,7 @@
 		46919847264052BA00F192BA /* level3.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = level3.sks; sourceTree = "<group>"; };
 		4691984F264056EB00F192BA /* level4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = level4.swift; sourceTree = "<group>"; };
 		46919857264057A400F192BA /* level4.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = level4.sks; sourceTree = "<group>"; };
+		469E516827AD8B1900484160 /* Platformer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Platformer.entitlements; sourceTree = "<group>"; };
 		46DE363C265C3B2E00E7F2CE /* credit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = credit.swift; sourceTree = "<group>"; };
 		46DE3647265C3B5900E7F2CE /* credit.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = credit.sks; sourceTree = "<group>"; };
 		46F4C099264B34E50074E085 /* level6.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = level6.swift; sourceTree = "<group>"; };
@@ -135,6 +136,7 @@
 		2B5BFEF825E42FAA0066419E = {
 			isa = PBXGroup;
 			children = (
+				469E516827AD8B1900484160 /* Platformer.entitlements */,
 				2B5BFF0325E42FAA0066419E /* FastShooterGame */,
 				2B5BFF1B25E42FAE0066419E /* FastShooterGameTests */,
 				2B5BFF2625E42FAE0066419E /* FastShooterGameUITests */,
@@ -540,17 +542,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Platformer.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 883DK65VTV;
 				INFOPLIST_FILE = FastShooterGame/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.3;
+				MARKETING_VERSION = 0.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = edu.ephs2021.platformer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -561,17 +565,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Platformer.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 883DK65VTV;
 				INFOPLIST_FILE = FastShooterGame/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.3;
+				MARKETING_VERSION = 0.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = edu.ephs2021.platformer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

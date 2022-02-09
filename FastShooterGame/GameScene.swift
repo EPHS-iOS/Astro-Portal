@@ -13,11 +13,18 @@ import SpriteKit
 import GameplayKit
 import AudioToolbox
 
+
+
 class GameScene: SKScene, SKPhysicsContactDelegate {
     let particles = SKEmitterNode(fileNamed: "Starfield.sks")
+    let highScoreLabel = SKLabelNode(fontNamed: "The Bold Font")
+    var myString = SKLabelNode()
+    var myPb = SKLabelNode()
     var lasercount : Bool?
     var impulseCount : Int?
     var timer = Timer()
+    var timer3 = Timer()
+    var ti = 0
     var utouch : Bool?
     var utouch2 : Bool?
     var rtouch2 : Bool?
@@ -67,8 +74,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         static let saw : UInt32 = 0b111//7
         static let laser : UInt32 = 0b1000//8
     }
+    let defaults = UserDefaults()
+    lazy var highScoreNumber = defaults.integer(forKey: "highScoreSaved")
     override func didMove(to view: SKView) {
-       
+        if highScoreNumber == 0{
+            highScoreNumber = 10000000
+        }
         if let musicURL = Bundle.main.url(forResource: "AstroPortalMusic", withExtension: "mp3") {
             addChild( SKAudioNode(url: musicURL))
         }
@@ -228,6 +239,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
          right.size=CGSize(width:scene!.size.width/5.5,height:scene!.size.width/8)
          right.alpha = 0.8
          cam.addChild(right)
+        
+        myString.text = "Time: \(ti)"
+        myString.fontSize = scene!.size.width/30
+        myString.fontColor = SKColor.white
+        myString.zPosition = 4
+        myString.position = CGPoint(x:camera!.position.x-(scene!.size.width) / -2.6, y: camera!.position.y+(scene!.size.width)/4.9)
+        cam.addChild(myString)
+        
         // left.position = CGPoint(x:camera!.position.x-(scene!.size.width), y: camera!.position.y-(scene!.size.height))
         left.position = CGPoint(x:camera!.position.x-(scene!.size.width)/3, y: camera!.position.y-(scene!.size.width)/5)
          left.zPosition = 3
@@ -248,8 +267,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
          menu.fontColor = SKColor.white
          menu.alpha = 0.8
          cam.addChild(menu)
+        
+        
+        
+        highScoreLabel.text = "Best Time: \(highScoreNumber)"
+        highScoreLabel.fontSize = 20
+        highScoreLabel.fontColor = SKColor.white
+        highScoreLabel.position = CGPoint(x:camera!.position.x-(scene!.size.width) / -2.5, y: camera!.position.y+(scene!.size.width)/4)
+        highScoreLabel.zPosition = 50
+        cam.addChild(highScoreLabel)
         let timer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(fire), userInfo: nil, repeats: true)
         let timer2 = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(fire2), userInfo: nil, repeats: true)
+        let timer3 = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(tim), userInfo: nil, repeats: true)
      
    // self.physicsWorld.gravity = CGVector(dx: 0, dy: -9.8)
      
@@ -260,6 +289,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         addChild(particles!)
           
+    }
+    @objc func tim(){
+        ti += 1
+       
+        
     }
     @objc func fire()
     {
@@ -294,7 +328,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
   //  centerOnNode(node: player!)
     }
     override func update(_ currentTime: TimeInterval){
-        
+        myString.text = "Time: \(ti)"
         particles!.position=player!.position
         if(reset==true){
          
@@ -306,6 +340,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                ltouch2=false
             reset = false
         }
+        
+        
         isthere=false
         for i in 0..<nodesList.count{
            
@@ -330,6 +366,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             isthereLeft=true
               isOnEdgeLeft=true
          //  print("true")
+                
                 
           }
             if(i==nodesListLeft.count-1&&isthereLeft==false){
@@ -711,8 +748,21 @@ istouching=true
     
         }
         
+        
+        
+        
         if ((contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.player && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.door && hasKey==true)||(contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.door && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.player && hasKey==true)){
             print("finishLevel")
+            // do the lb here
+            
+            
+            if ti < highScoreNumber{
+                highScoreNumber = ti
+                defaults.set(highScoreNumber, forKey: "highScoreSaved")
+            }
+            
+           
+            
             finishedLevel=true
             if let view = self.view as! SKView? {
                 // Load the SKScene from 'GameScene.sks'
@@ -732,6 +782,7 @@ istouching=true
             }
            
         }
+        
         if contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.player && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.mapEdge{
             print("edge")
     //  istouching=false

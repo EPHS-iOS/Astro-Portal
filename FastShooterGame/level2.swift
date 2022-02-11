@@ -435,7 +435,7 @@ class level2: SKScene, SKPhysicsContactDelegate {
             print("upp")
         }
         if(ltouch2==true&&isOnEdgeLeft==true){
-           // player?.physicsBody?.applyImpulse(CGVector(dx:0,dy:700))
+            player?.physicsBody?.applyImpulse(CGVector(dx:0,dy:700))
             player?.position.x-=20
            //player?.physicsBody?.applyImpulse(CGVector(dx:-30,dy:0))
           

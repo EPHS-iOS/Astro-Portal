@@ -21,13 +21,9 @@ class level: SKScene {
     var l9 = SKLabelNode(text: "9")
     var l10 = SKLabelNode(text: "10")
     var credit = SKLabelNode(text: "Credits")
-    var l12 = SKLabelNode(text: "12")
-    var l13 = SKLabelNode(text: "13")
-    var l14 = SKLabelNode(text: "14")
-    var l15 = SKLabelNode(text: "15")
-    var l16 = SKLabelNode(text: "16")
-    var l17 = SKLabelNode(text: "17")
-    var l18 = SKLabelNode(text: "18")
+    var lb = SKLabelNode(text: "Leaderboard")
+    var sp = SKLabelNode(text: "Shop")
+    
         override func didMove(to view: SKView){
             startLabel.fontSize = 50
             startLabel.fontColor = SKColor.white
@@ -85,6 +81,16 @@ class level: SKScene {
             l10.position = CGPoint(x: 100, y: 0)
             addChild(l10)
             
+            lb.fontSize = 35
+            lb.fontColor = SKColor.white
+            lb.position = CGPoint(x: 1, y: -150)
+            addChild(lb)
+
+            sp.fontSize = 35
+            sp.fontColor = SKColor.white
+            sp.position = CGPoint(x: 250, y: -150)
+            addChild(sp)
+
             
             credit.fontSize = 35
             credit.fontColor = SKColor.white
@@ -283,6 +289,40 @@ class level: SKScene {
                 }
             }
             if credit.contains(pointOfTouch){
+                if let view = self.view {
+                    // Load the SKScene from 'GameScene.sks'
+                    if let scene = SKScene(fileNamed: "credit") {
+                        // Set the scale mode to scale to fit the window
+                        scene.scaleMode = .aspectFit
+                        
+                        // Present the scene
+                        view.presentScene(scene)
+                    }
+                    view.showsPhysics = false
+                    view.ignoresSiblingOrder = true
+                    
+                    view.showsFPS = true
+                    view.showsNodeCount = true //hi
+                }
+            }
+            if lb.contains(pointOfTouch){
+                if let view = self.view {
+                    // Load the SKScene from 'GameScene.sks'
+                    if let scene = SKScene(fileNamed: "lb") {
+                        // Set the scale mode to scale to fit the window
+                        scene.scaleMode = .aspectFit
+                        
+                        // Present the scene
+                        view.presentScene(scene)
+                    }
+                    view.showsPhysics = false
+                    view.ignoresSiblingOrder = true
+                    
+                    view.showsFPS = true
+                    view.showsNodeCount = true //hi
+                }
+            }
+            if sp.contains(pointOfTouch){
                 if let view = self.view {
                     // Load the SKScene from 'GameScene.sks'
                     if let scene = SKScene(fileNamed: "credit") {

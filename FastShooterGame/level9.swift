@@ -331,12 +331,22 @@ class level9: SKScene, SKPhysicsContactDelegate {
         myString.zPosition = 4
         myString.position = CGPoint(x:camera!.position.x-(scene!.size.width) / -2.6, y: camera!.position.y+(scene!.size.width)/4.9)
         cam.addChild(myString)
-        highScoreLabel.text = "Best Time: \(highScoreNumber8)"
-        highScoreLabel.fontSize = 20
-        highScoreLabel.fontColor = SKColor.white
-        highScoreLabel.position = CGPoint(x:camera!.position.x-(scene!.size.width) / -2.5, y: camera!.position.y+(scene!.size.width)/4)
-        highScoreLabel.zPosition = 50
-        cam.addChild(highScoreLabel)
+        if highScoreNumber8 == 10000000{
+            highScoreLabel.text = "Best Time: N/A"
+            highScoreLabel.fontSize = 20
+            highScoreLabel.fontColor = SKColor.white
+            highScoreLabel.position = CGPoint(x:camera!.position.x-(scene!.size.width) / -2.5, y: camera!.position.y+(scene!.size.width)/4)
+            highScoreLabel.zPosition = 50
+            cam.addChild(highScoreLabel)
+        } else {
+            highScoreLabel.text = "Best Time: \(highScoreNumber8)"
+            highScoreLabel.fontSize = 20
+            highScoreLabel.fontColor = SKColor.white
+            highScoreLabel.position = CGPoint(x:camera!.position.x-(scene!.size.width) / -2.5, y: camera!.position.y+(scene!.size.width)/4)
+            highScoreLabel.zPosition = 50
+            cam.addChild(highScoreLabel)
+        }
+
         let timer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(fire), userInfo: nil, repeats: true)
         let timer2 = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(fire2), userInfo: nil, repeats: true)
         let timer3 = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(tim), userInfo: nil, repeats: true)

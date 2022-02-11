@@ -269,12 +269,22 @@ class level2: SKScene, SKPhysicsContactDelegate {
          menu.alpha = 0.8
          cam.addChild(menu)
         
-        highScoreLabel.text = "Best Time: \(highScoreNumber1)"
-        highScoreLabel.fontSize = 20
-        highScoreLabel.fontColor = SKColor.white
-        highScoreLabel.position = CGPoint(x:camera!.position.x-(scene!.size.width) / -2.5, y: camera!.position.y+(scene!.size.width)/4)
-        highScoreLabel.zPosition = 50
-        cam.addChild(highScoreLabel)
+        if highScoreNumber1 == 10000000{
+            highScoreLabel.text = "Best Time: N/A"
+            highScoreLabel.fontSize = 20
+            highScoreLabel.fontColor = SKColor.white
+            highScoreLabel.position = CGPoint(x:camera!.position.x-(scene!.size.width) / -2.5, y: camera!.position.y+(scene!.size.width)/4)
+            highScoreLabel.zPosition = 50
+            cam.addChild(highScoreLabel)
+        } else {
+            highScoreLabel.text = "Best Time: \(highScoreNumber1)"
+            highScoreLabel.fontSize = 20
+            highScoreLabel.fontColor = SKColor.white
+            highScoreLabel.position = CGPoint(x:camera!.position.x-(scene!.size.width) / -2.5, y: camera!.position.y+(scene!.size.width)/4)
+            highScoreLabel.zPosition = 50
+            cam.addChild(highScoreLabel)
+        }
+
         
         let timer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(fire), userInfo: nil, repeats: true)
         let timer2 = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(fire2), userInfo: nil, repeats: true)

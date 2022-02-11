@@ -178,6 +178,7 @@ class level6: SKScene, SKPhysicsContactDelegate {
                     tileNode.physicsBody?.collisionBitMask = PhysicsCategory.none
                     tileNode.physicsBody?.contactTestBitMask = PhysicsCategory.bullet
                     tileNode.physicsBody?.contactTestBitMask = PhysicsCategory.player
+                    tileNode.physicsBody?.friction=1.0
                     nodesList.append(tileNode)
                     tileMap!.addChild(tileNode)
                     
@@ -201,6 +202,7 @@ class level6: SKScene, SKPhysicsContactDelegate {
                     tileNode.physicsBody?.collisionBitMask = PhysicsCategory.none
                     tileNode.physicsBody?.contactTestBitMask = PhysicsCategory.bullet
                     tileNode.physicsBody?.contactTestBitMask = PhysicsCategory.player
+                    tileNode.physicsBody?.friction=1.0
                     nodesListLeft.append(tileNode)
                     tileMap!.addChild(tileNode)
                     
@@ -328,6 +330,17 @@ class level6: SKScene, SKPhysicsContactDelegate {
   //  centerOnNode(node: player!)
     }
     override func update(_ currentTime: TimeInterval){
+        
+              if(isOnEdge == true || isOnEdgeLeft == true){
+                  player?.physicsBody?.affectedByGravity=false
+                  
+              }
+              if(isOnEdge == false && isOnEdgeLeft==false){
+                  player?.physicsBody?.affectedByGravity=true
+              }
+              if(player?.physicsBody?.affectedByGravity==true){
+                print("yes")
+              }
         myString.text = "Time: \(ti)"
         particles!.position=player!.position
         if(reset==true){
@@ -847,6 +860,8 @@ istouching=true
         }
         if contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.player && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.mapEdge{
             print("edge")
+            player?.physicsBody?.isDynamic = false
+            player?.physicsBody?.isDynamic = true
     //  istouching=false
         }
     }

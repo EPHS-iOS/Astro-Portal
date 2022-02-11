@@ -34,6 +34,108 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     }
+    override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
+        // Stop running when the user releases the left or right arrow key.
+
+        var didHandleEvent = false
+        for press in presses {
+            
+            guard let key = press.key else { continue }
+            if(isOnEdge==false){
+                if key.charactersIgnoringModifiers == UIKeyCommand.inputRightArrow {
+                    rtouch = true
+                    didHandleEvent = true
+                }
+            }
+            if(isOnEdge==true){
+                if key.charactersIgnoringModifiers == UIKeyCommand.inputRightArrow {
+                    rtouch=true
+                 rtouch2=true
+                    didHandleEvent = true
+                }
+            }
+            if(isOnEdgeLeft==false){
+                if key.charactersIgnoringModifiers == UIKeyCommand.inputLeftArrow {
+                    ltouch=true
+                    didHandleEvent = true
+                }
+            }
+            if(isOnEdgeLeft==true){
+                if key.charactersIgnoringModifiers == UIKeyCommand.inputLeftArrow {
+                    ltouch=true
+                    ltouch2=true
+                    didHandleEvent = true
+                }
+            }
+
+            if(isOnEdge==false&&isOnEdgeLeft==false){
+                if key.charactersIgnoringModifiers == UIKeyCommand.inputUpArrow && istouching==true{
+
+                    utouch=true
+                        istouching=false
+                    didHandleEvent = true
+                }
+            }
+            if(isOnEdge==true||isOnEdgeLeft==true){
+                if key.charactersIgnoringModifiers == UIKeyCommand.inputUpArrow {
+
+                    utouch2=true
+                        utouch = false
+                        istouching=false
+                    didHandleEvent = true
+                }
+            }
+    
+        }
+        
+        if didHandleEvent == false {
+            // Didn't handle this key press, so pass the event to the next responder.
+            super.pressesBegan(presses, with: event)
+        }
+    }
+    override func pressesEnded(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
+        // Stop running when the user releases the left or right arrow key.
+
+        var didHandleEvent = false
+        for press in presses {
+            
+            guard let key = press.key else { continue }
+            if key.charactersIgnoringModifiers == UIKeyCommand.inputRightArrow {
+                rtouch=false
+                didHandleEvent = true
+            }
+
+            if key.charactersIgnoringModifiers == UIKeyCommand.inputLeftArrow {
+                ltouch=false
+                didHandleEvent = true
+            }
+            if key.charactersIgnoringModifiers == UIKeyCommand.inputLeftArrow {
+                ltouch2=false
+                didHandleEvent = true
+            }
+            if key.charactersIgnoringModifiers == UIKeyCommand.inputUpArrow {
+                utouch=false
+                didHandleEvent = true
+            }
+
+            if key.charactersIgnoringModifiers == UIKeyCommand.inputUpArrow {
+                utouch2=false
+                didHandleEvent = true
+            }
+
+
+            if key.charactersIgnoringModifiers == UIKeyCommand.inputRightArrow {
+                rtouch2=false
+                didHandleEvent = true
+            }
+        }
+        
+        
+        if didHandleEvent == false {
+            // Didn't handle this key press, so pass the event to the next responder.
+            super.pressesBegan(presses, with: event)
+        }
+    }
 
 
 }

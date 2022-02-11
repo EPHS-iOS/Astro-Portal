@@ -12,9 +12,15 @@ import Foundation
 import SpriteKit
 import GameplayKit
 import AudioToolbox
-
-
-
+var rtouch : Bool?
+var ltouch: Bool?
+var utouch : Bool?
+var isOnEdge: Bool?
+var isOnEdgeLeft : Bool?
+var utouch2 : Bool?
+var rtouch2 : Bool?
+var ltouch2:Bool?
+var istouching : Bool?
 class GameScene: SKScene, SKPhysicsContactDelegate {
     let particles = SKEmitterNode(fileNamed: "Starfield.sks")
     let highScoreLabel = SKLabelNode(fontNamed: "The Bold Font")
@@ -25,15 +31,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var timer = Timer()
     var timer3 = Timer()
     var ti = 0
-    var utouch : Bool?
-    var utouch2 : Bool?
-    var rtouch2 : Bool?
     var finishedLevel : Bool?
     var initialPosition : CGPoint?
     var reset : Bool?
-    var rtouch : Bool?
-    var ltouch: Bool?
-    var ltouch2:Bool?
     var hasKey : Bool?
     var halfWidth : CGFloat?
     var isthere : Bool?
@@ -180,6 +180,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     tileNode.physicsBody?.collisionBitMask = PhysicsCategory.none
                     tileNode.physicsBody?.contactTestBitMask = PhysicsCategory.bullet
                     tileNode.physicsBody?.contactTestBitMask = PhysicsCategory.player
+                    tileNode.physicsBody?.friction=1.0
                     nodesList.append(tileNode)
                     tileMap!.addChild(tileNode)
                     
@@ -204,6 +205,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     tileNode.physicsBody?.collisionBitMask = PhysicsCategory.none
                     tileNode.physicsBody?.contactTestBitMask = PhysicsCategory.bullet
                     tileNode.physicsBody?.contactTestBitMask = PhysicsCategory.player
+                    tileNode.physicsBody?.friction=1.0
                     nodesListLeft.append(tileNode)
                     tileMap!.addChild(tileNode)
                     
@@ -330,8 +332,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func update(_ currentTime: TimeInterval){
         myString.text = "Time: \(ti)"
         particles!.position=player!.position
+        
+              if(isOnEdge == true || isOnEdgeLeft == true){
+                  player?.physicsBody?.affectedByGravity=false
+                  
+              }
+              if(isOnEdge == false && isOnEdgeLeft==false){
+                  player?.physicsBody?.affectedByGravity=true
+              }
+              if(player?.physicsBody?.affectedByGravity==true){
+                print("yes")
+              }
         if(reset==true){
-         
+        
             AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
             player?.position=initialPosition!
             rtouch=false
@@ -785,7 +798,10 @@ istouching=true
         
         if contact.bodyA.node?.physicsBody?.categoryBitMask==PhysicsCategory.player && contact.bodyB.node?.physicsBody?.categoryBitMask==PhysicsCategory.mapEdge{
             print("edge")
+            player?.physicsBody?.isDynamic = false
+            player?.physicsBody?.isDynamic = true
     //  istouching=false
+        
         }
     }
 }

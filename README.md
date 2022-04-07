@@ -4,7 +4,7 @@
 
 The goal of [Astro portal](https://apps.apple.com/sr/app/astro-portal/id1558706324) is to find the keys in every level and escape to the portals. The first level is a tutorial that will teach you the basics in order to complete all levels. Along the way, you will find many traps including lasers, acid, bullets, and saws that are designed to hinder your movement. Dodge them in order to secure the key and exit to the portal.
 
-Here's a [presentation]() with more information on development
+Here's a [presentation](https://docs.google.com/presentation/d/1_dS6fekyFHGk0Haac8MnGpl7FZA1C-6x0TiGL69uuvM/edit#slide=id.p) with more information on development
 
 Here's [the launch trailer](https://www.youtube.com/watch?v=9Ml9apc4FA0&ab_channel=KanTheGamer)
 

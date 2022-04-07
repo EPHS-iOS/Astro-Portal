@@ -15,7 +15,7 @@ Here's [the launch trailer](https://www.youtube.com/watch?v=9Ml9apc4FA0&ab_chann
   - Timer With PB System 
   - New Wall Mechanics 
   - Bug Fixes
-![image_6487327](https://user-images.githubusercontent.com/59212272/162109479-250213de-509c-4f9f-8a4c-488907f87bd6.JPG)
+<img width="783" alt="Screen Shot 2022-04-06 at 9 41 29 PM" src="https://user-images.githubusercontent.com/59212272/162109635-6f534f59-cd96-42fc-83a7-aaa0e5e636f7.png">
 
 * Version 1.1
   - Added Music

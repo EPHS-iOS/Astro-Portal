@@ -8,7 +8,6 @@ Here's a [presentation]() with more information on development
 
 Here's [the launch trailer](https://www.youtube.com/watch?v=9Ml9apc4FA0&ab_channel=KanTheGamer)
 
-<img width="316" alt="Screen Shot 2022-04-06 at 9 06 10 PM" src="https://user-images.githubusercontent.com/59212272/162105906-3c632c87-6f5e-4895-a6f9-63a7e7194ab6.png">
 
 # Version History
 
@@ -23,6 +22,9 @@ Here's [the launch trailer](https://www.youtube.com/watch?v=9Ml9apc4FA0&ab_chann
   - Improved visuals for players and traps
   
 * Version 1.0
+
+<img width="316" alt="Screen Shot 2022-04-06 at 9 06 10 PM" src="https://user-images.githubusercontent.com/59212272/162105906-3c632c87-6f5e-4895-a6f9-63a7e7194ab6.png">
+
   - High Skill Movement
   - Ten Levels
   - Unique Traps
